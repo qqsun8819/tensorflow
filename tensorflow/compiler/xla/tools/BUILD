@@ -23,6 +23,30 @@ filegroup(
 )
 
 tf_cc_binary(
+    name = "compile_and_run_computation",
+    srcs = ["compile_and_run_computation.cc"],
+    copts=["-g"],
+    deps = [
+        "//tensorflow/compiler/jit:xla_cpu_jit",
+        "//tensorflow/compiler/xla:statusor",
+        "//tensorflow/compiler/xla:types",
+        "//tensorflow/compiler/xla:xla_data_proto",
+        "//tensorflow/compiler/xla/client",
+        "//tensorflow/compiler/xla/client:client_library",
+        "//tensorflow/compiler/xla/client:local_client",
+        "//tensorflow/compiler/xla/client:xla_computation",
+        "//tensorflow/compiler/xla/service",
+        "//tensorflow/compiler/xla/service:hlo_proto",
+        "//tensorflow/compiler/xla/service:interpreter_plugin",
+        "//tensorflow/core:lib",
+        "//tensorflow/core:framework",
+        "@com_google_absl//absl/types:span",
+    ],
+)
+
+
+
+tf_cc_binary(
     name = "hex_floats_to_packed_literal",
     srcs = ["hex_floats_to_packed_literal.cc"],
     deps = [
