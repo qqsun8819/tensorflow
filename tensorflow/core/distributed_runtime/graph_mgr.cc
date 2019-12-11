@@ -17,7 +17,8 @@ limitations under the License.
 
 #include <chrono>  // NOLINT(build/c++11)
 #include <vector>
-
+#include <iostream>
+#include <fstream>
 #include "tensorflow/core/common_runtime/build_graph_options.h"
 #include "tensorflow/core/common_runtime/constant_folding.h"
 #include "tensorflow/core/common_runtime/debugger_state_interface.h"
@@ -52,6 +53,8 @@ limitations under the License.
 #include "tensorflow/core/profiler/lib/traceme.h"
 #include "tensorflow/core/protobuf/worker.pb.h"
 #include "tensorflow/core/util/env_var.h"
+
+#include "tensorflow/compiler/mlir/tf_mlir_compiler.h"
 
 namespace tensorflow {
 
@@ -286,6 +289,7 @@ Status GraphMgr::InitItem(
   return Status::OK();
 }
 
+
 Status GraphMgr::Register(
     const string& handle, const GraphDef& gdef, WorkerSession* session,
     const GraphOptions& graph_options, const DebugOptions& debug_options,
@@ -305,6 +309,31 @@ Status GraphMgr::Register(
     *graph_handle = strings::Printf("%016llx", ++next_id_);
     item->handle = *graph_handle;
     CHECK(table_.insert({*graph_handle, item}).second);
+  
+
+    std::ostringstream ostr2;
+    std::ifstream pinfile("/tmp/callfunc.pbtxt", std::ifstream::binary);
+    char ch;
+    while (pinfile.get(ch)) {  // till end-of-file
+      ostr2 << ch;
+    }
+    pinfile.close();
+    
+    SimpleMlirCompiler mlir_compiler(ostr2.str());
+    LOG(INFO) << "mlir compile test";
+    auto s1 = mlir_compiler.CompileGraphDef();
+    if (!s1.ok())  {
+      LOG(ERROR) << "compile mlir fail";
+    } else {
+      LOG(INFO) << "compile success";
+      s1 = mlir_compiler.RunJit(true);
+      if (!s1.ok())  {
+        LOG(ERROR) << "run jit faile";
+      } else {
+        LOG(INFO) << "run jit success";
+      }
+    }
+     
   }
   return Status::OK();
 }
@@ -566,3 +595,5 @@ void GraphMgr::BuildCostModel(Item* item, StepStatsCollector* collector,
 }
 
 }  // end namespace tensorflow
+
+

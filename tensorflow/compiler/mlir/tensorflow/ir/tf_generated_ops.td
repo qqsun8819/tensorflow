@@ -7495,3 +7495,50 @@ def TF_ZerosLikeOp : TF_Op<"ZerosLike", [NoSideEffect, SameOperandsAndResultType
 
   TF_DerivedOperandTypeAttr T = TF_DerivedOperandTypeAttr<0>;
 }
+
+def TF_CallExternalFuncOp : TF_Op<"CallExternalFunc", [NoSideEffect]> {
+  let summary = "call_external_func  operation";
+  let description = [{
+    call external function
+  }];
+
+  // The operation takes an input tensor to print.
+  let arguments = (ins
+    AnyTypeOf<[TF_NumberTensor, I32MemRef]>:$x,
+    AnyTypeOf<[TF_NumberTensor, I32MemRef]>:$y
+  );
+
+  let results = (outs
+    AnyTypeOf<[TF_NumberTensor, I32MemRef]>:$z
+  );
+
+  let builders = [
+    OpBuilder<"Builder* builder, OperationState& result, Value* lhs, Value* rhs">
+  ];
+
+  TF_DerivedOperandTypeAttr T = TF_DerivedOperandTypeAttr<0>;
+}
+
+def TF_CallExternalFunc2Op : TF_Op<"CallExternalFunc2", [NoSideEffect]> {
+  let summary = "call_external_func  operation";
+  let description = [{
+    call external function
+  }];
+
+  // The operation takes an input tensor to print.
+  let arguments = (ins
+    AnyTypeOf<[TF_NumberTensor, I32MemRef]>:$x,
+    AnyTypeOf<[TF_NumberTensor, I32MemRef]>:$y
+  );
+
+  let results = (outs
+    AnyTypeOf<[TF_NumberTensor, I32MemRef]>:$z
+  );
+
+  let builders = [
+    OpBuilder<"Builder* builder, OperationState& result, Value* lhs, Value* rhs">
+  ];
+
+  TF_DerivedOperandTypeAttr T = TF_DerivedOperandTypeAttr<0>;
+}
+

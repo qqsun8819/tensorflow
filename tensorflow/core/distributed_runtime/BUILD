@@ -438,6 +438,7 @@ cc_library(
         "//tensorflow/core:worker_proto_cc",
         "//tensorflow/core/debug",
         "//tensorflow/core/profiler/lib:traceme",
+        "//tensorflow/compiler/mlir:tf_mlir_compiler",
     ],
 )
 

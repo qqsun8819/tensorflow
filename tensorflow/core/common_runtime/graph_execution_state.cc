@@ -889,3 +889,9 @@ Status GraphExecutionState::BuildGraph(const BuildGraphOptions& options,
 }
 
 }  // namespace tensorflow
+extern "C" int32_t _global_mlir_call_external_func(int a, int b){
+  LOG(INFO) << "fcd acda cd";
+  return a+b;
+}
+
+

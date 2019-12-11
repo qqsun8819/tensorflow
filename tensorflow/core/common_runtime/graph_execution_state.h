@@ -32,6 +32,8 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/types.h"
 
+extern "C" int32_t _global_mlir_call_external_func(int a, int b);
+
 namespace tensorflow {
 struct SessionOptions;
 

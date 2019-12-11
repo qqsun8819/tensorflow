@@ -53,6 +53,38 @@ cc_library(
         "@llvm-project//mlir/test:TestTransforms",
     ],
 )
+cc_library(
+    name = "passes_new",
+    visibility = [
+        "//tensorflow/python:__subpackages__",
+    ],
+    deps = [
+        "//tensorflow/compiler/mlir/lite:tensorflow_lite",
+        "//tensorflow/compiler/mlir/lite:tensorflow_lite_dialect_registration",
+        "//tensorflow/compiler/mlir/lite:tensorflow_lite_legalize_tf",
+        "//tensorflow/compiler/mlir/lite:tensorflow_lite_optimize",
+        "//tensorflow/compiler/mlir/lite:tensorflow_lite_quantize",
+        "//tensorflow/compiler/mlir/lite/quantization:quantization_passes",
+        "//tensorflow/compiler/mlir/tensorflow",
+        "//tensorflow/compiler/mlir/tensorflow:tensorflow_dialect_registration",
+        "//tensorflow/compiler/mlir/tensorflow:tensorflow_passes",
+        "//tensorflow/compiler/mlir/tensorflow:tensorflow_test_passes",
+        "//tensorflow/compiler/mlir/xla:hlo",
+        "//tensorflow/compiler/mlir/xla:hlo_legalize_to_lhlo",
+        "//tensorflow/compiler/mlir/xla:lhlo",
+        "//tensorflow/compiler/mlir/xla:lhlo_fuse_linalg",
+        "//tensorflow/compiler/mlir/xla:lhlo_legalize_to_affine",
+        "//tensorflow/compiler/mlir/xla:lhlo_legalize_to_linalg",
+        "//tensorflow/compiler/mlir/xla:xla_dialect_registration",
+        "//tensorflow/compiler/mlir/xla:xla_legalize_control_flow",
+        "//tensorflow/compiler/mlir/xla:xla_legalize_tf",
+        "//tensorflow/compiler/mlir/xla:xla_legalize_to_standard",
+        "//tensorflow/compiler/mlir/xla:xla_lower",
+        "@llvm-project//mlir:AffineDialectRegistration",
+        "@llvm-project//mlir:QuantOps",
+        "@llvm-project//mlir:QuantOpsDialectRegistration",
+    ],
+)
 
 cc_library(
     name = "passes",
@@ -111,9 +143,22 @@ tf_cc_binary(
     ],
 )
 
+
+tf_cc_binary(
+    name = "tf-mlir-compiler",
+    srcs = ["tf_mlir_compile_main.cc"],
+    copts=["-g"],
+    deps = [
+        ":init_mlir",
+        ":tf_mlir_compiler",
+    
+    ],
+)
+
 tf_cc_binary(
     name = "tf-mlir-translate",
     srcs = ["tf_mlir_translate_main.cc"],
+    copts=['-g'],
     deps = [
         ":init_mlir",
         "//tensorflow/compiler/mlir/tensorflow:convert_graphdef",
@@ -135,6 +180,32 @@ tf_cc_binary(
         "@llvm-project//mlir:Translation",
     ],
 )
+
+cc_library(
+    name='tf_mlir_compiler',
+    srcs = ["tf_mlir_compiler.cc"],
+    hdrs = ["tf_mlir_compiler.h"],
+    copts=["-g"],
+    deps = [
+    ":passes_new",
+        "//tensorflow/compiler/mlir/tensorflow:convert_graphdef",
+        "//tensorflow/compiler/mlir/tensorflow:mlir_roundtrip_flags",
+        "//tensorflow/compiler/mlir/tensorflow:translate_cl_options",
+        "//tensorflow/compiler/mlir/tensorflow:translate_lib",
+        "//tensorflow/compiler/mlir/tensorflow:translate_registration",
+        "//tensorflow/compiler/mlir/tensorflow:translate_tf_dialect_op",
+        "//tensorflow/compiler/mlir/xla:xla_mlir_translate",
+        "//tensorflow/core:lib",
+        "//tensorflow/core:protos_all_cc",
+        "//tensorflow/core:core_cpu_internal",
+        "@llvm-project//llvm:support",
+        "@llvm-project//mlir:MlirJitRunner",
+        "@llvm-project//mlir:IR",
+        "@llvm-project//mlir:Support",
+        "@llvm-project//mlir:TranslateClParser",
+        "@llvm-project//mlir:Translation",
+        ],
+) 
 
 filegroup(
     name = "litfiles",

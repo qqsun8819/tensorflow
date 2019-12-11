@@ -513,4 +513,5 @@ Example:
   TF_DerivedOperandOrResultHandleShapeAttr shape =
     TF_DerivedOperandOrResultHandleShapeAttr<"resource">;
 }
+
 #endif // TF_OPS

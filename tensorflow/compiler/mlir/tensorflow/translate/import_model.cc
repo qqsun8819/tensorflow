@@ -52,6 +52,7 @@ limitations under the License.
 #include "mlir/IR/Module.h"  // TF:llvm-project
 #include "mlir/IR/OpDefinition.h"  // TF:llvm-project
 #include "mlir/IR/Types.h"  // TF:llvm-project
+#include "mlir/Dialect/LLVMIR/LLVMDialect.h" // TF:llvm-project
 #include "tensorflow/compiler/jit/shape_inference_helpers.h"
 #include "tensorflow/compiler/mlir/op_or_arg_name_mapper.h"
 #include "tensorflow/compiler/mlir/tensorflow/ir/control_flow_ops.h"
@@ -731,7 +732,7 @@ Status ImporterBase::AddNodesToShapeRefiner() {
     // pass to avoid adding complexity to the importer. But right now, we don't
     // have an MLIR-native shape inference pass, so we need to do this while we
     // still have the Graph around, i.e. here, in the importer.
-    if (node->op_def().name() == "ReadVariableOp") {
+    if (node->op_def().name() == "ReadVariableOp" or node->op_def().name() == "_Recv") {
       // TODO(silvasean): In some graphs, this seems to be annotated on every
       // node. Why and by whom?
       // TODO(b/140588338): We should ideally incorporate that information for
@@ -1202,10 +1203,12 @@ Status ImporterBase::ConvertFunctionArgAndRets(
   auto* bb = &func.front();
   llvm::SmallDenseMap<std::pair<Node*, int>, mlir::Value, 4>
       arg_nodes_to_values;
-  for (int i = 0, e = arg_types.size(); i < e; ++i) {
+  for (int i = 0, e = arg_nodes.size(); i < e; ++i) {
     auto& arg_node = arg_nodes[i];
     // The lookup can't fail here: otherwise some nodes in the function haven't
     // be converted to mlir operations and don't have a mapping.
+    if (node_values_.find(arg_node.node->id()) == node_values_.end())
+      continue;
     mlir::Operation* island = node_values_.find(arg_node.node->id())->second;
 
     auto bb_arg = bb->getArgument(i);
@@ -1979,7 +1982,7 @@ StatusOr<mlir::FunctionType> GraphDefImporter::InferMainFunctionType(
     arg_types.push_back(mlir::RankedTensorType::get(shape, element_type));
     i++;
   }
-
+  //arg_types.push_back(mlir::LLVM::LLVMType::getInt8PtrTy(context->getRegisteredDialect<mlir::LLVM::LLVMDialect>()));
   llvm::SmallVector<mlir::Type, 4> ret_types;
   ret_types.reserve(specs.outputs.size());
   for (int i = 0, e = specs.outputs.size(); i != e; ++i) {

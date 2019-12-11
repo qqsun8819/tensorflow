@@ -19,6 +19,7 @@ limitations under the License.
 #include <unordered_map>
 #include <vector>
 
+
 #include "tensorflow/core/common_runtime/costmodel_manager.h"
 #include "tensorflow/core/common_runtime/executor.h"
 #include "tensorflow/core/common_runtime/process_function_library_runtime.h"
@@ -36,6 +37,7 @@ limitations under the License.
 #include "tensorflow/core/protobuf/config.pb.h"
 #include "tensorflow/core/protobuf/debug.pb.h"
 #include "tensorflow/core/protobuf/worker.pb.h"
+
 
 namespace tensorflow {
 
@@ -162,6 +164,7 @@ class GraphMgr {
   // lose memory over time. We should implement a timeout-based
   // mechanism to gc these graphs.
   std::unordered_map<string, Item*> table_;
+
 
   void StartParallelExecutors(const string& handle, int64 step_id, Item* item,
                               Rendezvous* rendezvous,
