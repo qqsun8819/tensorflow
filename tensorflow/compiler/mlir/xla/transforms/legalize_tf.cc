@@ -1649,6 +1649,78 @@ class ConvertSplitOp : public OpRewritePattern<TF::SplitOp> {
   }
 };
 
+// TODO: support dynamic UniqueOp
+//
+class ConvertUniqueOp : public OpRewritePattern<TF::UniqueOp> {
+ public:
+  using OpRewritePattern::OpRewritePattern;
+
+  PatternMatchResult matchAndRewrite(TF::UniqueOp op,
+                                     PatternRewriter &rewriter) const override {
+    Location loc = op.getLoc();
+
+    ElementsAttr x_value;
+    if (!matchPattern(op.x(), m_Constant(&x_value))) {
+      return this->matchFailure();
+    }
+
+    // TODO: support dynamic dimensions.
+    //
+    auto input_type = op.x().getType().dyn_cast<RankedTensorType>();
+    if (!input_type) {
+      return matchFailure();
+    }
+
+    Type element_type = input_type.getElementType();
+
+    // rank must equal 1
+    if (input_type.getRank() != 1) {
+      return matchFailure();
+    }
+
+    // TODO: support dynamic dims
+    int64_t input_dim_size = input_type.getDimSize(0);
+    if (TensorType::isDynamic(input_dim_size)) {
+      return matchFailure();
+    }
+
+    // TODO: fix int64 type
+    int64_t cur_idx = 0;
+    SmallVector<int64_t, 4> unique_ids;
+    SmallVector<int64_t, 4> total_index;
+    std::unordered_map<int64_t, int64_t> ids_map;
+    auto x_shape = input_type.getShape();
+    // TODO: Integer ?
+    auto x_it = x_value.getValues<mlir::IntegerAttr>().begin();
+    auto x_end = x_value.getValues<mlir::IntegerAttr>().end();
+    while (x_it != x_end) {
+      int64_t cur_x = (*x_it).getInt();
+      if (ids_map.find(cur_x) != ids_map.end()) {
+        total_index.push_back(ids_map[cur_x]);
+      } else {
+        unique_ids.push_back(cur_x);
+        total_index.push_back(cur_idx);
+        ids_map[cur_x] = cur_idx++;
+      }
+
+      ++x_it;
+    }
+
+    SmallVector<Value, 2> outputs;
+    // TODO: fix type
+    auto unique_ids_attr = GetI64ElementsAttr(unique_ids, &rewriter);
+    auto total_index_attr = GetI64ElementsAttr(total_index, &rewriter);
+    auto unique_ids_op = rewriter.create<ConstOp>(loc, unique_ids_attr);
+    auto total_index_op = rewriter.create<ConstOp>(loc, total_index_attr);
+    outputs.push_back(unique_ids_op);
+    outputs.push_back(total_index_op);
+
+    rewriter.replaceOp(op, outputs);
+    return matchSuccess();
+  }
+};
+
+
 // Converts the tf.SplitV op into a series of HLO slice ops when the tensor to
 // be split has fully static shape and the dimension to split and split sizes
 // are constants.
@@ -3499,7 +3571,7 @@ LogicalResult legalizeTF(Operation *op, bool allow_partial_conversion) {
       ConvertTensorScatterUpdateOp, ConvertTileOp, ConvertTopKV2Op,
       ConvertUnpackOp, ConvertUnsortedSegmentMaxOp, ConvertUnsortedSegmentMinOp,
       ConvertUnsortedSegmentProdOp, ConvertUnsortedSegmentSumOp,
-      ConvertRandomShuffleOp, ConvertVariableShapeOp>(op->getContext());
+      ConvertRandomShuffleOp, ConvertVariableShapeOp, ConvertUniqueOp>(op->getContext());
 
   ConversionTarget target(*context);
   target.addLegalDialect<XlaHloDialect>();

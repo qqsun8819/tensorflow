@@ -323,6 +323,7 @@ cc_library(
         ":tensorflow",
         ":tensorflow_optimize_inc_gen",
         ":tpu_rewrite_device_util",
+        "//tensorflow/compiler/mlir/xla:xla_legalize_tf",
         "//tensorflow/compiler/mlir/lite:validators",
         "//tensorflow/compiler/xla:xla_data_proto_cc",
         "//tensorflow/compiler/xla:xla_proto_cc",
