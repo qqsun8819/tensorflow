@@ -51,7 +51,6 @@ from tensorflow.contrib import feature_column
 from tensorflow.contrib import framework
 from tensorflow.contrib import graph_editor
 from tensorflow.contrib import grid_rnn
-from tensorflow.contrib import image
 from tensorflow.contrib import input_pipeline
 from tensorflow.contrib import integrate
 from tensorflow.contrib import keras
@@ -85,7 +84,6 @@ from tensorflow.contrib import slim
 from tensorflow.contrib import solvers
 from tensorflow.contrib import sparsemax
 from tensorflow.contrib import staging
-from tensorflow.contrib import stat_summarizer
 from tensorflow.contrib import stateless
 from tensorflow.contrib import tensor_forest
 from tensorflow.contrib import tensorboard
@@ -95,7 +93,6 @@ from tensorflow.contrib import timeseries
 from tensorflow.contrib import tpu
 from tensorflow.contrib import training
 from tensorflow.contrib import util
-from tensorflow.contrib.eager.python import tfe as eager
 from tensorflow.contrib.optimizer_v2 import optimizer_v2_symbols as optimizer_v2
 from tensorflow.contrib.receptive_field import receptive_field_api as receptive_field
 from tensorflow.contrib.recurrent.python import recurrent_api as recurrent

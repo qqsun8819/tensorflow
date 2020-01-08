@@ -113,7 +113,6 @@ py_library(
         "//tensorflow:linux_s390x": [],
         "//tensorflow:windows": [],
         "//conditions:default": [
-            "//tensorflow/contrib/fused_conv:fused_conv_py",
             "//tensorflow/contrib/tensorrt:init_py",
             "//tensorflow/contrib/ffmpeg:ffmpeg_ops_py",
         ],
@@ -124,8 +123,6 @@ py_library(
         "//tensorflow:windows": [],
         "//tensorflow:no_gcp_support": [],
         "//conditions:default": [
-            "//tensorflow/contrib/bigtable",
-            "//tensorflow/contrib/cloud:cloud_py",
         ],
     }),
 )
