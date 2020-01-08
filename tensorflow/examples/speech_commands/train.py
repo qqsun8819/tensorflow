@@ -86,6 +86,17 @@ FLAGS = None
 
 
 def main(_):
+  if FLAGS.quantize:
+    try:
+      _ = tf.contrib
+    except AttributeError as e:
+      msg = e.args[0]
+      msg += ('\n\n The --quantize option still requires contrib, which is not '
+              'part of TensorFlow 2.0. Please install a previous version:'
+              '\n    `pip install tensorflow<=1.15`')
+      e.args = (msg,)
+      raise e
+
   # Set the verbosity based on flags (default is INFO, so we see all messages)
   tf.compat.v1.logging.set_verbosity(FLAGS.verbosity)
 
@@ -153,18 +164,8 @@ def main(_):
   with tf.compat.v1.name_scope('cross_entropy'):
     cross_entropy_mean = tf.compat.v1.losses.sparse_softmax_cross_entropy(
         labels=ground_truth_input, logits=logits)
-
   if FLAGS.quantize:
-    try:
-      tf.contrib.quantize.create_training_graph(quant_delay=0)
-    except ImportError as e:
-      msg = e.args[0]
-      msg += ('\n\n The --quantize option still requires contrib, which is not '
-              'part of TensorFlow 2.0. Please install a previous version:'
-              '\n    `pip install tensorflow<=1.15`')
-      e.args = (msg,)
-      raise e
-
+    tf.contrib.quantize.create_training_graph(quant_delay=0)
   with tf.compat.v1.name_scope('train'), tf.control_dependencies(
       control_dependencies):
     learning_rate_input = tf.compat.v1.placeholder(

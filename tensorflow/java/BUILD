@@ -57,6 +57,7 @@ filegroup(
         "src/main/java/org/tensorflow/types/*.java",
     ]),
     visibility = [
+        "//tensorflow/contrib/android:__pkg__",
         "//tensorflow/java:__pkg__",
         "//tensorflow/tools/android/inference_interface:__pkg__",
     ],
