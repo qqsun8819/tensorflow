@@ -50,8 +50,8 @@ SimpleMlirCompiler::SimpleMlirCompiler(const std::string& graph_str): graph_stre
   
   mlir_module_ = tensorflow::GraphdefToMlirTranslateFunction(
       graph_str, debug_info_file, input_arrays, input_dtypes, input_shapes,
-      output_arrays, prune_unused_nodes, convert_legacy_fed_inputs,
-      graph_as_function, upgrade_legacy, &mlir_context_);
+      output_arrays, control_output_arrays, prune_unused_nodes,
+      convert_legacy_fed_inputs, graph_as_function, upgrade_legacy, &mlir_context_);
   mlir::registerPassManagerCLOptions();
 }
 
