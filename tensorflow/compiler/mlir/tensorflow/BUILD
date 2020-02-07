@@ -1,5 +1,6 @@
 load("//third_party/mlir:tblgen.bzl", "gentbl")
 load("//tensorflow:tensorflow.bzl", "tf_cc_test", "tf_gen_op_wrapper_py", "tf_native_cc_binary")
+load("//tensorflow:tensorflow.bzl", "tf_cc_binary")
 
 package(
     default_visibility = [":friends"],
@@ -1099,3 +1100,37 @@ cc_library(
         "@llvm-project//mlir:Support",
     ],
 )
+
+cc_library(
+    name = "runtime",
+    srcs = [
+    ],
+    hdrs = [
+        "runtime/dynamic_memref.h",
+    ],
+    deps = [
+        "//tensorflow/core:framework",
+        "//tensorflow/core:lib",
+        "//tensorflow/core:protos_all_cc",
+        "@com_google_absl//absl/strings",
+        "@llvm-project//llvm:support",
+    ],
+)
+
+tf_cc_binary(
+    name = "tf-mlir-runtime",
+    srcs = ["runtime/runtime_main.cc",],
+    copts=["-g"],
+    deps = [
+        ":runtime",
+        "@llvm-project//llvm:support",
+        "@llvm-project//mlir:Pass",
+        "@llvm-project//mlir:Support",
+        "@llvm-project//mlir:ExecutionEngineUtils",
+        "@llvm-project//mlir:ExecutionEngine",
+        "@llvm-project//mlir:Dialect",
+        "@llvm-project//mlir:IR",
+        "@llvm-project//mlir:Parser",
+    ],
+)
+
