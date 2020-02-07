@@ -136,18 +136,10 @@ void ExecutorToTFDialectConversion::runOnFunction() {
 
       if (state.name.getStringRef() == "_tf.Const" ) {
           auto const_op = builder.create<TF::ConstOp>(wrapped_op.getLoc(), wrapped_op.getAttrList().get("value"));
-          wrapped_op.getResult(0)->replaceAllUsesWith(const_op); 
+          wrapped_op.getResult(0).replaceAllUsesWith(const_op); 
         } else if (state.name.getStringRef() == "_tf.Add") {
           auto add_op = builder.create<TF::AddOp>(wrapped_op.getLoc(), wrapped_op.getOperand(0), wrapped_op.getOperand(1));
-          wrapped_op.getResult(0)->replaceAllUsesWith(add_op); 
-        } else if (state.name.getStringRef() == "_tf.CallExternalFunc") {
-          auto callfunc_op = builder.create<TF::CallExternalFuncOp>(wrapped_op.getLoc(), wrapped_op.getOperand(0)->getType(), wrapped_op.getOperand(0), wrapped_op.getOperand(1));
-          wrapped_op.getResult(0)->replaceAllUsesWith(callfunc_op); 
-        } else if (state.name.getStringRef() == "_tf.CallExternalFunc2") {
-          auto callfunc_op = builder.create<TF::CallExternalFunc2Op>(wrapped_op.getLoc(), wrapped_op.getOperand(0)->getType(), wrapped_op.getOperand(0), wrapped_op.getOperand(1));
-          wrapped_op.getResult(0)->replaceAllUsesWith(callfunc_op);
-        } else if (state.name.getStringRef() == "_tf._Recv") {
-          // TODO
+          wrapped_op.getResult(0).replaceAllUsesWith(add_op); 
         } else if (state.name.getStringRef() == "_tf.Unique") {
           SmallVector<Type, 4> result_types;
           result_types.append(wrapped_op.getResultTypes().begin(),
@@ -216,7 +208,7 @@ void ExecutorToTFDialectConversion::runOnFunction() {
     // dialect.
     auto non_null_operands = llvm::make_filter_range(
         op.getOperands(),
-        [](Value v) { return !v->getType().isa<tf_executor::TokenType>(); });
+        [](Value v) { return !v.getType().isa<tf_executor::TokenType>(); });
     state.operands.append(non_null_operands.begin(), non_null_operands.end());
     for (Type result_type : op.getResultTypes()) {
       // Filter out TokenType, they don't exist in the control dialect.

@@ -85,6 +85,34 @@ Value InsertAllocAndDealloc(Location loc, Value result,
   return alloc;
 }
 
+Value InsertAllocAndDeallocWithDynamicShape(Location loc, Value result,
+                            ConversionPatternRewriter* rewriter, 
+                            ArrayRef<Value> dyn_args) {
+  auto result_type = result.getType().dyn_cast<ShapedType>();
+  auto memref_type =
+      MemRefType::get(result_type.getShape(), result_type.getElementType());
+
+
+  Operation* op = result.getDefiningOp();
+  auto block = op->getBlock();
+  
+  OpBuilder allocBuilder(op);
+  SmallVector<Value, 4> alloc_operands;
+ 
+  for (unsigned i = 0; i < memref_type.getRank(); i++) {
+    auto ith_dim_value = allocBuilder.create<DimOp>(loc, dyn_args[0], i);
+    if (ShapedType::isDynamic(memref_type.getShape()[i]))
+        alloc_operands.push_back(ith_dim_value);
+  }
+
+ 
+  auto alloc = allocBuilder.create<AllocOp>(loc, memref_type, alloc_operands);
+  alloc.setAttr(kTempBufferAttr, rewriter->getBoolAttr(true));
+
+  allocBuilder.setInsertionPoint(block, std::prev(block->end()));
+  allocBuilder.create<DeallocOp>(loc, alloc);
+  return alloc;
+}
 /// For every tensor-type value that is produced in the original function,
 /// this function returns the buffer that can be used in the converted
 /// function to store that values held in the tensor.
@@ -96,6 +124,14 @@ Value GetBufferForResultValue(Location loc, Value result,
   return InsertAllocAndDealloc(loc, result, rewriter);
 }
 
+Value GetBufferForResultValueWithDynamicShape(Location loc, Value result,
+                              ConversionPatternRewriter* rewriter,
+                              ArrayRef<Value> dynamic_args) {
+  return InsertAllocAndDeallocWithDynamicShape(loc, result, rewriter, dynamic_args);
+}
+
+
+
 template <typename HloOpTy, typename LhloOpTy>
 class HloToLhloOpConverter : public ConversionPattern {
  public:
@@ -106,11 +142,38 @@ class HloToLhloOpConverter : public ConversionPattern {
       Operation* op, ArrayRef<Value> operands,
       ConversionPatternRewriter& rewriter) const final {
     const auto& original_results = op->getResults();
+
+    bool has_dynamic_shape = false;
+
     SmallVector<Value, 4> buffer_args(operands.begin(), operands.end());
     for (auto result : original_results) {
-      buffer_args.push_back(
-          GetBufferForResultValue(op->getLoc(), result, &rewriter));
+      auto result_type = result.getType().dyn_cast<ShapedType>();
+      if (!result_type)
+        emitError(op->getLoc(), "tensor to buffer conversion expects valid result type");
     }
+   
+    size_t dyn_idx;
+    for (size_t idx = 0; idx < operands.size(); idx++) {
+      auto argtype = operands[idx].getType().dyn_cast<ShapedType>();
+      if (!argtype.hasStaticShape()) {
+        has_dynamic_shape = true;
+        dyn_idx = idx;
+        break;
+      }
+    }
+
+    if (has_dynamic_shape) {
+      for (auto result : original_results) {
+        buffer_args.push_back(
+          GetBufferForResultValueWithDynamicShape(op->getLoc(), result, &rewriter, {operands[dyn_idx]}));
+      }
+    } else {
+      for (auto result : original_results) {
+        buffer_args.push_back(
+          GetBufferForResultValue(op->getLoc(), result, &rewriter));
+      }
+    }
+   
     rewriter.create<LhloOpTy>(op->getLoc(), llvm::None, buffer_args,
                               op->getAttrs());
     rewriter.replaceOp(op, ArrayRef<Value>(buffer_args).slice(operands.size()));

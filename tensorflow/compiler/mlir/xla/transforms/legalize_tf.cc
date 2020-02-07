@@ -69,7 +69,7 @@ class LegalizeTF : public FunctionPass<LegalizeTF> {
   Option<bool> allow_partial_conversion_{
       *this, "allow-partial-conversion",
       llvm::cl::desc("Allow operations that can't be legalized."),
-      llvm::cl::init(false)};
+      llvm::cl::init(true)};
 };
 
 /// Returns if the given TF data format string is the default format.

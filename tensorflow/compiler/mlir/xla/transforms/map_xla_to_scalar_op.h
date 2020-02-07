@@ -74,6 +74,16 @@ struct ScalarOp<xla_hlo::RemOp> {
   using IOp = ::mlir::SignedRemIOp;
 };
 template <>
+struct ScalarOp<xla_lhlo::NegOp> {
+  using FOp = ::mlir::NegFOp;
+  using IOp = ::mlir::NegIOp;
+};
+template <>
+struct ScalarOp<xla_hlo::NegOp> {
+  using FOp = ::mlir::NegFOp;
+  using IOp = ::mlir::NegIOp;
+};
+template <>
 struct ScalarOp<xla_lhlo::SubOp> {
   using FOp = ::mlir::SubFOp;
   using IOp = ::mlir::SubIOp;
@@ -83,6 +93,7 @@ struct ScalarOp<xla_hlo::SubOp> {
   using FOp = ::mlir::SubFOp;
   using IOp = ::mlir::SubIOp;
 };
+
 
 template <typename LHLO_BinaryOp>
 using ScalarFOp = typename ScalarOp<LHLO_BinaryOp>::FOp;
@@ -125,8 +136,25 @@ inline Value MapXlaOpToStdScalarOp<xla_lhlo::AbsOp>(xla_lhlo::AbsOp xla_op,
                                                     ArrayRef<Type> result_types,
                                                     ArrayRef<Value> args,
                                                     OpBuilder* b) {
-  return MapXlaOpToStdScalarOpImpl<FloatType, ::mlir::AbsFOp>{}(
+  Type element_type = args.front().getType();
+  if (element_type.isa<FloatType>()) {
+    return MapXlaOpToStdScalarOpImpl<FloatType, ::mlir::AbsFOp>{}(
       xla_op.getLoc(), result_types, args, b);
+  }
+  if (element_type.isa<IntegerType>()) {
+    const auto& lhs = args[0];
+    auto integer_type = element_type.dyn_cast<IntegerType>();
+
+    auto zero_intval = b->create<::mlir::ConstantIntOp>(xla_op.getLoc(), 0, integer_type.getWidth());
+    auto lhs_gt_zero = b->create<ScalarIOp<CompareOp>>(
+        xla_op.getLoc(), CmpIPredicate::sge, lhs, zero_intval);
+    auto neg_val =  b->create<ScalarIOp<xla_lhlo::NegOp>>(
+        xla_op.getLoc(), result_types,
+        args, mlir::None);
+    return b->create<::mlir::SelectOp>(xla_op.getLoc(), lhs_gt_zero, lhs, neg_val);
+
+  }
+  return nullptr;
 }
 template <>
 inline Value MapXlaOpToStdScalarOp<xla_hlo::AbsOp>(xla_hlo::AbsOp xla_op,
@@ -343,22 +371,6 @@ inline Value MapXlaOpToStdScalarOp<xla_lhlo::MinOp>(xla_lhlo::MinOp xla_op,
   return nullptr;
 }
 
-template <>
-inline Value MapXlaOpToStdScalarOp<xla_lhlo::NegOp>(xla_lhlo::NegOp xla_op,
-                                                    ArrayRef<Type> result_types,
-                                                    ArrayRef<Value> args,
-                                                    OpBuilder* b) {
-  return MapXlaOpToStdScalarOpImpl<FloatType, ::mlir::NegFOp>{}(
-      xla_op.getLoc(), result_types, args, b);
-}
-template <>
-inline Value MapXlaOpToStdScalarOp<xla_hlo::NegOp>(xla_hlo::NegOp xla_op,
-                                                   ArrayRef<Type> result_types,
-                                                   ArrayRef<Value> args,
-                                                   OpBuilder* b) {
-  return MapXlaOpToStdScalarOpImpl<FloatType, ::mlir::NegFOp>{}(
-      xla_op.getLoc(), result_types, args, b);
-}
 
 template <>
 inline Value MapXlaOpToStdScalarOp<xla_lhlo::SelectOp>(
