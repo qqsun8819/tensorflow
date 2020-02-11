@@ -311,6 +311,7 @@ cc_library(
     ],
     includes = ["include"],
     deps = [
+        ":runtime",
         ":bridge_logger",
         ":convert_tensor",
         ":convert_type",
@@ -1104,6 +1105,7 @@ cc_library(
 cc_library(
     name = "runtime",
     srcs = [
+        "runtime/dynamic_memref.cc",
     ],
     hdrs = [
         "runtime/dynamic_memref.h",

@@ -134,7 +134,7 @@ void ExecutorToTFDialectConversion::runOnFunction() {
                            wrapped_op.getResultTypes().end());
         state.types.push_back(control_type);
 
-      if (state.name.getStringRef() == "_tf.Const" ) {
+        if (state.name.getStringRef() == "_tf.Const" ) {
           auto const_op = builder.create<TF::ConstOp>(wrapped_op.getLoc(), wrapped_op.getAttrList().get("value"));
           wrapped_op.getResult(0).replaceAllUsesWith(const_op); 
         } else if (state.name.getStringRef() == "_tf.Add") {
@@ -148,7 +148,33 @@ void ExecutorToTFDialectConversion::runOnFunction() {
           operands.append(wrapped_op.getOperands().begin(),
                           wrapped_op.getOperands().end());
           auto callfunc_op = builder.create<TF::UniqueOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
-         // wrapped_op.getResult(0)->replaceAllUsesWith(callfunc_op.getResults());
+         // wrapped_op.getResult(0)->replaceAllUsesWith(callfunc_op);
+        } else if (state.name.getStringRef() == "_tf.Reshape") {
+          SmallVector<Type, 4> result_types;
+          result_types.append(wrapped_op.getResultTypes().begin(),
+                              wrapped_op.getResultTypes().end());
+          SmallVector<Value, 4> operands;
+          operands.append(wrapped_op.getOperands().begin(),
+                          wrapped_op.getOperands().end());
+          auto callfunc_op = builder.create<TF::ReshapeOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
+          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
+        } else if (state.name.getStringRef() == "_tf.Sub") {
+          SmallVector<Type, 4> result_types;
+          result_types.append(wrapped_op.getResultTypes().begin(),
+                              wrapped_op.getResultTypes().end());
+          SmallVector<Value, 4> operands;
+          operands.append(wrapped_op.getOperands().begin(),
+                          wrapped_op.getOperands().end());
+          auto callfunc_op = builder.create<TF::SubOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
+          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
+        } else if (state.name.getStringRef() == "_tf.CopyResult") {
+          SmallVector<Type, 4> result_types;
+          result_types.append(wrapped_op.getResultTypes().begin(),
+                              wrapped_op.getResultTypes().end());
+          SmallVector<Value, 4> operands;
+          operands.append(wrapped_op.getOperands().begin(),
+                          wrapped_op.getOperands().end());
+          auto callfunc_op = builder.create<TF::CopyResultOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
         } else {
           auto *replacement = builder.createOperation(state);
           replacement->setAttrs(wrapped_op.getAttrList());

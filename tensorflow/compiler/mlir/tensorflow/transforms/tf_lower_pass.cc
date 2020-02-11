@@ -32,13 +32,53 @@ void TFAffineLoweringPass::runOnModule() {
   target.addLegalDialect<mlir::AffineOpsDialect,
                          mlir::StandardOpsDialect>();
   target.addIllegalDialect<mlir::TF::TensorFlowDialect>();
-  target.addLegalOp<mlir::TF::CallExternalFuncOp>();
-  target.addLegalOp<mlir::TF::CallExternalFunc2Op>();
-
   mlir::LLVMTypeConverter type_converter(&getContext());
+  target.addLegalOp<mlir::TF::MemcpyOp>();
+  // NOTE(jiankeng.pt): Advanced skills: prevent the error of UniqueOp lowering process.
+  // Cause the `func` op here has no one legalize pattern.
+  // If you don't want the Op with concrete information which you specify
+  // in the anonymous function be lowered at the pass, please do this.
+  target.addDynamicallyLegalOp<FuncOp>(
+      [&](FuncOp op) { return  op.getName() == "_global_unique" ||
+                               op.getName() == "_global_unique64" ||
+                               op.getName() == "_global_get_unique_ids_count" ||
+                               op.getName() == "_global_mlir_call_external_func_64" ||
+                               op.getName() == "_global_mlir_call_external_func_1d_i64" ||
+                               op.getName() == "_global_mlir_call_external_func_1d_i64i32" ||
+                               op.getName() == "_global_mlir_call_external_func_1d" ||
+                               op.getName() == "_global_mlir_call_external_func_2d" ||
+                               op.getName() == "_global_mlir_call_external_func_2d_i64" ||
+                               op.getName() == "_global_mlir_call_external_func_2d_f64" ||
+                               op.getName() == "_global_mlir_call_external_func_2d_f32" ||
+                               op.getName() == "_global_mlir_call_external_func_2d_i1" ||
+                               op.getName() == "_global_set_external_memref_r0_i32" ||
+                               op.getName() == "_global_set_external_memref_r1_i32" ||
+                               op.getName() == "_global_set_external_memref_r2_i32" ||
+                               op.getName() == "_global_set_external_memref_r3_i32" ||
+                               op.getName() == "_global_set_external_memref_r4_i32" ||
+                               op.getName() == "_global_set_external_memref_r5_i32" ||
+                               op.getName() == "_global_set_external_memref_r0_i64" ||
+                               op.getName() == "_global_set_external_memref_r1_i64" ||
+                               op.getName() == "_global_set_external_memref_r2_i64" ||
+                               op.getName() == "_global_set_external_memref_r3_i64" ||
+                               op.getName() == "_global_set_external_memref_r4_i64" ||
+                               op.getName() == "_global_set_external_memref_r5_i64" ||
+                               op.getName() == "_global_set_external_memref_r0_f32" ||
+                               op.getName() == "_global_set_external_memref_r1_f32" ||
+                               op.getName() == "_global_set_external_memref_r2_f32" ||
+                               op.getName() == "_global_set_external_memref_r3_f32" ||
+                               op.getName() == "_global_set_external_memref_r4_f32" ||
+                               op.getName() == "_global_set_external_memref_r5_f32" ||
+                               op.getName() == "_global_set_external_memref_r0_f64" ||
+                               op.getName() == "_global_set_external_memref_r1_f64" ||
+                               op.getName() == "_global_set_external_memref_r2_f64" ||
+                               op.getName() == "_global_set_external_memref_r3_f64" ||
+                               op.getName() == "_global_set_external_memref_r4_f64" ||
+                               op.getName() == "_global_set_external_memref_r5_f64"; });
 
   mlir::OwningRewritePatternList patterns;
   patterns.insert<ConstOpLowering>(&getContext());
+  patterns.insert<CopyResultOpLowering>(&getContext());
 
   auto module = getModule();
   for (auto func : module.getOps<mlir::FuncOp>()) {

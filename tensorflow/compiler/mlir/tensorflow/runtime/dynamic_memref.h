@@ -27,6 +27,30 @@ limitations under the License.
 namespace mlir {
 namespace runtime {
 
+typedef enum {
+  I32Type = 0,
+  I64Type = 1,
+  F32Type = 2,
+  F64Type = 3,
+
+  InvalidType = 100,
+} ElementType;
+
+inline ElementType GetElementType(const std::string& type) {
+  if (type == "i32") {
+    return ElementType::I32Type;
+  } else if (type == "i64") {
+    return ElementType::I64Type;
+  } else if (type == "f32") {
+    return ElementType::F32Type;
+  } else if (type == "f64") {
+    return ElementType::F64Type;
+  } else {
+    assert(false && "Not support enum ElementType now.");
+    return ElementType::InvalidType;
+  }
+}
+
 // Define the struct same to MLIR MemRef descriptor
 //
 template <int N>
@@ -54,22 +78,6 @@ MemRefWrapper<N>* AllocateMemrefDescriptor(int64_t rank) {
   return descriptor;
 }
 
-template <int N>
-std::vector<void*> AllocateMemrefArgs(std::vector<int64_t>& ranks) {
-  std::vector<void*> args;
-  for (auto rank : ranks) {
-    auto descriptor = AllocateMemrefDescriptor<N>(rank);
-    args.push_back(descriptor);
-  }
-
-  return args;
-}
-
-template <int N>
-void* AllocateMemrefArg(int64_t rank) {
-  return AllocateMemrefDescriptor<N>(rank);
-}
-
 std::vector<int64_t> MakeStrides(const std::vector<int64_t>& shape) {
   std::vector<int64_t> tmp;
   if (shape.empty()) {
@@ -89,52 +97,131 @@ std::vector<int64_t> MakeStrides(const std::vector<int64_t>& shape) {
 
 }
 
+// For get result tensor from compiled function
+struct ResultTensorWrapper {
+  ResultTensorWrapper() {
+    result_tensor_addr_saver_ = (int64_t*)malloc(sizeof(int64_t));
+    *result_tensor_addr_saver_ = 0;
+    result_tensor_addr2_saver_ = (int64_t**)malloc(sizeof(int64_t*));
+    *result_tensor_addr2_saver_ = result_tensor_addr_saver_;
+    int64_t result_addr2_i64 = (int64_t)(result_tensor_addr2_saver_);
+    result_addr2_i64_pointer_ = (int64_t*)malloc(sizeof(int64_t));
+    *result_addr2_i64_pointer_ = result_addr2_i64;
+  }
+
+  ~ResultTensorWrapper() {
+    // NOTE(jiankeng.pt):
+    // delete tensor, tensor should be copied before ~ResultTensorWrapper() be called
+    tensorflow::Tensor* t = (tensorflow::Tensor*)(*result_tensor_addr_saver_);
+    delete t;
+
+    delete result_tensor_addr_saver_;
+    delete result_tensor_addr2_saver_;
+    delete result_addr2_i64_pointer_;
+    result_tensor_addr_saver_ = nullptr;
+    result_tensor_addr2_saver_ = nullptr;
+    result_addr2_i64_pointer_ = nullptr;
+  }
+
+  void* GetArg() {
+    return (void*)(result_addr2_i64_pointer_);
+  }
+
+  tensorflow::Tensor* GetResultTensorPointer() {
+    if (*result_tensor_addr_saver_ == 0) {
+      LOG(FATAL) << "Get result tensor from compiled function failed.";
+    }
+    return (tensorflow::Tensor*)(*result_tensor_addr_saver_);
+  }
+
+  int64_t* result_tensor_addr_saver_;
+  int64_t** result_tensor_addr2_saver_;
+  int64_t* result_addr2_i64_pointer_;
+};
+
+// For input args which are passed to compiled function
 template <int N>
-void* BuildMemrefArgument(tensorflow::Tensor& arg) {
-  int64_t rank = arg.shape().dims();
-  auto void_arg = AllocateMemrefArg<N>(rank);
-  auto memref_arg = reinterpret_cast<MemRefWrapper<N>*>(void_arg);
-  void* tmp_tensor_data = const_cast<void*>(static_cast<const void*>(arg.tensor_data().data()));
+struct InputTensorWrapper {
+  InputTensorWrapper(tensorflow::Tensor& arg) {
+    int64_t rank = arg.shape().dims();
+    if (rank != N) {
+      LOG(FATAL) << "Input tensor's shape vs input shape N, " << rank << " : " << N;
+    }
+    memref_wrapper_pointer_ = AllocateMemrefDescriptor<N>(rank);
+    void* tmp_tensor_data = const_cast<void*>(static_cast<const void*>(arg.tensor_data().data()));
+    memref_wrapper_pointer_->allocated_ptr = tmp_tensor_data;
+    memref_wrapper_pointer_->aligned_ptr = tmp_tensor_data;
+    std::vector<int64_t> shape;
+    for (auto i = 0; i < rank; ++i) {
+      shape.push_back(arg.shape().dim_sizes()[i]);
+    }
 
-  memref_arg->allocated_ptr = tmp_tensor_data;
-  memref_arg->aligned_ptr = tmp_tensor_data;
-  std::vector<int64_t> shape;
-  for (auto i = 0; i < rank; ++i) {
-    shape.push_back(arg.shape().dim_sizes()[i]);
-  }
-  std::vector<int64_t> stride = MakeStrides(shape);
+    std::vector<int64_t> stride = MakeStrides(shape);
+    for (auto i = 0; i < rank; ++i) {
+      memref_wrapper_pointer_->sizes[i] = shape[i];
+      memref_wrapper_pointer_->strides[i] = stride[i];
+    }
 
-  for (auto i = 0; i < rank; ++i) {
-    memref_arg->sizes[i] = shape[i];
-    memref_arg->strides[i] = stride[i];
-  }
-
-  MemRefWrapper<N>** ret_arg = reinterpret_cast<MemRefWrapper<N>**>(malloc(sizeof(MemRefWrapper<N>*)));
-  *ret_arg = memref_arg;
-
-  return (void*)(ret_arg);
-}
-
-template <int N>
-void* BuildMemrefArgument(void* ptr, const std::vector<int64_t>& shape) {
-  int64_t rank = shape.size();
-  auto void_arg = AllocateMemrefArg<N>(rank);
-  auto memref_arg = reinterpret_cast<MemRefWrapper<N>*>(void_arg);
-  memref_arg->allocated_ptr = ptr;
-  memref_arg->aligned_ptr = ptr;
-  std::vector<int64_t> stride = MakeStrides(shape);
-  for (auto i = 0; i < rank; ++i) {
-    memref_arg->sizes[i] = shape[i];
-    memref_arg->strides[i] = stride[i];
+    memref_wrapper_pointer2_ = reinterpret_cast<MemRefWrapper<N>**>(malloc(sizeof(MemRefWrapper<N>*)));
+    *memref_wrapper_pointer2_ = memref_wrapper_pointer_;
   }
 
-  MemRefWrapper<N>** ret_arg = reinterpret_cast<MemRefWrapper<N>**>(malloc(sizeof(MemRefWrapper<N>*)));
-  *ret_arg = memref_arg;
+  InputTensorWrapper(void* ptr, const std::vector<int64_t>& shape) {
+    int64_t rank = shape.size();
+    if (rank != N) {
+      LOG(FATAL) << "Input ptr's shape vs input shape N, " << rank << " : " << N;
+    }
+    memref_wrapper_pointer_ = AllocateMemrefDescriptor<N>(rank);
+    memref_wrapper_pointer_->allocated_ptr = ptr;
+    memref_wrapper_pointer_->aligned_ptr = ptr;
+    std::vector<int64_t> stride = MakeStrides(shape);
+    for (auto i = 0; i < rank; ++i) {
+      memref_wrapper_pointer_->sizes[i] = shape[i];
+      memref_wrapper_pointer_->strides[i] = stride[i];
+    }
 
-  return (void*)(ret_arg);
-}
+    memref_wrapper_pointer2_ = reinterpret_cast<MemRefWrapper<N>**>(malloc(sizeof(MemRefWrapper<N>*)));
+    *memref_wrapper_pointer2_ = memref_wrapper_pointer_;
+  }
+
+  void* GetArg() {
+    return (void*)memref_wrapper_pointer2_;
+  }
+
+  ~InputTensorWrapper() {
+    delete memref_wrapper_pointer_;
+    delete memref_wrapper_pointer2_;
+    memref_wrapper_pointer_ = nullptr;
+    memref_wrapper_pointer2_ = nullptr;
+  }
+
+  MemRefWrapper<N>* memref_wrapper_pointer_;
+  MemRefWrapper<N>** memref_wrapper_pointer2_;
+};
 
 } // namespace mlir
 } // namespace mlir_runtime
+
+
+#ifdef _WIN32
+#ifndef MLIR_RUNNER_UTILS_EXPORT
+#ifdef mlir_runner_utils_EXPORTS
+/* We are building this library */
+#define MLIR_RUNNER_UTILS_EXPORT __declspec(dllexport)
+#else
+/* We are using this library */
+#define MLIR_RUNNER_UTILS_EXPORT __declspec(dllimport)
+#endif
+#endif
+#else
+#define MLIR_RUNNER_UTILS_EXPORT
+#endif
+
+// TODO: 
+// put external function here ? now in tensorflow/compiler/mlir/compile_util.h
+//
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+SetExternalMemref(int64_t* dest, mlir::runtime::MemRefWrapper<1>* src,
+                  mlir::runtime::ElementType ele_type) {}
 
 #endif 

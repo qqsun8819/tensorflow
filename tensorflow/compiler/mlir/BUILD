@@ -149,6 +149,10 @@ cc_library(
     name = "tf_mlir_compiler_util",
     srcs = ["compile_util.cc"],
     hdrs = ["compile_util.h"],
+    deps = [
+        "//tensorflow/core:framework",
+        "//tensorflow/core:lib",
+    ],
     )
 
 tf_cc_binary(
@@ -158,7 +162,6 @@ tf_cc_binary(
     deps = [
         ":init_mlir",
         ":tf_mlir_compiler",
-    
     ],
 )
 

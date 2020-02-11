@@ -550,6 +550,7 @@ struct LhloLegalizeToLinalg : public FunctionPass<LhloLegalizeToLinalg> {
     OwningRewritePatternList patterns;
     ConversionTarget target(getContext());
     target.addLegalDialect<linalg::LinalgDialect, StandardOpsDialect>();
+    // target.addLegalOp<TF::CopyResultOp>();
 
     auto func = getFunction();
     populateLHLOToLinalgConversionPattern(func.getContext(), &patterns);

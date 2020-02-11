@@ -236,7 +236,10 @@ static Error compileAndExecuteFunctionWithArgs(
     }
     std::vector<int64_t> shape;
     shape.push_back(count);
-    void* args_pointer = mlir::runtime::BuildMemrefArgument<1>((void*)(ptr), shape);
+
+    mlir::runtime::InputTensorWrapper<1> input_tensor(ptr, shape);
+    void* args_pointer = input_tensor.GetArg();
+
     if (auto error =
         compileAndExecute(module, entryPoint, transformer, ((void**)&args_pointer)))
       return error;
@@ -256,7 +259,10 @@ static Error compileAndExecuteFunctionWithArgs(
     std::vector<int64_t> shape;
     shape.push_back(count1);
     shape.push_back(count2);
-    void* args_pointer = mlir::runtime::BuildMemrefArgument<2>((void*)(ptr), shape);
+
+    mlir::runtime::InputTensorWrapper<2> input_tensor(ptr, shape);
+    void* args_pointer = input_tensor.GetArg();
+
     if (auto error =
         compileAndExecute(module, entryPoint, transformer, ((void**)&args_pointer)))
       return error;
@@ -276,7 +282,10 @@ static Error compileAndExecuteFunctionWithArgs(
     std::vector<int64_t> shape;
     shape.push_back(count1);
     shape.push_back(count2);
-    void* args_pointer = mlir::runtime::BuildMemrefArgument<2>((void*)(ptr), shape);
+
+    mlir::runtime::InputTensorWrapper<2> input_tensor(ptr, shape);
+    void* args_pointer = input_tensor.GetArg();
+
     if (auto error =
         compileAndExecute(module, entryPoint, transformer, ((void**)&args_pointer)))
       return error;
@@ -289,9 +298,10 @@ static Error compileAndExecuteFunctionWithArgs(
     for (int i = 0; i < 8; i++) {
       tensor.vec<tensorflow::int64>()(i) = i;
     }
-    std::vector<int64_t> shape;
-    shape.push_back(8);
-    void* args_pointer = mlir::runtime::BuildMemrefArgument<1>(tensor);
+
+    mlir::runtime::InputTensorWrapper<1> input_tensor(tensor);
+    void* args_pointer = input_tensor.GetArg();
+
     if (auto error =
         compileAndExecute(module, entryPoint, transformer, ((void**)&args_pointer)))
       return error;
@@ -306,10 +316,10 @@ static Error compileAndExecuteFunctionWithArgs(
         tensor.matrix<float>()(i, j) = 1.1 * (i * 10 + j);
       }
     }
-    std::vector<int64_t> shape;
-    shape.push_back(8);
-    shape.push_back(8);
-    void* args_pointer = mlir::runtime::BuildMemrefArgument<2>(tensor);
+
+    mlir::runtime::InputTensorWrapper<2> input_tensor(tensor);
+    void* args_pointer = input_tensor.GetArg();
+
     if (auto error =
         compileAndExecute(module, entryPoint, transformer, ((void**)&args_pointer)))
       return error;
@@ -324,13 +334,112 @@ static Error compileAndExecuteFunctionWithArgs(
         tensor.matrix<double>()(i, j) = 1.1 * (i * 10 + j);
       }
     }
-    std::vector<int64_t> shape;
-    shape.push_back(5);
-    shape.push_back(3);
-    void* args_pointer = mlir::runtime::BuildMemrefArgument<2>(tensor);
+
+    mlir::runtime::InputTensorWrapper<2> input_tensor(tensor);
+    void* args_pointer = input_tensor.GetArg();
+
     if (auto error =
         compileAndExecute(module, entryPoint, transformer, ((void**)&args_pointer)))
       return error;
+  }
+
+  // 7) Test input args && return results
+  //
+  if (mainFuncName.getValue() == "main_ret1") {
+    std::cout << "Now testing `input args && return results` case\n";
+    int count = 1;
+    int64_t* ptr = (int64_t*)malloc(sizeof(int64_t)*count);
+    for (int i = 0; i < count; ++i) {
+      *(ptr+i) = 999;
+    }
+    std::vector<int64_t> shape;
+    shape.push_back(count);
+    std::vector<void*> args_pointers;
+
+    mlir::runtime::InputTensorWrapper<1> input_tensor(ptr, shape);
+    void* args_pointer = input_tensor.GetArg();
+    args_pointers.push_back(args_pointer);
+
+    // Create a ResultTensorWrapper for result tensor
+    mlir::runtime::ResultTensorWrapper *rtw = new mlir::runtime::ResultTensorWrapper();
+    args_pointers.push_back(rtw->GetArg());
+
+    if (auto error =
+        compileAndExecute(module, entryPoint, transformer, ((void**)(args_pointers.data()))))
+      return error;
+
+    tensorflow::Tensor* result_tensor_ptr = rtw->GetResultTensorPointer();
+    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128) << "\n";
+
+    // TODO: set result tensor to output
+    tensorflow::Tensor tensor_copied(*result_tensor_ptr);
+    delete rtw;
+    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128) << "\n";
+  }
+
+  // 8) Test input args && return results
+  if (mainFuncName.getValue() == "main_ret2") {
+    std::vector<void*> args_pointers;
+
+    // Create a ResultTensorWrapper for result tensor
+    mlir::runtime::ResultTensorWrapper *rtw = new mlir::runtime::ResultTensorWrapper();
+    args_pointers.push_back(rtw->GetArg());
+
+    if (auto error =
+        compileAndExecute(module, entryPoint, transformer, ((void**)(args_pointers.data()))))
+      return error;
+
+    tensorflow::Tensor* result_tensor_ptr = rtw->GetResultTensorPointer();
+    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128) << "\n";
+
+    // TODO: set result tensor to output
+    tensorflow::Tensor tensor_copied(*result_tensor_ptr);
+    delete rtw;
+    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128) << "\n";
+  }
+
+  // 9) Test input args && return results
+  if (mainFuncName.getValue() == "main_ret3") {
+    std::vector<void*> args_pointers;
+
+    const int count1 = 2;
+    const int count2 = 3;
+    double ptr0[count1][count2];
+    double ptr1[count1][count2];
+    for (int i = 0; i < count1; ++i) {
+      for (int j = 0; j < count2; ++j) {
+        ptr0[i][j] = 1.0;
+        ptr1[i][j] = 2.0;
+      }
+    }
+
+    std::vector<int64_t> shape;
+    shape.push_back(count1);
+    shape.push_back(count2);
+ 
+    mlir::runtime::InputTensorWrapper<2> input_tensor0(ptr0, shape);
+    void* args_pointer0 = input_tensor0.GetArg();
+    args_pointers.push_back(args_pointer0);
+
+    mlir::runtime::InputTensorWrapper<2> input_tensor1(ptr1, shape);
+    void* args_pointer1 = input_tensor1.GetArg();
+    args_pointers.push_back(args_pointer1);
+
+    // Create a ResultTensorWrapper for result tensor
+    mlir::runtime::ResultTensorWrapper *rtw = new mlir::runtime::ResultTensorWrapper();
+    args_pointers.push_back(rtw->GetArg());
+
+    if (auto error =
+        compileAndExecute(module, entryPoint, transformer, ((void**)(args_pointers.data()))))
+      return error;
+
+    tensorflow::Tensor* result_tensor_ptr = rtw->GetResultTensorPointer();
+    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128) << "\n";
+
+    // TODO: set result tensor to output
+    tensorflow::Tensor tensor_copied(*result_tensor_ptr);
+    delete rtw;
+    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128) << "\n";
   }
 
   return Error::success();

@@ -38,6 +38,33 @@ struct ConstOpLowering : public mlir::OpRewritePattern<mlir::TF::ConstOp> {
       mlir::PatternRewriter &rewriter) const final;
 };
 
+class UniqueOpLOwering : public OpRewritePattern<mlir::TF::UniqueOp> {
+ public:
+  using mlir::OpRewritePattern<mlir::TF::UniqueOp>::OpRewritePattern;
+
+  mlir::PatternMatchResult matchAndRewrite(
+      mlir::TF::UniqueOp op,
+      mlir::PatternRewriter &rewriter) const final;
+};
+
+class ReshapeOpLOwering : public OpRewritePattern<mlir::TF::ReshapeOp> {
+ public:
+  using mlir::OpRewritePattern<mlir::TF::ReshapeOp>::OpRewritePattern;
+
+  mlir::PatternMatchResult matchAndRewrite(
+      mlir::TF::ReshapeOp op,
+      mlir::PatternRewriter &rewriter) const final;
+};
+
+class CopyResultOpLowering : public OpRewritePattern<mlir::TF::CopyResultOp> {
+ public:
+  using mlir::OpRewritePattern<mlir::TF::CopyResultOp>::OpRewritePattern;
+
+  mlir::PatternMatchResult matchAndRewrite(
+      mlir::TF::CopyResultOp op,
+      mlir::PatternRewriter &rewriter) const final;
+};
+
 } // end mlir
 
 #endif // TENSORFLOW_COMPILER_MLIR_TENSORFLOW_TRANSFORMS_LOWER_TO_AFFINE_H_

@@ -14,6 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 #include "tensorflow/compiler/mlir/tensorflow/transforms/tf_lower_to_affine.h"
+#include "tensorflow/compiler/mlir/tensorflow/runtime/dynamic_memref.h"
 
 #include "mlir/IR/AttributeSupport.h"
 #include "llvm/ADT/APFloat.h"
@@ -97,5 +98,116 @@ ConstOpLowering::matchAndRewrite(
 
   return matchSuccess();
 }
+FlatSymbolRefAttr CallExternalFunc(
+    PatternRewriter &rewriter,
+    ModuleOp module,
+    Location loc,
+    const std::string& func_name,
+    std::vector<Type> &input_types,
+    std::vector<Type> &result_types,
+    ArrayRef<NamedAttribute> attrs) {
+
+  // TODO: FIXME, how about the same function name, by differernt params ?
+  // External function symbol is existed
+  FlatSymbolRefAttr func_name_attr = rewriter.getSymbolRefAttr(func_name);
+  if (module.lookupSymbol(func_name)) {
+    return func_name_attr;
+  }
+
+  auto context = rewriter.getContext();
+  // function type
+  auto func_type = FunctionType::get(input_types, result_types, context);
+
+  // create func op
+  OpBuilder::InsertionGuard guard(rewriter);
+  rewriter.setInsertionPointToStart(module.getBody());
+  rewriter.create<mlir::FuncOp>(loc, func_name_attr.getValue(),
+                                func_type, attrs);
+
+  return func_name_attr;
+}
+// --------------------------------------------------------
+// CopyResultOp
+//
+mlir::PatternMatchResult
+CopyResultOpLowering::matchAndRewrite(
+    mlir::TF::CopyResultOp op,
+    mlir::PatternRewriter &rewriter) const {
+  auto loc = op.getLoc();
+  ModuleOp parent_module = op.getParentOfType<ModuleOp>();
+  auto context = rewriter.getContext();
+
+  std::vector<Type> result_types;
+  std::vector<Type> input_types;
+  input_types.push_back(IntegerType::get(64, context));
+  auto src_memref_type = op.src().getType();
+  auto ele_type = src_memref_type.dyn_cast<MemRefType>();
+  if (!ele_type) {
+    auto src_tensor_type = src_memref_type.dyn_cast<RankedTensorType>();
+    auto src_real_memref = ConvertTensorToMemRef(src_tensor_type);
+    ele_type = src_real_memref;
+    input_types.push_back(src_real_memref);
+  } else {
+    input_types.push_back(src_memref_type);
+  }
+
+  // TODO: unknow rank case ?
+  //
+  int rank = ele_type.getRank();
+  std::string func_name("_global_set_external_memref_r0");
+  switch (rank) {
+    case 0: break;
+    case 1: func_name = "_global_set_external_memref_r1"; break;
+    case 2: func_name = "_global_set_external_memref_r2"; break;
+    case 3: func_name = "_global_set_external_memref_r3"; break;
+    case 4: func_name = "_global_set_external_memref_r4"; break;
+    case 5: func_name = "_global_set_external_memref_r5"; break;
+    default:
+      llvm::dbgs() << "Now only support from rank-0 to rank-5.\n";
+      return matchFailure();
+  }
+
+  //input_types.push_back(IntegerType::get(32, context));
+  Value vtype = nullptr;
+  if (ele_type.getElementType().isInteger(32)) {
+    vtype = rewriter.create<ConstantOp>(
+        loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 0));
+    func_name += "_i32";
+  } else if (ele_type.getElementType().isInteger(64)) {
+    vtype = rewriter.create<ConstantOp>(
+        loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 1));
+    func_name += "_i64";
+  } else if (ele_type.getElementType().isF32()) {
+    vtype = rewriter.create<ConstantOp>(
+        loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 2));
+    func_name += "_f32";
+  } else if (ele_type.getElementType().isF64()) {
+    vtype = rewriter.create<ConstantOp>(
+        loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 3));
+    func_name += "_f64";
+  } else {
+    llvm::dbgs() << "Now only support i32, i64, f32, f64 type.\n";
+    return matchFailure();
+  }
+
+  auto set_external_memref = CallExternalFunc(
+      rewriter, parent_module, loc, func_name,
+      input_types, result_types,
+      ArrayRef<NamedAttribute>{});
+
+  // Create a CallOp to call `_global_set_external_memref_rx`
+  SmallVector<Value, 4> func_params;
+  func_params.push_back(op.dest());
+  func_params.push_back(op.src());
+  //func_params.push_back(vtype);
+  rewriter.create<mlir::CallOp>(
+      loc, set_external_memref.getValue(), result_types,
+      func_params);
+
+  rewriter.eraseOp(op);
+
+  return matchSuccess();
+}
+
 
 } // end mlir

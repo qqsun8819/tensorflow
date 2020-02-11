@@ -3530,11 +3530,13 @@ LogicalResult legalizeTF(Operation *op, bool allow_partial_conversion) {
   ConversionTarget target(*context);
   target.addLegalDialect<XlaHloDialect>();
   target.addLegalOp<CallOp>();
+
   if (!allow_partial_conversion) {
     // Fully qualify ReturnOp here as xla_hlo dialect also defines a ReturnOp.
     target.addLegalOp<ModuleOp, FuncOp, ModuleTerminatorOp, ::mlir::ReturnOp>();
     target.addLegalOp<mlir::TensorLoadOp, mlir::TensorStoreOp>();
     target.addLegalOp<mlir::ConstantOp>();
+    target.addLegalOp<TF::CopyResultOp>();
     return applyFullConversion(op, target, patterns);
   }
 

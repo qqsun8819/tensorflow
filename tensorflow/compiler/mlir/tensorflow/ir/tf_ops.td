@@ -514,4 +514,29 @@ Example:
     TF_DerivedOperandOrResultHandleShapeAttr<"resource">;
 }
 
+// No concrete tf op for MemcpyOp
+def MemcpyOp : TF_Op<"Memcpy"> {
+  let summary = "tf memcpy operation";
+  let description = [{
+  copy data form src to dest, will call llvm.memcpy function.
+  }];
+
+  let arguments = (ins AnyMemRef:$dest, AnyMemRef:$src, AnyInteger:$size);
+
+  let parser = ?;
+  let printer = ?;
+}
+
+def CopyResultOp : TF_Op<"CopyResult"> {
+  let summary = "Copy memref data from src to dest by call external function.";
+  let description = [{
+  Copy memref data from src to dest by call external function.
+  }];
+
+  let arguments = (ins I64:$dest, AnyTypeOf<[AnyMemRef, AnyTensor]>:$src);
+
+  let parser = ?;
+  let printer = ?;
+}
+
 #endif // TF_OPS
