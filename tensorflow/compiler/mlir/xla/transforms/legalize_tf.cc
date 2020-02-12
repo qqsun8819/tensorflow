@@ -69,7 +69,7 @@ class LegalizeTF : public FunctionPass<LegalizeTF> {
   Option<bool> allow_partial_conversion_{
       *this, "allow-partial-conversion",
       llvm::cl::desc("Allow operations that can't be legalized."),
-      llvm::cl::init(true)};
+      llvm::cl::init(false)};
 };
 
 /// Returns if the given TF data format string is the default format.
@@ -3530,10 +3530,11 @@ LogicalResult legalizeTF(Operation *op, bool allow_partial_conversion) {
   ConversionTarget target(*context);
   target.addLegalDialect<XlaHloDialect>();
   target.addLegalOp<CallOp>();
-
   if (!allow_partial_conversion) {
     // Fully qualify ReturnOp here as xla_hlo dialect also defines a ReturnOp.
     target.addLegalOp<ModuleOp, FuncOp, ModuleTerminatorOp, ::mlir::ReturnOp>();
+    target.addLegalOp<mlir::TensorLoadOp, mlir::TensorStoreOp>();
+    target.addLegalOp<mlir::ConstantOp>();
     return applyFullConversion(op, target, patterns);
   }
 

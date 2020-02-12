@@ -110,61 +110,45 @@ template <int D1, int D2, int D3, int D4, typename T>
 using Vector4D = Vector<T, D1, D2, D3, D4>;
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_1d(
-    StridedMemRefType<int32_t, 1> *M1,
+_global_print_memref_1d(
     StridedMemRefType<int32_t, 1> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_2d(
-    StridedMemRefType<int32_t, 2> *M1,
+_global_print_memref_2d(
     StridedMemRefType<int32_t, 2> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_3d(
-    StridedMemRefType<int32_t, 3> *M1,
+_global_print_memref_3d(
     StridedMemRefType<int32_t, 3> *M2);
 
-extern "C" MLIR_RUNNER_UTILS_EXPORT int32_t
-_global_mlir_call_external_func(int a, int b);
-
-extern "C" MLIR_RUNNER_UTILS_EXPORT int32_t
-_global_mlir_call_external_func_64(int64_t a, int64_t b);
-
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_1d_i64(
-    StridedMemRefType<int64_t, 1> *M1,
+_global_print_memref_1d_i64(
     StridedMemRefType<int64_t, 1> *M2);
 
 // TODO: Refine these code!
 //
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_1d_i64i32(
-    StridedMemRefType<int64_t, 1> *M1,
+_global_print_memref_1d_i32(
     StridedMemRefType<int32_t, 1> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_2d_i64(
-    StridedMemRefType<int64_t, 2> *M1,
+_global_print_memref_2d_i64(
     StridedMemRefType<int64_t, 2> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_3d_i64(
-    StridedMemRefType<int64_t, 3> *M1,
+_global_print_memref_3d_i64(
     StridedMemRefType<int64_t, 3> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_2d_f32(
-    StridedMemRefType<float, 2> *M1,
+_global_print_memref_2d_f32(
     StridedMemRefType<float, 2> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_2d_f64(
-    StridedMemRefType<double, 2> *M1,
+_global_print_memref_2d_f64(
     StridedMemRefType<double, 2> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_mlir_call_external_func_2d_i1(
-    StridedMemRefType<bool, 2> *M1,
+_global_print_memref_2d_i1(
     StridedMemRefType<bool, 2> *M2);
 
 

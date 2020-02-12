@@ -386,6 +386,7 @@ struct HloLegalizeToLhlo : public ModulePass<HloLegalizeToLhlo> {
     target.addIllegalOp<mlir::TensorLoadOp>();
     target.addIllegalOp<mlir::TensorStoreOp>();
     target.addLegalOp<ModuleTerminatorOp>();
+    // target.addLegalOp<xla_hlo::DebugPrintOp>();
     target.addIllegalDialect<xla_hlo::XlaHloDialect>();
     target.addDynamicallyLegalOp<FuncOp>([&](FuncOp op) {
       auto inputs = op.getType().getInputs();
@@ -514,6 +515,7 @@ void populateHLOToLHLOConversionPattern(MLIRContext* context,
       HloToLhloOpConverter<xla_hlo::UniqueCountOp, xla_lhlo::UniqueCountOp>,
       // HloToLhloOpConverter<xla_hlo::UniqueIdsOp, xla_lhlo::UniqueIdsOp>,
       HloToLhloOpConverter<xla_hlo::UniqueIndexOp, xla_lhlo::UniqueIndexOp>,
+      HloToLhloOpConverter<xla_hlo::DebugPrintOp, xla_lhlo::DebugPrintOp>,
       HloToLHloUniqueIdsOpConverter,
       HloToLhloTensorLoadOpConverter,
       HloToLhloTensorStoreOpConverter,

@@ -177,13 +177,72 @@ struct UniqueIndexConverter : public OpRewritePattern<UniqueIndexOp> {
     return this->matchSuccess();
   }
 };
+
+
+struct DebugPrintConverter : public OpRewritePattern<DebugPrintOp> {
+  using OpRewritePattern<DebugPrintOp>::OpRewritePattern;
+
+  PatternMatchResult matchAndRewrite(DebugPrintOp op,
+                                     PatternRewriter& rewriter) const override {
+
+
+    auto loc = op.getLoc();
+    ModuleOp parent_module = op.getParentOfType<ModuleOp>();
+    auto context = rewriter.getContext();
+
+    auto ele_type = op.input().getType().dyn_cast<MemRefType>();
+    if (!ele_type)
+      return this->matchFailure();
+    
+    std::string external_func_name =
+      "_global_print_memref_" + std::to_string(ele_type.getRank()) + "d";
+
+    std::vector<Type> input_types;
+    std::vector<Type> result_types;
+    input_types.push_back(ele_type);
+  
+
+    if (ele_type.getElementType().isInteger(64)) {
+      external_func_name += "_i64";
+    } else if (ele_type.getElementType().isInteger(32)) {
+      // nothing
+    } else if (ele_type.getElementType().isF64()) {
+      external_func_name += "_f64";
+    } else if (ele_type.getElementType().isF32()) {
+      external_func_name += "_f32";
+    } else if (ele_type.getElementType().isInteger(1)) {
+      external_func_name += "_i1";
+    } else {
+      llvm::errs() << "Now only support int32 and int64 type.\n";
+      return this->matchFailure();
+    }
+
+    auto print_tensor_ref = CallExternalFunc(
+        rewriter, parent_module, loc,
+        external_func_name,
+        input_types, result_types,
+        ArrayRef<NamedAttribute>{});
+
+    // Create a CallOp to call `_global_print_memref_xd`
+    SmallVector<Value, 4> func_params;
+    func_params.push_back(op.input());
+    rewriter.create<mlir::CallOp>(
+        loc, print_tensor_ref.getValue(), result_types,
+        func_params);
+
+    rewriter.eraseOp(op);
+    return this->matchSuccess();
+  }
+};
+
 void populateLHLOToStdConversionPattern(MLIRContext* context,
                                            OwningRewritePatternList* patterns) {
   // clang-format off
   patterns->insert<
       UniqueCountConverter,
       UniqueIdsConverter,
-      UniqueIndexConverter 
+      UniqueIndexConverter,
+      DebugPrintConverter
     >(context);
   // clang-format on
 }
@@ -203,15 +262,15 @@ struct LhloLegalizeToStd: public FunctionPass<LhloLegalizeToStd> {
         op.getName() == "_global_unique_index64" ||
         op.getName() == "_global_get_unique_ids_count" ||
         op.getName() == "_global_unique_ids" ||
-        op.getName() == "_global_mlir_call_external_func_64" ||
-        op.getName() == "_global_mlir_call_external_func_1d_i64" ||
-        op.getName() == "_global_mlir_call_external_func_1d_i64i32" ||
-        op.getName() == "_global_mlir_call_external_func_1d" ||
-        op.getName() == "_global_mlir_call_external_func_2d" ||
-        op.getName() == "_global_mlir_call_external_func_2d_i64" ||
-        op.getName() == "_global_mlir_call_external_func_2d_f64" ||
-        op.getName() == "_global_mlir_call_external_func_2d_f32" ||
-        op.getName() == "_global_mlir_call_external_func_2d_i1"; });
+        op.getName() == "_global_print_memref_64" ||
+        op.getName() == "_global_print_memref_1d_i64" ||
+        op.getName() == "_global_print_memref_1d_i64i32" ||
+        op.getName() == "_global_print_memref_1d" ||
+        op.getName() == "_global_print_memref_2d" ||
+        op.getName() == "_global_print_memref_2d_i64" ||
+        op.getName() == "_global_print_memref_2d_f64" ||
+        op.getName() == "_global_print_memref_2d_f32" ||
+        op.getName() == "_global_print_memref_2d_i1"; });
     auto func = getFunction();
     populateLHLOToStdConversionPattern(func.getContext(), &patterns);
     if (failed(applyPartialConversion(func, target, patterns, nullptr))) {

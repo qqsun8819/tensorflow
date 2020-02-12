@@ -1297,4 +1297,16 @@ def HLO_DequantizeOp : HLO_Op<"dequantize", [NoSideEffect]>,
   let hasCustomHLOConverter = 1;
 }
 
+// For test
+def HLO_DebugPrintOp : HLO_Op<"debug_print", [NoSideEffect]> {
+  let summary = "call_external_func  operation";
+  let description = [{
+    call external function
+  }];
+
+  // The operation takes an input tensor to print.
+  let arguments = (ins
+      AnyTypeOf<[HLO_Tensor]>:$operand
+  );
+}
 #endif // HLO_OPS

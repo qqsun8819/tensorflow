@@ -105,6 +105,10 @@ def LHLO_UniqueCountOp:  LHLO_Op<"unique_count", [NoSideEffect]> {
   let arguments = (ins LHLO_Buffer:$input,
                        LHLO_Buffer:$output);
 }
+
+def LHLO_DebugPrintOp:  LHLO_Op<"debug_print", [NoSideEffect]> {
+  let arguments = (ins LHLO_Buffer:$input);
+}
 //===----------------------------------------------------------------------===//
 // XLA binary elementwise op definitions.
 //===----------------------------------------------------------------------===//

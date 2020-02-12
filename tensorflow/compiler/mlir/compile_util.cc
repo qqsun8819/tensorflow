@@ -127,104 +127,75 @@ template <typename T, int N> void printMemRef(StridedMemRefType<T, N> &M) {
   std::cout << std::endl;
 }
 
-extern "C"
-int32_t _global_mlir_call_external_func(int a, int b) {
-  std::cout << "a = " << a << ", b = " << b << "\n";
-}
 
 extern "C"
-int32_t _global_mlir_call_external_func_64(int64_t a, int64_t b) {
-  std::cout << "a = " << a << ", b = " << b << "\n";
-}
-
-extern "C"
-void _global_mlir_call_external_func_1d(
-    StridedMemRefType<int32_t, 1> *M1,
+void _global_print_memref_1d(
     StridedMemRefType<int32_t, 1> *M2) {
-  std::cout << "_global_mlir_call_external_func_1d called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_1d called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_2d(
-    StridedMemRefType<int32_t, 2> *M1,
+void _global_print_memref_2d(
     StridedMemRefType<int32_t, 2> *M2) {
-  std::cout << "_global_mlir_call_external_func_2d called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_2d called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_3d(
-    StridedMemRefType<int32_t, 3> *M1,
+void _global_print_memref_3d(
     StridedMemRefType<int32_t, 3> *M2) {
-  std::cout << "_global_mlir_call_external_func_3d called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_3d called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_1d_i64(
-    StridedMemRefType<int64_t, 1> *M1,
+void _global_print_memref_1d_i64(
     StridedMemRefType<int64_t, 1> *M2) {
-  std::cout << "_global_mlir_call_external_func_1d_64 called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_1d_64 called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_1d_i64i32(
-    StridedMemRefType<int64_t, 1> *M1,
+void _global_print_memref_1d_i32(
     StridedMemRefType<int32_t, 1> *M2) {
-  std::cout << "_global_mlir_call_external_func_1d_i64i32 called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_1d_i64i32 called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_2d_i64(
-    StridedMemRefType<int64_t, 2> *M1,
+void _global_print_memref_2d_i64(
     StridedMemRefType<int64_t, 2> *M2) {
-  std::cout << "_global_mlir_call_external_func_2d_64 called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_2d_64 called\n";
   printMemRef(*M2);
 }
 
 
 extern "C"
-void _global_mlir_call_external_func_3d_i64(
-    StridedMemRefType<int64_t, 3> *M1,
+void _global_print_memref_3d_i64(
     StridedMemRefType<int64_t, 3> *M2) {
-  std::cout << "_global_mlir_call_external_func_3d_64 called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_3d_64 called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_2d_i1(
-    StridedMemRefType<bool, 2> *M1,
+void _global_print_memref_2d_i1(
     StridedMemRefType<bool, 2> *M2) {
-  std::cout << "_global_mlir_call_external_func_2d_i1 called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_2d_i1 called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_2d_f32(
-    StridedMemRefType<float, 2> *M1,
+void _global_print_memref_2d_f32(
     StridedMemRefType<float, 2> *M2) {
-  std::cout << "_global_mlir_call_external_func_2d_f32 called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_2d_f32 called\n";
   printMemRef(*M2);
 }
 
 extern "C"
-void _global_mlir_call_external_func_2d_f64(
-    StridedMemRefType<double, 2> *M1,
+void _global_print_memref_2d_f64(
     StridedMemRefType<double, 2> *M2) {
-  std::cout << "_global_mlir_call_external_func_2d_f64 called\n";
-  printMemRef(*M1);
+  std::cout << "_global_print_memref_2d_f64 called\n";
   printMemRef(*M2);
 }
 
