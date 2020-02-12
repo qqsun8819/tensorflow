@@ -15,6 +15,7 @@ limitations under the License.
 
 #include "tensorflow/compiler/mlir/tensorflow/translate/import_model.h"
 
+#include <assert.h>
 #include <iterator>
 #include <string>
 #include <tuple>
@@ -293,6 +294,18 @@ class ImporterBase {
       const llvm::SmallVectorImpl<mlir::Value>& control_operands,
       bool convert_to_legacy_call = false);
 
+  // Insert a tf.CopyResult Op for copy tensor from
+  // compiled fucntion to tensorflow runtime.
+  // We create tf.CopyResult Op by _Retval node,
+  // one _Retval node represent one result tensor.
+  // tf.CopyResult has two params, 
+  // param1: int64_t type, represent a tensor addr pointer
+  // param2: tensor<...> type, represent a tensor in the
+  //         compiled fucntion which should be returned to tf runtime.
+  mlir::Operation* createCopyResultOp(
+      int ret_node_index, mlir::Value ret,
+      mlir::Location loc);
+
   // Converts one NodeDef from the input GraphDef into an Operation and
   // inserts it into the MLIR module using builder_.
   Status ConvertNode(const Node& node);
@@ -389,6 +402,8 @@ class ImporterBase {
  protected:
   // Maps feed as TensorId to new Placeholder node name.
   absl::flat_hash_map<TensorId, absl::string_view> remapped_feeds_;
+  // Save _Retval node, key is the `index` attr of retval node
+  std::unordered_map<int, Node*> ret_nodes_;
 };
 
 // Returns true if the node with given name has a non primary output that is
@@ -1194,6 +1209,57 @@ Status ImporterBase::Convert(
   return Status::OK();
 }
 
+mlir::Operation* ImporterBase::createCopyResultOp(
+    int ret_node_index, mlir::Value ret, mlir::Location loc) {
+  std::string op_name("tf.CopyResult");
+  std::string node_type_name("CopyResult");
+  mlir::OperationState result(loc, op_name);
+  mlir::SmallVector<mlir::Value, 1> control_operands;
+  Node* node = ret_nodes_[ret_node_index];
+  if (node == nullptr) {
+    std::string err_msg("_Retval node is not existed!, index attr is ");
+    err_msg += std::to_string(ret_node_index);
+    assert(false && err_msg);
+    return nullptr;
+  }
+  absl::InlinedVector<const Edge*, 8> in_edges(node->in_edges().size());
+  absl::c_copy(node->in_edges(), in_edges.begin());
+  absl::c_stable_sort(in_edges, [](const Edge* e1, const Edge* e2) {
+    if (e1->IsControlEdge() && !e2->IsControlEdge()) return false;
+    if (!e1->IsControlEdge() && e2->IsControlEdge()) return true;
+    return e1->dst_input() < e2->dst_input();
+  });
+  result.operands.reserve(in_edges.size()+1);
+  result.operands.push_back(ret);
+  for (const auto* input_edge : in_edges) {
+    const Node& input_node = *input_edge->src();
+    mlir::Operation* inst = node_values_[input_node.id()];
+    if (input_edge->IsControlEdge())
+      control_operands.push_back(inst->getResult(inst->getNumResults() - 1));
+    else
+      result.operands.push_back(inst->getResult(input_edge->src_output()));
+  }
+
+  if (result.operands.size() != 2) {
+    std::string err_msg("CopyResult Op operands count must be 2, but got ");
+    err_msg += std::to_string(result.operands.size());
+    assert(false && err_msg);
+  }
+
+  mlir::SmallVector<mlir::Type, 1> types;
+  types.push_back(mlir::tf_executor::ControlType::get(builder_.getContext()));
+  auto island = builder_.create<mlir::tf_executor::IslandOp>(
+      result.location, types, control_operands,
+      mlir::ArrayRef<mlir::NamedAttribute>{});
+  island.body().push_back(new mlir::Block);
+  mlir::OpBuilder island_builder(&island.GetBody());
+  // Create the operation inside the island now.
+  mlir::Operation* inner_op = island_builder.createOperation(result);
+  island_builder.create<mlir::tf_executor::YieldOp>(result.location,
+                                                    inner_op->getResults());
+  return inner_op;
+}
+
 Status ImporterBase::ConvertFunctionArgAndRets(
     mlir::FuncOp func, mlir::tf_executor::GraphOp graph_op,
     llvm::ArrayRef<mlir::Type> arg_types,
@@ -1201,6 +1267,14 @@ Status ImporterBase::ConvertFunctionArgAndRets(
     const absl::InlinedVector<OutputTensor, 4>& ret_nodes,
     const absl::InlinedVector<Node*, 4>& control_ret_nodes) {
   auto* bb = &func.front();
+
+  // TODO: FIXME
+  // should insert CopyResult Op instead of _Retval Op
+  bool should_add_result_tensor_pointer_args = false;
+  if (bb->getNumArguments() > arg_nodes.size()) {
+    should_add_result_tensor_pointer_args = true;
+  }
+
   llvm::SmallDenseMap<std::pair<Node*, int>, mlir::Value, 4>
       arg_nodes_to_values;
   for (int i = 0, e = arg_nodes.size(); i < e; ++i) {
@@ -1235,8 +1309,11 @@ Status ImporterBase::ConvertFunctionArgAndRets(
     island->erase();
   }
 
+  int result_tensor_idx = arg_nodes.size();
   llvm::SmallVector<mlir::Value, 8> inst_to_return;
+  int ret_node_index = -1;
   for (const auto& ret : ret_nodes) {
+    ++ret_node_index;
     auto* inst = node_values_[ret.node->id()];
     auto op = absl::string_view(ret.node->type_string());
     if (op == FunctionLibraryDefinition::kRetOp ||
@@ -1252,6 +1329,14 @@ Status ImporterBase::ConvertFunctionArgAndRets(
       inst_to_return.push_back(inner_op->getOperand(0));
       inst->dropAllReferences();
       inst->erase();
+
+      // TODO: insert a CopyResult Op for result tensor
+      if (should_add_result_tensor_pointer_args) {
+        // result tensor pointer type: i64
+        auto bb_arg = bb->getArgument(result_tensor_idx++);
+        mlir::Value arg_def = bb_arg;
+        createCopyResultOp(ret_node_index, arg_def, graph_op.getLoc());
+      }
     } else {
       // Lookup and use block arg if fetch is a feed.
       auto it = arg_nodes_to_values.find({ret.node, ret.index});
@@ -2010,7 +2095,7 @@ GraphDefImporter::GetArgsRetsAndTypesFromFunctionGraph(
     absl::InlinedVector<OutputTensor, 4>* ret_nodes,
     absl::InlinedVector<std::pair<int64_t, int64_t>, 4>*
         resource_arg_unique_ids) {
-  auto add_node = [](Node* node, absl::InlinedVector<OutputTensor, 4>* nodes) {
+  auto add_node = [this](Node* node, absl::InlinedVector<OutputTensor, 4>* nodes) {
     auto* attr = node->attrs().Find("index");
     if (!attr)
       return errors::InvalidArgument(node->type_string(), " node '",
@@ -2026,6 +2111,9 @@ GraphDefImporter::GetArgsRetsAndTypesFromFunctionGraph(
                                      index, " that conflicts with node '",
                                      (*nodes)[index].node->name(), "'");
     (*nodes)[index] = {node, 0};
+    if (node->IsRetval()) {
+      ret_nodes_[index] = node;
+    }
 
     return Status::OK();
   };
@@ -2056,6 +2144,12 @@ GraphDefImporter::GetArgsRetsAndTypesFromFunctionGraph(
       resource_arg_unique_ids->emplace_back(arg_node_and_idx.index(),
                                             resource_arg_unique_id);
     }
+  }
+
+  // TODO: FIXME
+  // Add i64 type for result tensor pointer
+  for (int i = 0; i < ret_nodes->size(); ++i) {
+    arg_types.push_back(mlir::IntegerType::get(64, context));
   }
 
   llvm::SmallVector<mlir::Type, 4> ret_types;
