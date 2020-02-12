@@ -138,6 +138,8 @@ static bool OperatorWritersMain(raw_ostream& os, RecordKeeper& records) {
     // Skip operations that have a custom exporter.
     Operator op(def);
 
+    if (op.getCppClassName().find("Unique") != std::string::npos)
+      continue;
     // Cast to the current operation and build the exporter.
     os << "  if (auto xla_op = llvm::dyn_cast<mlir::xla_hlo::"
        << op.getCppClassName() << ">(op)) {\n";

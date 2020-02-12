@@ -74,6 +74,7 @@ cc_library(
         "//tensorflow/compiler/mlir/xla:lhlo",
         "//tensorflow/compiler/mlir/xla:lhlo_fuse_linalg",
         "//tensorflow/compiler/mlir/xla:lhlo_legalize_to_affine",
+        "//tensorflow/compiler/mlir/xla:lhlo_legalize_to_std",
         "//tensorflow/compiler/mlir/xla:xla_legalize_to_linalg",
         "//tensorflow/compiler/mlir/xla:xla_dialect_registration",
         "//tensorflow/compiler/mlir/xla:xla_legalize_control_flow",
@@ -143,6 +144,12 @@ tf_cc_binary(
     ],
 )
 
+
+cc_library(
+    name = "tf_mlir_compiler_util",
+    srcs = ["compile_util.cc"],
+    hdrs = ["compile_util.h"],
+    )
 
 tf_cc_binary(
     name = "tf-mlir-compiler",

@@ -181,6 +181,51 @@ class HloToLhloOpConverter : public ConversionPattern {
   }
 };
 
+struct HloToLHloUniqueIdsOpConverter
+    : public OpConversionPattern<xla_hlo::UniqueIdsOp> {
+ public:
+  using OpConversionPattern::OpConversionPattern;
+
+  PatternMatchResult matchAndRewrite(
+      xla_hlo::UniqueIdsOp op, ArrayRef<Value> operands,
+      ConversionPatternRewriter& rewriter) const final {
+    auto loc = op.getLoc();
+    SmallVector<Value, 4> buffer_args(operands.begin(), operands.end());
+    auto result = op.getResult();
+    auto id_count_rhs = rewriter.create<LoadOp>(loc, op.rhs());
+    auto id_count_dim = rewriter.create<IndexCastOp>(loc, mlir::IndexType::get(rewriter.getContext()), id_count_rhs);
+    {
+      
+      auto result_type = result.getType().dyn_cast<ShapedType>();
+      if (!result_type)
+        emitError(op.getLoc(), "tensor to buffer conversion expects valid result type");
+
+      auto memref_type =
+        MemRefType::get(result_type.getShape(), result_type.getElementType());
+
+      Operation* opt = result.getDefiningOp();
+      auto block = opt->getBlock();
+  
+      OpBuilder allocBuilder(opt);
+      SmallVector<Value, 4> alloc_operands;
+      for (unsigned i = 0; i < memref_type.getRank(); i++) {
+        alloc_operands.push_back(id_count_dim);
+      }
+
+      auto alloc = allocBuilder.create<AllocOp>(loc, memref_type, alloc_operands);
+      alloc.setAttr(kTempBufferAttr, rewriter.getBoolAttr(true));
+
+      allocBuilder.setInsertionPoint(block, std::prev(block->end()));
+      allocBuilder.create<DeallocOp>(loc, alloc);
+      buffer_args.push_back(alloc);
+    }
+    rewriter.create<xla_lhlo::UniqueIdsOp>(op.getLoc(), llvm::None, buffer_args,
+                              op.getAttrs());
+    rewriter.replaceOp(op, ArrayRef<Value>(buffer_args).slice(operands.size()));
+    return matchSuccess();
+ }
+};
+
 struct HloToLHloReduceOpConverter
     : public OpConversionPattern<xla_hlo::ReduceOp> {
  public:
@@ -466,6 +511,10 @@ void populateHLOToLHLOConversionPattern(MLIRContext* context,
       HloToLhloOpConverter<xla_hlo::SignOp, xla_lhlo::SignOp>,
       HloToLhloOpConverter<xla_hlo::SubOp, xla_lhlo::SubOp>,
       HloToLhloOpConverter<xla_hlo::TanhOp, xla_lhlo::TanhOp>,
+      HloToLhloOpConverter<xla_hlo::UniqueCountOp, xla_lhlo::UniqueCountOp>,
+      // HloToLhloOpConverter<xla_hlo::UniqueIdsOp, xla_lhlo::UniqueIdsOp>,
+      HloToLhloOpConverter<xla_hlo::UniqueIndexOp, xla_lhlo::UniqueIndexOp>,
+      HloToLHloUniqueIdsOpConverter,
       HloToLhloTensorLoadOpConverter,
       HloToLhloTensorStoreOpConverter,
       StdToLhloReturnOpConverter

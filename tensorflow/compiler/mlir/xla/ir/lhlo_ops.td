@@ -101,6 +101,10 @@ def LHLO_SignOp: LHLO_UnaryElementwiseOp<"sign">, BASE_HLO_SignOp;
 
 def LHLO_TanhOp: LHLO_UnaryElementwiseOp<"tanh">, BASE_HLO_TanhOp;
 
+def LHLO_UniqueCountOp:  LHLO_Op<"unique_count", [NoSideEffect]> {
+  let arguments = (ins LHLO_Buffer:$input,
+                       LHLO_Buffer:$output);
+}
 //===----------------------------------------------------------------------===//
 // XLA binary elementwise op definitions.
 //===----------------------------------------------------------------------===//
@@ -133,6 +137,9 @@ def LHLO_SubOp : LHLO_BinaryElementwiseOp<"sub", []>, BASE_HLO_SubOp;
 def LHLO_AndOp: LHLO_BinaryElementwiseOp<"and", []>, BASE_HLO_AndOp;
 
 def LHLO_OrOp: LHLO_BinaryElementwiseOp<"or", []>, BASE_HLO_OrOp;
+
+def LHLO_UniqueIdsOp: LHLO_BinaryElementwiseOp<"unique_ids", []>;
+def LHLO_UniqueIndexOp: LHLO_BinaryElementwiseOp<"unique_index", []>;
 
 //===----------------------------------------------------------------------===//
 // XLA control flow op definitions.

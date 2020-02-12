@@ -1,3 +1,8 @@
+#include <iostream>
+#include <unordered_map>
+#include <unordered_set>
+#include "tensorflow/compiler/mlir/compile_util.h"
+
 template <int... Dims> struct StaticSizeMult {
   static constexpr int value = 1;
 };
@@ -123,9 +128,29 @@ template <typename T, int N> void printMemRef(StridedMemRefType<T, N> &M) {
 }
 
 extern "C"
+int32_t _global_mlir_call_external_func(int a, int b) {
+  std::cout << "a = " << a << ", b = " << b << "\n";
+}
+
+extern "C"
+int32_t _global_mlir_call_external_func_64(int64_t a, int64_t b) {
+  std::cout << "a = " << a << ", b = " << b << "\n";
+}
+
+extern "C"
 void _global_mlir_call_external_func_1d(
     StridedMemRefType<int32_t, 1> *M1,
     StridedMemRefType<int32_t, 1> *M2) {
+  std::cout << "_global_mlir_call_external_func_1d called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+extern "C"
+void _global_mlir_call_external_func_2d(
+    StridedMemRefType<int32_t, 2> *M1,
+    StridedMemRefType<int32_t, 2> *M2) {
+  std::cout << "_global_mlir_call_external_func_2d called\n";
   printMemRef(*M1);
   printMemRef(*M2);
 }
@@ -134,7 +159,144 @@ extern "C"
 void _global_mlir_call_external_func_3d(
     StridedMemRefType<int32_t, 3> *M1,
     StridedMemRefType<int32_t, 3> *M2) {
+  std::cout << "_global_mlir_call_external_func_3d called\n";
   printMemRef(*M1);
   printMemRef(*M2);
 }
+
+extern "C"
+void _global_mlir_call_external_func_1d_i64(
+    StridedMemRefType<int64_t, 1> *M1,
+    StridedMemRefType<int64_t, 1> *M2) {
+  std::cout << "_global_mlir_call_external_func_1d_64 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+extern "C"
+void _global_mlir_call_external_func_1d_i64i32(
+    StridedMemRefType<int64_t, 1> *M1,
+    StridedMemRefType<int32_t, 1> *M2) {
+  std::cout << "_global_mlir_call_external_func_1d_i64i32 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+extern "C"
+void _global_mlir_call_external_func_2d_i64(
+    StridedMemRefType<int64_t, 2> *M1,
+    StridedMemRefType<int64_t, 2> *M2) {
+  std::cout << "_global_mlir_call_external_func_2d_64 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+
+extern "C"
+void _global_mlir_call_external_func_3d_i64(
+    StridedMemRefType<int64_t, 3> *M1,
+    StridedMemRefType<int64_t, 3> *M2) {
+  std::cout << "_global_mlir_call_external_func_3d_64 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+extern "C"
+void _global_mlir_call_external_func_2d_i1(
+    StridedMemRefType<bool, 2> *M1,
+    StridedMemRefType<bool, 2> *M2) {
+  std::cout << "_global_mlir_call_external_func_2d_i1 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+extern "C"
+void _global_mlir_call_external_func_2d_f32(
+    StridedMemRefType<float, 2> *M1,
+    StridedMemRefType<float, 2> *M2) {
+  std::cout << "_global_mlir_call_external_func_2d_f32 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+extern "C"
+void _global_mlir_call_external_func_2d_f64(
+    StridedMemRefType<double, 2> *M1,
+    StridedMemRefType<double, 2> *M2) {
+  std::cout << "_global_mlir_call_external_func_2d_f64 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+
+
+extern "C"
+int64_t _global_get_unique_ids_count(
+    StridedMemRefType<int64_t, 1> *ids, /*StridedMemRefType<int64_t, 0> *N*/int64_t N) {
+  int64_t unique_count = 0;
+  int64_t *data = ids->data;
+  std::unordered_set<int64_t> m;
+  int64_t real_n = N; //*((int64_t*)(N->data));
+  for (int64_t i = 0; i < real_n; ++i) {
+    if (m.find(*(data+i)) == m.end()) {
+      ++unique_count;
+      m.insert(*(data+i));
+    }
+  }
+
+  return unique_count;
+}
+
+extern "C"
+void _global_unique_ids(
+    StridedMemRefType<int64_t, 1> *input_ids,
+    StridedMemRefType<int64_t, 0> *id_count,
+    StridedMemRefType<int64_t, 1> *output_ids) {
+  int32_t cur_idx = -1;
+  std::unordered_map<int64_t, int64_t> m;
+  int64_t real_n = input_ids->sizes[0]; 
+  for (int64_t i = 0; i < real_n; ++i) {
+    int64_t spec_id = (*(input_ids->data + i));
+    if (m.find(spec_id) == m.end()) {
+      m[spec_id] = ++cur_idx;
+      *(output_ids->data + cur_idx) = spec_id;
+    } else {
+      continue;
+    }
+  }
+}
+
+extern "C"
+void _global_unique_index32(
+    StridedMemRefType<int64_t, 1> *ids,
+    StridedMemRefType<int64_t, 1> *unique_ids,
+    StridedMemRefType<int32_t, 1> *ids_index) {
+  std::unordered_map<int64_t, int32_t> m;
+  int64_t unique_N = unique_ids->sizes[0]; 
+
+  for (int32_t i = 0; i < unique_N; ++i) {
+    m[*(unique_ids->data + i)] = i;
+  }
+  int64_t input_N = ids->sizes[0]; 
+  for(int64_t i = 0; i < input_N; i++) {
+    *(ids_index->data + i) = m[*(ids->data + i)];
+  }
+}
+
+extern "C"
+void _global_unique_index64(
+    StridedMemRefType<int64_t, 1> *ids,
+    StridedMemRefType<int64_t, 1> *unique_ids,
+    StridedMemRefType<int64_t, 1> *ids_index) {
+  std::unordered_map<int64_t, int64_t> m;
+  int64_t unique_N = unique_ids->sizes[0]; 
+
+  for (int64_t i = 0; i < unique_N; ++i) {
+    m[*(unique_ids->data + i)] = i;
+  }
+  int64_t input_N = ids->sizes[0]; 
+  for(int64_t i = 0; i < input_N; i++) {
+    *(ids_index->data + i) = m[*(ids->data + i)];
+  }
+}
+
 

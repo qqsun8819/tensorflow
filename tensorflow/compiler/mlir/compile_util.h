@@ -17,6 +17,8 @@ limitations under the License.
 #define TENSORFLOW_COMPILER_MLIR_COMPILE_UTIL_H
 
 #include <cstdint>
+#include <string>
+#include <iostream>
 
 #ifdef _WIN32
 #ifndef MLIR_RUNNER_UTILS_EXPORT
@@ -113,11 +115,82 @@ _global_mlir_call_external_func_1d(
     StridedMemRefType<int32_t, 1> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_2d(
+    StridedMemRefType<int32_t, 2> *M1,
+    StridedMemRefType<int32_t, 2> *M2);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
 _global_mlir_call_external_func_3d(
     StridedMemRefType<int32_t, 3> *M1,
     StridedMemRefType<int32_t, 3> *M2);
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT int32_t
 _global_mlir_call_external_func(int a, int b);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT int32_t
+_global_mlir_call_external_func_64(int64_t a, int64_t b);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_1d_i64(
+    StridedMemRefType<int64_t, 1> *M1,
+    StridedMemRefType<int64_t, 1> *M2);
+
+// TODO: Refine these code!
+//
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_1d_i64i32(
+    StridedMemRefType<int64_t, 1> *M1,
+    StridedMemRefType<int32_t, 1> *M2);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_2d_i64(
+    StridedMemRefType<int64_t, 2> *M1,
+    StridedMemRefType<int64_t, 2> *M2);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_3d_i64(
+    StridedMemRefType<int64_t, 3> *M1,
+    StridedMemRefType<int64_t, 3> *M2);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_2d_f32(
+    StridedMemRefType<float, 2> *M1,
+    StridedMemRefType<float, 2> *M2);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_2d_f64(
+    StridedMemRefType<double, 2> *M1,
+    StridedMemRefType<double, 2> *M2);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_2d_i1(
+    StridedMemRefType<bool, 2> *M1,
+    StridedMemRefType<bool, 2> *M2);
+
+
+// TODO: UniqueOp support int32 and int64 for ids index
+//
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT int64_t
+_global_get_unique_ids_count(StridedMemRefType<int64_t, 1> *ids, int64_t N);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT 
+void _global_unique_ids(
+    StridedMemRefType<int64_t, 1> *intput_ids,
+    StridedMemRefType<int64_t, 0> *id_count,
+    StridedMemRefType<int64_t, 1> *output_ids); 
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT 
+void _global_unique_index32(
+    StridedMemRefType<int64_t, 1> *ids,
+    StridedMemRefType<int64_t, 1> *unique_ids,
+    StridedMemRefType<int32_t, 1> *ids_index); 
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT 
+void _global_unique_index64(
+    StridedMemRefType<int64_t, 1> *ids,
+    StridedMemRefType<int64_t, 1> *unique_ids,
+    StridedMemRefType<int64_t, 1> *ids_index); 
+
 
 #endif TENSORFLOW_COMPILER_MLIR_COMPILE_UTIL_H
