@@ -56,15 +56,6 @@ class ReshapeOpLOwering : public OpRewritePattern<mlir::TF::ReshapeOp> {
       mlir::PatternRewriter &rewriter) const final;
 };
 
-class CopyResultOpLowering : public OpRewritePattern<mlir::TF::CopyResultOp> {
- public:
-  using mlir::OpRewritePattern<mlir::TF::CopyResultOp>::OpRewritePattern;
-
-  mlir::PatternMatchResult matchAndRewrite(
-      mlir::TF::CopyResultOp op,
-      mlir::PatternRewriter &rewriter) const final;
-};
-
 } // end mlir
 
 #endif // TENSORFLOW_COMPILER_MLIR_TENSORFLOW_TRANSFORMS_LOWER_TO_AFFINE_H_

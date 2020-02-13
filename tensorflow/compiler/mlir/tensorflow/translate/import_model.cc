@@ -1245,8 +1245,13 @@ mlir::Operation* ImporterBase::createCopyResultOp(
     err_msg += std::to_string(result.operands.size());
     assert(false && err_msg);
   }
+  absl::InlinedVector<int64_t, 1> dimensions;
+  dimensions.push_back(1);
+  result.types.push_back(mlir::RankedTensorType::get(
+      llvm::makeArrayRef(dimensions.begin(), dimensions.end()), builder_.getIntegerType(64)));
 
-  mlir::SmallVector<mlir::Type, 1> types;
+  mlir::SmallVector<mlir::Type, 4> types;
+  types.push_back(result.types[0]);
   types.push_back(mlir::tf_executor::ControlType::get(builder_.getContext()));
   auto island = builder_.create<mlir::tf_executor::IslandOp>(
       result.location, types, control_operands,
@@ -1332,7 +1337,7 @@ Status ImporterBase::ConvertFunctionArgAndRets(
 
       // TODO: insert a CopyResult Op for result tensor
       if (should_add_result_tensor_pointer_args) {
-        // result tensor pointer type: i64
+        // result tensor pointer type: tensor<1xi64>
         auto bb_arg = bb->getArgument(result_tensor_idx++);
         mlir::Value arg_def = bb_arg;
         createCopyResultOp(ret_node_index, arg_def, graph_op.getLoc());
@@ -2147,9 +2152,13 @@ GraphDefImporter::GetArgsRetsAndTypesFromFunctionGraph(
   }
 
   // TODO: FIXME
-  // Add i64 type for result tensor pointer
+  // Add tensor<1xi64> type for result tensor pointer
+  absl::InlinedVector<int64_t, 1> dimensions;
+  dimensions.push_back(1);
+  auto result_addr_type = mlir::RankedTensorType::get(
+      llvm::makeArrayRef(dimensions.begin(), dimensions.end()), builder.getIntegerType(64));
   for (int i = 0; i < ret_nodes->size(); ++i) {
-    arg_types.push_back(mlir::IntegerType::get(64, context));
+    arg_types.push_back(result_addr_type);
   }
 
   llvm::SmallVector<mlir::Type, 4> ret_types;

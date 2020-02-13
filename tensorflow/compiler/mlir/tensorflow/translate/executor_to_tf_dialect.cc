@@ -177,6 +177,7 @@ void ExecutorToTFDialectConversion::runOnFunction() {
           operands.append(wrapped_op.getOperands().begin(),
                           wrapped_op.getOperands().end());
           auto callfunc_op = builder.create<TF::CopyResultOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
+          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
         } else if (state.name.getStringRef() == "_tf.DebugPrint") {
           SmallVector<Type, 4> result_types;
           result_types.append(wrapped_op.getResultTypes().begin(),

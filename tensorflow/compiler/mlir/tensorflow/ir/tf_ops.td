@@ -546,6 +546,9 @@ def TF_CopyResultOp : TF_Op<"CopyResult"> {
   }];
 
   let arguments = (ins AnyTypeOf<[I64Tensor, I64MemRef]>:$dest, AnyTypeOf<[AnyMemRef, AnyTensor]>:$src);
+  let results = (outs
+    AnyTypeOf<[I64Tensor, I64MemRef]>:$ret
+  );
 
   let parser = ?;
   let printer = ?;

@@ -66,6 +66,16 @@ class MemcpyOpLowering : public mlir::ConversionPattern {
       LLVM::LLVMDialect *llvm_dialect);
 };
 
+class CopyResultOpLowering : public mlir::ConversionPattern {
+ public:
+  explicit CopyResultOpLowering(mlir::MLIRContext *context)
+      : mlir::ConversionPattern(mlir::TF::CopyResultOp::getOperationName(), 1, context) {}
+
+  mlir::PatternMatchResult matchAndRewrite(mlir::Operation *op,
+      llvm::ArrayRef<mlir::Value> operands,
+      mlir::ConversionPatternRewriter &rewriter) const override;
+};
+
 } // namespace mlir
 
 #endif // TENSORFLOW_COMPILER_MLIR_TENSORFLOW_TRANSFORMS_TF_LOWER_TO_LLVM_H_

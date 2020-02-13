@@ -387,4 +387,153 @@ MemcpyOpLowering::GetOrInsertMemcpy(
   return SymbolRefAttr::get(c_lib_memcpy, context);
 }
 
+// ---------------------------------------------------------------------
+// CopyResultOp
+//
+namespace {
+
+// first param's type is "1xi64"
+mlir::FlatSymbolRefAttr GetOrInsertCopyResultFunc(
+    mlir::PatternRewriter &rewriter,
+    mlir::ModuleOp module,
+    mlir::LLVM::LLVMDialect *llvm_dialect,
+    const std::vector<int64_t>& params_dims,
+    Type src_ele_type,
+    const std::string& func_name) {
+  auto *context = module.getContext();
+  if (module.lookupSymbol<mlir::LLVM::LLVMFuncOp>(func_name)) {
+    return mlir::SymbolRefAttr::get(func_name, context);
+  }
+
+  auto llvm_I64_type = mlir::LLVM::LLVMType::getInt64Ty(llvm_dialect);
+  auto llvm_I64_ptr_type = mlir::LLVM::LLVMType::getInt64Ty(llvm_dialect).getPointerTo();
+  auto llvm_I32_ptr_type = mlir::LLVM::LLVMType::getInt32Ty(llvm_dialect).getPointerTo();
+  auto llvm_I32_type = mlir::LLVM::LLVMType::getInt32Ty(llvm_dialect);
+  auto llvm_F64_ptr_type = mlir::LLVM::LLVMType::getDoubleTy(llvm_dialect).getPointerTo();
+  auto llvm_F32_ptr_type = mlir::LLVM::LLVMType::getFloatTy(llvm_dialect).getPointerTo();
+
+  SmallVector<LLVM::LLVMType, 4> args_types;
+  args_types.reserve(params_dims.size());
+
+  // first param: "1xi64"
+  auto dest_shape_type = mlir::LLVM::LLVMType::getArrayTy(llvm_I64_type, params_dims[0]);
+  auto dest_type = mlir::LLVM::LLVMType::getStructTy(llvm_dialect,
+    {llvm_I64_ptr_type, llvm_I64_ptr_type, llvm_I64_type, dest_shape_type, dest_shape_type}).getPointerTo();
+  args_types.push_back(dest_type);
+
+  // second param: "?x?x...i32", "?x?x...i64", "?x?x...f32", "?x?x...f64"
+  auto src_shape_type = mlir::LLVM::LLVMType::getArrayTy(llvm_I64_type, params_dims[1]);
+  if (src_ele_type.isInteger(32)) {
+    auto src_type = mlir::LLVM::LLVMType::getStructTy(llvm_dialect,
+      {llvm_I32_ptr_type, llvm_I32_ptr_type, llvm_I64_type, src_shape_type, src_shape_type}).getPointerTo();
+    args_types.push_back(src_type);
+  } else if (src_ele_type.isInteger(64)) {
+    auto src_type = mlir::LLVM::LLVMType::getStructTy(llvm_dialect,
+      {llvm_I64_ptr_type, llvm_I64_ptr_type, llvm_I64_type, src_shape_type, src_shape_type}).getPointerTo();
+    args_types.push_back(src_type); 
+  } else if (src_ele_type.isF32()) {
+    auto src_type = mlir::LLVM::LLVMType::getStructTy(llvm_dialect,
+      {llvm_F32_ptr_type, llvm_F32_ptr_type, llvm_I64_type, src_shape_type, src_shape_type}).getPointerTo();
+    args_types.push_back(src_type);
+  } else if (src_ele_type.isF64()) {
+    auto src_type = mlir::LLVM::LLVMType::getStructTy(llvm_dialect,
+      {llvm_F64_ptr_type, llvm_F64_ptr_type, llvm_I64_type, src_shape_type, src_shape_type}).getPointerTo();
+    args_types.push_back(src_type);
+  } else {
+    assert(false && "GetOrInsertCopyResultFunc: error element type, must be i32, i64, f32, f64");
+  }
+ 
+  auto llvm_fn_type = mlir::LLVM::LLVMType::getFunctionTy(
+      llvm_I64_type,
+      mlir::ArrayRef<mlir::LLVM::LLVMType>(args_types),
+      false);
+
+  mlir::PatternRewriter::InsertionGuard insert_guard(rewriter);
+  rewriter.setInsertionPointToStart(module.getBody());
+  rewriter.create<mlir::LLVM::LLVMFuncOp>(
+      module.getLoc(),
+      func_name,
+      llvm_fn_type);
+
+  return mlir::SymbolRefAttr::get(func_name, context);
+}
+ 
+}
+
+mlir::PatternMatchResult
+CopyResultOpLowering::matchAndRewrite(
+    Operation *op, llvm::ArrayRef<mlir::Value> operands,
+    mlir::ConversionPatternRewriter &rewriter) const {
+  auto loc = op->getLoc();
+  auto *llvm_dialect =
+    op->getContext()->getRegisteredDialect<mlir::LLVM::LLVMDialect>();
+  assert(llvm_dialect && "expected llvm dialect to be registered");
+
+  std::string func_name("_global_set_external_memref_r0");
+  mlir::SmallVector<mlir::Type, 8> operand_types
+      = {op->operand_type_begin(), op->operand_type_end()};
+  if (operand_types.size() != 2) {
+    assert(false && "tf.CopyResult should be passed two params.");
+    return matchFailure();
+  }
+
+  int src_rank = operand_types[1].dyn_cast<MemRefType>().getShape().size();
+  switch (src_rank) {
+    case 0: break;
+    case 1: func_name = "_global_set_external_memref_r1"; break;
+    case 2: func_name = "_global_set_external_memref_r2"; break;
+    case 3: func_name = "_global_set_external_memref_r3"; break;
+    case 4: func_name = "_global_set_external_memref_r4"; break;
+    case 5: func_name = "_global_set_external_memref_r5"; break;
+    default:
+      assert(false && "Now only support from rank-0 to rank-5.");
+      return matchFailure();
+  }
+
+  Type src_type = operand_types[1].dyn_cast<MemRefType>().getElementType();
+  if (src_type.isInteger(32)) {
+    func_name += "_i32";
+  } else if (src_type.isInteger(64)) {
+    func_name += "_i64";
+  } else if (src_type.isF32()) {
+    func_name += "_f32";
+  } else if (src_type.isF64()) {
+    func_name += "_f64";
+  } else {
+    llvm::dbgs() << "Now only support i32, i64, f32, f64 type.\n";
+    return matchFailure();
+  }
+
+  std::vector<int64_t> params_dims;
+  int i = -1;
+  for (auto t : operand_types) {
+    ++i;
+    auto mem_ref_type = t.cast<mlir::MemRefType>();
+    auto mem_ref_shape = mem_ref_type.getShape();
+    int idx = 0;
+    // push back current param's rank
+    params_dims.push_back(mem_ref_shape.size());
+  }
+
+  // CopyResult Op
+  auto external_op = mlir::cast<mlir::TF::CopyResultOp>(op);
+
+  // Get or insert external function to the parent module
+  // dest type always be : tensor<1xi64> / memref<1xi64>
+  mlir::ModuleOp parent_module = op->getParentOfType<mlir::ModuleOp>();
+  auto func_ref = GetOrInsertCopyResultFunc(rewriter, parent_module,
+      llvm_dialect, params_dims, src_type,
+      func_name);
+
+  // Insert callOp to call the external function
+  auto llvm_I64_type = mlir::LLVM::LLVMType::getInt64Ty(llvm_dialect);
+  rewriter.create<mlir::CallOp>(
+      loc, func_ref, llvm_I64_type,
+      mlir::ArrayRef<mlir::Value>({external_op.dest(), external_op.src()}));
+
+  rewriter.eraseOp(op);
+
+  return matchSuccess();
+}
+
 } // namespace mlir

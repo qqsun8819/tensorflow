@@ -36,6 +36,7 @@ void TFAffineLoweringPass::runOnModule() {
   target.addLegalOp<mlir::TF::RawDebugPrintOp>();
   target.addLegalOp<mlir::TF::RawDebugPrint2Op>();
   target.addLegalOp<mlir::TF::MemcpyOp>();
+  target.addLegalOp<mlir::TF::CopyResultOp>();
   // NOTE(jiankeng.pt): Advanced skills: prevent the error of UniqueOp lowering process.
   // Cause the `func` op here has no one legalize pattern.
   // If you don't want the Op with concrete information which you specify
@@ -80,7 +81,6 @@ void TFAffineLoweringPass::runOnModule() {
 
   mlir::OwningRewritePatternList patterns;
   patterns.insert<ConstOpLowering>(&getContext());
-  patterns.insert<CopyResultOpLowering>(&getContext());
 
   auto module = getModule();
   for (auto func : module.getOps<mlir::FuncOp>()) {
@@ -106,6 +106,7 @@ void TFStandardLoweringPass::runOnModule() {
   target.addLegalOp<mlir::TF::RawDebugPrintOp>();
   target.addLegalOp<mlir::TF::RawDebugPrint2Op>();
   target.addLegalOp<mlir::TF::MemcpyOp>();
+  target.addLegalOp<mlir::TF::CopyResultOp>();
 
   mlir::LLVMTypeConverter type_converter(&getContext());
   mlir::OwningRewritePatternList patterns;
@@ -136,6 +137,7 @@ void TFLLVMLoweringPass::runOnModule() {
   patterns.insert<RawDebugPrintOpLowering>(&getContext());
   patterns.insert<CallNdExternalFuncOpLowering>(&getContext());
   patterns.insert<MemcpyOpLowering>(&getContext());
+  patterns.insert<CopyResultOpLowering>(&getContext());
 
   // TODO: here use module pass! 
   auto module = getModule();
