@@ -1,7 +1,7 @@
 // 1) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf-opt
 // 2) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir/tensorflow:tf-mlir-runtime
-// 3) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf_mlir_compiler_lib
-// 4) bazel-bin/tensorflow/compiler/mlir/tf-opt -tf-executor-to-tf-conversion -xla-legalize-tf  -hlo-legalize-to-lhlo -lhlo-legalize-to-linalg -convert-tf-to-affine -convert-linalg-to-affine-loops -lower-affine -convert-std-to-llvm mlir_runtime_results.mlir | bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime -e main_ret1 -entry-point-result=user_define -shared-libs=/home/jiankeng.pt/workspace/tensorflow-bak/bazel-bin/tensorflow/compiler/mlir/libtf_mlir_compiler_lib.so
+// 3) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf_mlir_compiler_util
+// 4) bazel-bin/tensorflow/compiler/mlir/tf-opt -tf-executor-to-tf-conversion -xla-legalize-tf  -hlo-legalize-to-lhlo -lhlo-legalize-to-linalg -convert-tf-to-affine -convert-linalg-to-affine-loops -lower-affine -convert-std-to-llvm mlir_runtime_results.mlir | bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime -e main_ret1 -entry-point-result=user_define -shared-libs=/home/jiankeng.pt/workspace/tensorflow-bak/bazel-bin/tensorflow/compiler/mlir/libtf_mlir_compiler_util.so
 // the function name can be: -e main_ret1 ; -e main_ret2 ; -e main_ret3
 
 module attributes {tf.versions = {bad_consumers = [], min_consumer = 0 : i32, producer = 134 : i32}} {

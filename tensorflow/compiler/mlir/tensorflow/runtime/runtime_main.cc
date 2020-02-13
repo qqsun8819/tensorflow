@@ -20,7 +20,7 @@ limitations under the License.
 // bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime
 //   -e main_1d_i32 | main_1d_i64 | main_2d_i32 | main_2d_i64 | main_2d_f32 | main_2d_f64
 //   -entry-point-result=user_define
-//   -shared-libs=/path/libtf_mlir_compiler_lib.so
+//   -shared-libs=/path/libtf_mlir_mlir_compiler_util.so
 
 #include "tensorflow/compiler/mlir/tensorflow/runtime/dynamic_memref.h"
 #include "tensorflow/core/framework/tensor.h"
@@ -629,7 +629,7 @@ int JitRunnerMainWithArgs(
 // bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime
 //   -e main_1d_i32 | main_1d_i64 | main_2d_i32 | main_2d_i64 | main_2d_f32 | main_2d_f64
 //   -entry-point-result=user_define
-//   -shared-libs=/path/libtf_mlir_compiler_lib.so
+//   -shared-libs=/path/libtf_mlir_compiler_util.so
 //
 int main(int argc, char **argv) {
   return JitRunnerMainWithArgs(argc, argv, nullptr);

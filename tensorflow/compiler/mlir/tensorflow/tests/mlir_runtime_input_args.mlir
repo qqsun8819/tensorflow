@@ -1,7 +1,7 @@
 // 1) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf-opt
 // 2) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir/tensorflow:tf-mlir-runtime
-// 3) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf_mlir_compiler_lib
-// 4) bazel-bin/tensorflow/compiler/mlir/tf-opt -tf-executor-to-tf-conversion -convert-tf-to-affine --convert-tf-to-llvm mlir_runtime_input_args.mlir | bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime -e main_1d_i64 -entry-point-result=user_define -shared-libs=/home/jiankeng.pt/workspace/tensorflow-bak/bazel-bin/tensorflow/compiler/mlir/libtf_mlir_compiler_lib.so
+// 3) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf_mlir_compiler_util
+// 4) bazel-bin/tensorflow/compiler/mlir/tf-opt -tf-executor-to-tf-conversion -convert-tf-to-affine --convert-tf-to-llvm mlir_runtime_input_args.mlir | bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime -e main_1d_i64 -entry-point-result=user_define -shared-libs=/home/jiankeng.pt/workspace/tensorflow-bak/bazel-bin/tensorflow/compiler/mlir/libtf_mlir_compiler_util.so
 // the function name can be: -e main_1d_i64, -e main_2d_f32, -e main_2d_i32, -e main_2d_f64
 
 module attributes {tf.versions = {bad_consumers = [], min_consumer = 0 : i32, producer = 134 : i32}} {
