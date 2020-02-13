@@ -188,6 +188,7 @@ tf_cc_binary(
         "@llvm-project//mlir:Support",
         "@llvm-project//mlir:TranslateClParser",
         "@llvm-project//mlir:Translation",
+        "@llvm-project//mlir:CFGTransforms",
     ],
 )
 
