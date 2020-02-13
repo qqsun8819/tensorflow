@@ -152,9 +152,11 @@ class HloToLhloOpConverter : public ConversionPattern {
       auto result_type = result.getType().dyn_cast<ShapedType>();
       if (!result_type)
         emitError(op->getLoc(), "tensor to buffer conversion expects valid result type");
+      if (!result_type.hasStaticShape())
+        has_dynamic_shape = true; 
     }
    
-    size_t dyn_idx;
+    size_t dyn_idx = 0;
     for (size_t idx = 0; idx < operands.size(); idx++) {
       auto argtype = operands[idx].getType().dyn_cast<ShapedType>();
       if (!argtype.hasStaticShape()) {

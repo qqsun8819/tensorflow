@@ -527,7 +527,19 @@ def MemcpyOp : TF_Op<"Memcpy"> {
   let printer = ?;
 }
 
-def CopyResultOp : TF_Op<"CopyResult"> {
+def TF_DebugPrintOp : TF_Op<"DebugPrint", [NoSideEffect]> {
+  let summary = "call_external_func  operation";
+  let description = [{
+    call external function
+  }];
+
+  // The operation takes an input tensor to print.
+  let arguments = (ins
+      AnyTypeOf<[TF_Tensor]>:$operand
+  );
+}
+
+def TF_CopyResultOp : TF_Op<"CopyResult"> {
   let summary = "Copy memref data from src to dest by call external function.";
   let description = [{
   Copy memref data from src to dest by call external function.

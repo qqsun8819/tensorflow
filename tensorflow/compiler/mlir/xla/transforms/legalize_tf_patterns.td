@@ -351,6 +351,8 @@ def : Pat<(TF_MatMulOp $a, $b, $transpose_a, $transpose_b),
 def : Pat<(TF_ConstOp:$res ElementsAttr:$value), (HLO_ConstOp $value),
           [(HLO_Tensor $res)]>;
 
+def : Pat<(TF_DebugPrintOp AnyTensor:$value), (HLO_DebugPrintOp $value)>;
+
 //===----------------------------------------------------------------------===//
 // Relu op patterns.
 //===----------------------------------------------------------------------===//
