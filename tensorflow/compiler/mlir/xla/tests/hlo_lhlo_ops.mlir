@@ -1,6 +1,7 @@
 // bazel-bin/tensorflow/compiler/mlir/tf-opt tensorflow/compiler/mlir/xla/tests/hlo_lhlo_ops.mlir --xla-legalize-tf|bazel-bin/tensorflow/compiler/mlir/tf-opt -hlo-legalize-to-lhlo --lhlo-legalize-to-linalg --lhlo-legalize-to-std --convert-linalg-to-affine-loops  --lower-affine  --convert-loop-to-std --convert-std-to-llvm|bazel-bin/external/llvm-project/mlir/mlir-cpu-runner -e main -entry-point-result=void -shared-libs=bazel-bin/tensorflow/compiler/mlir/libtf_mlir_compiler_util.so
 
-func @main() {
+module attributes {tf.versions = {bad_consumers = [], min_consumer = 0 : i32, producer = 134 : i32}} {
+  func @main() {
 	// Add/Sub/Mul/Div
     %0 = "tf.Const"() {value = dense<[[34, 35, 55], [12, 13, 33]]> : tensor<2x3xi64>} : () -> tensor<2x3xi64>
     %1 = "tf.Const"() {value = dense<[[30, 31, 11], [36, 78, 77]]> : tensor<2x3xi64>} : () -> tensor<2x3xi64>
@@ -106,9 +107,6 @@ func @main() {
     %cmp5 = "xla_hlo.compare"(%add_cmp5, %add_cmp6) {comparison_direction = "LT"} : (tensor<?x?xf32>, tensor<?x?xf32>) -> tensor<?x?xi1>
 	"xla_hlo.debug_print"(%cmp5) : (tensor<?x?xi1>) -> ()
 
-
-
-   
- 
-return
+    return
+  }
 }
