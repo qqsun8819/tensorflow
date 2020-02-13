@@ -149,11 +149,18 @@ cc_library(
     name = "tf_mlir_compiler_util",
     srcs = ["compile_util.cc"],
     hdrs = ["compile_util.h"],
+    )
+
+cc_library(
+    name = "tf_mlir_external_copy_results",
+    srcs = ["external_copy_results.cc"],
+    hdrs = ["external_copy_results.h"],
     deps = [
-        "//tensorflow/core:framework",
+      "//tensorflow/core:framework",
         "//tensorflow/core:lib",
     ],
     )
+
 
 tf_cc_binary(
     name = "tf-mlir-compiler",
