@@ -97,51 +97,14 @@ std::vector<int64_t> MakeStrides(const std::vector<int64_t>& shape) {
 
 }
 
-// For get result tensor from compiled function
-struct ResultTensorWrapper {
-  ResultTensorWrapper() {
-    result_tensor_addr_saver_ = (int64_t*)malloc(sizeof(int64_t));
-    *result_tensor_addr_saver_ = 0;
-    result_tensor_addr2_saver_ = (int64_t**)malloc(sizeof(int64_t*));
-    *result_tensor_addr2_saver_ = result_tensor_addr_saver_;
-    int64_t result_addr2_i64 = (int64_t)(result_tensor_addr2_saver_);
-    result_addr2_i64_pointer_ = (int64_t*)malloc(sizeof(int64_t));
-    *result_addr2_i64_pointer_ = result_addr2_i64;
-  }
-
-  ~ResultTensorWrapper() {
-    // NOTE(jiankeng.pt):
-    // delete tensor, tensor should be copied before ~ResultTensorWrapper() be called
-    tensorflow::Tensor* t = (tensorflow::Tensor*)(*result_tensor_addr_saver_);
-    delete t;
-
-    delete result_tensor_addr_saver_;
-    delete result_tensor_addr2_saver_;
-    delete result_addr2_i64_pointer_;
-    result_tensor_addr_saver_ = nullptr;
-    result_tensor_addr2_saver_ = nullptr;
-    result_addr2_i64_pointer_ = nullptr;
-  }
-
-  void* GetArg() {
-    return (void*)(result_addr2_i64_pointer_);
-  }
-
-  tensorflow::Tensor* GetResultTensorPointer() {
-    if (*result_tensor_addr_saver_ == 0) {
-      LOG(FATAL) << "Get result tensor from compiled function failed.";
-    }
-    return (tensorflow::Tensor*)(*result_tensor_addr_saver_);
-  }
-
-  int64_t* result_tensor_addr_saver_;
-  int64_t** result_tensor_addr2_saver_;
-  int64_t* result_addr2_i64_pointer_;
-};
-
 // For input args which are passed to compiled function
 template <int N>
 struct InputTensorWrapper {
+  InputTensorWrapper() {
+    memref_wrapper_pointer_ = nullptr;
+    memref_wrapper_pointer2_ = nullptr;
+  }
+
   InputTensorWrapper(tensorflow::Tensor& arg) {
     int64_t rank = arg.shape().dims();
     if (rank != N) {
@@ -197,6 +160,43 @@ struct InputTensorWrapper {
 
   MemRefWrapper<N>* memref_wrapper_pointer_;
   MemRefWrapper<N>** memref_wrapper_pointer2_;
+};
+
+// For get result tensor from compiled function
+struct ResultTensorWrapper {
+  ResultTensorWrapper() {
+    result_tensor_addr_saver_ = (int64_t*)malloc(sizeof(int64_t));
+    *result_tensor_addr_saver_ = 0;
+    result_tensor_addr2_saver_ = (int64_t*)malloc(sizeof(int64_t));
+    *result_tensor_addr2_saver_ = (int64_t)result_tensor_addr_saver_;
+    std::vector<int64_t> shape;
+    shape.push_back(1);
+    result_tensor_ = new InputTensorWrapper<1>(result_tensor_addr2_saver_, shape);
+  }
+
+  ~ResultTensorWrapper() {
+    delete result_tensor_addr_saver_;
+    delete result_tensor_addr2_saver_;
+    delete result_tensor_;
+    result_tensor_addr_saver_ = nullptr;
+    result_tensor_addr2_saver_ = nullptr;
+    result_tensor_ = nullptr;
+  }
+
+  void* GetArg() {
+    return result_tensor_->GetArg();
+  }
+
+  tensorflow::Tensor* GetResultTensorPointer() {
+    if (*result_tensor_addr_saver_ == 0) {
+      LOG(FATAL) << "Get result tensor from compiled function failed.";
+    }
+    return (tensorflow::Tensor*)(*result_tensor_addr_saver_);
+  }
+
+  int64_t* result_tensor_addr_saver_;
+  int64_t* result_tensor_addr2_saver_;
+  InputTensorWrapper<1>* result_tensor_;
 };
 
 } // namespace mlir

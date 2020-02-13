@@ -60,9 +60,9 @@ typedef enum {
 } RElementType;
 
 template <int N>
-void set_external_memref(int64_t dest, RRawMemRef<N>* src, int ele_type) {
-  int64_t* dest_addr = (int64_t*)dest;
-  int64_t* dest_addr_addr = (int64_t*)((int64_t)(*dest_addr));
+void set_external_memref(RRawMemRef<1>* dest, RRawMemRef<N>* src, int ele_type) {
+  int64_t dest_addr = *((int64_t*)(dest->aligned_ptr));
+  int64_t* dest_addr_addr = (int64_t*)(dest_addr);
 
   // TODO: consider strides
 
@@ -101,78 +101,79 @@ void set_external_memref(int64_t dest, RRawMemRef<N>* src, int ele_type) {
 
 // Rank=0
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r0_i32(int64_t dest, RRawMemRef<0>* src);
+_global_set_external_memref_r0_i32(RRawMemRef<1>* dest, RRawMemRef<0>* src);
 // Rank=1
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r1_i32(int64_t dest, RRawMemRef<1>* src);
+_global_set_external_memref_r1_i32(RRawMemRef<1>* dest, RRawMemRef<1>* src);
 // Rank=2
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r2_i32(int64_t dest, RRawMemRef<2>* src);
+_global_set_external_memref_r2_i32(RRawMemRef<1>* dest, RRawMemRef<2>* src);
 // Rank=3
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r3_i32(int64_t dest, RRawMemRef<3>* src);
+_global_set_external_memref_r3_i32(RRawMemRef<1>* dest, RRawMemRef<3>* src);
 // Rank=4
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r4_i32(int64_t dest, RRawMemRef<4>* src);
+_global_set_external_memref_r4_i32(RRawMemRef<1>* dest, RRawMemRef<4>* src);
 // Rank=5
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r5_i32(int64_t dest, RRawMemRef<5>* src);
+_global_set_external_memref_r5_i32(RRawMemRef<1>* dest, RRawMemRef<5>* src);
 
 // Rank=0
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r0_i64(int64_t dest, RRawMemRef<0>* src);
+_global_set_external_memref_r0_i64(RRawMemRef<1>* dest, RRawMemRef<0>* src);
 // Rank=1
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r1_i64(int64_t dest, RRawMemRef<1>* src);
+_global_set_external_memref_r1_i64(RRawMemRef<1>* dest, RRawMemRef<1>* src);
 // Rank=2
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r2_i64(int64_t dest, RRawMemRef<2>* src);
+_global_set_external_memref_r2_i64(RRawMemRef<1>* dest, RRawMemRef<2>* src);
 // Rank=3
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r3_i64(int64_t dest, RRawMemRef<3>* src);
+_global_set_external_memref_r3_i64(RRawMemRef<1>* dest, RRawMemRef<3>* src);
 // Rank=4
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r4_i64(int64_t dest, RRawMemRef<4>* src);
+_global_set_external_memref_r4_i64(RRawMemRef<1>* dest, RRawMemRef<4>* src);
 // Rank=5
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r5_i64(int64_t dest, RRawMemRef<5>* src);
+_global_set_external_memref_r5_i64(RRawMemRef<1>* dest, RRawMemRef<5>* src);
 
 // Rank=0
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r0_f32(int64_t dest, RRawMemRef<0>* src);
+_global_set_external_memref_r0_f32(RRawMemRef<1>* dest, RRawMemRef<0>* src);
 // Rank=1
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r1_f32(int64_t dest, RRawMemRef<1>* src);
+_global_set_external_memref_r1_f32(RRawMemRef<1>* dest, RRawMemRef<1>* src);
 // Rank=2
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r2_f32(int64_t dest, RRawMemRef<2>* src);
+_global_set_external_memref_r2_f32(RRawMemRef<1>* dest, RRawMemRef<2>* src);
 // Rank=3
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r3_f32(int64_t dest, RRawMemRef<3>* src);
+_global_set_external_memref_r3_f32(RRawMemRef<1>* dest, RRawMemRef<3>* src);
 // Rank=4
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r4_f32(int64_t dest, RRawMemRef<4>* src);
+_global_set_external_memref_r4_f32(RRawMemRef<1>* dest, RRawMemRef<4>* src);
 // Rank=5
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r5_f32(int64_t dest, RRawMemRef<5>* src);
+_global_set_external_memref_r5_f32(RRawMemRef<1>* dest, RRawMemRef<5>* src);
 
 // Rank=0
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r0_f64(int64_t dest, RRawMemRef<0>* src);
+_global_set_external_memref_r0_f64(RRawMemRef<1>* dest, RRawMemRef<0>* src);
 // Rank=1
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r1_f64(int64_t dest, RRawMemRef<1>* src);
+_global_set_external_memref_r1_f64(RRawMemRef<1>* dest, RRawMemRef<1>* src);
 // Rank=2
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r2_f64(int64_t dest, RRawMemRef<2>* src);
+_global_set_external_memref_r2_f64(RRawMemRef<1>* dest, RRawMemRef<2>* src);
 // Rank=3
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r3_f64(int64_t dest, RRawMemRef<3>* src);
+_global_set_external_memref_r3_f64(RRawMemRef<1>* dest, RRawMemRef<3>* src);
 // Rank=4
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r4_f64(int64_t dest, RRawMemRef<4>* src);
+_global_set_external_memref_r4_f64(RRawMemRef<1>* dest, RRawMemRef<4>* src);
 // Rank=5
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
-_global_set_external_memref_r5_f64(int64_t dest, RRawMemRef<5>* src);
+_global_set_external_memref_r5_f64(RRawMemRef<1>* dest, RRawMemRef<5>* src);
+
 
 #endif TENSORFLOW_COMPILER_MLIR_EXTERNAL_COPY_RESULTS_H

@@ -139,13 +139,25 @@ CopyResultOpLowering::matchAndRewrite(
 
   std::vector<Type> result_types;
   std::vector<Type> input_types;
-  input_types.push_back(IntegerType::get(64, context));
+
   auto src_memref_type = op.src().getType();
-  auto ele_type = src_memref_type.dyn_cast<MemRefType>();
-  if (!ele_type) {
+  auto dest_memref_type = op.dest().getType();
+  auto src_ele_type = src_memref_type.dyn_cast<MemRefType>();
+  auto dest_ele_type = dest_memref_type.dyn_cast<MemRefType>();
+
+  if (!dest_ele_type) {
+    auto dest_tensor_type = dest_memref_type.dyn_cast<RankedTensorType>();
+    auto dest_real_memref = ConvertTensorToMemRef(dest_tensor_type);
+    dest_ele_type = dest_real_memref;
+    input_types.push_back(dest_real_memref);
+  } else {
+    input_types.push_back(dest_memref_type);
+  }
+
+  if (!src_ele_type) {
     auto src_tensor_type = src_memref_type.dyn_cast<RankedTensorType>();
     auto src_real_memref = ConvertTensorToMemRef(src_tensor_type);
-    ele_type = src_real_memref;
+    src_ele_type = src_real_memref;
     input_types.push_back(src_real_memref);
   } else {
     input_types.push_back(src_memref_type);
@@ -153,7 +165,7 @@ CopyResultOpLowering::matchAndRewrite(
 
   // TODO: unknow rank case ?
   //
-  int rank = ele_type.getRank();
+  int rank = src_ele_type.getRank();
   std::string func_name("_global_set_external_memref_r0");
   switch (rank) {
     case 0: break;
@@ -169,19 +181,19 @@ CopyResultOpLowering::matchAndRewrite(
 
   //input_types.push_back(IntegerType::get(32, context));
   Value vtype = nullptr;
-  if (ele_type.getElementType().isInteger(32)) {
+  if (src_ele_type.getElementType().isInteger(32)) {
     vtype = rewriter.create<ConstantOp>(
         loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 0));
     func_name += "_i32";
-  } else if (ele_type.getElementType().isInteger(64)) {
+  } else if (src_ele_type.getElementType().isInteger(64)) {
     vtype = rewriter.create<ConstantOp>(
         loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 1));
     func_name += "_i64";
-  } else if (ele_type.getElementType().isF32()) {
+  } else if (src_ele_type.getElementType().isF32()) {
     vtype = rewriter.create<ConstantOp>(
         loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 2));
     func_name += "_f32";
-  } else if (ele_type.getElementType().isF64()) {
+  } else if (src_ele_type.getElementType().isF64()) {
     vtype = rewriter.create<ConstantOp>(
         loc, rewriter.getIntegerAttr(IntegerType::get(32, context), 3));
     func_name += "_f64";

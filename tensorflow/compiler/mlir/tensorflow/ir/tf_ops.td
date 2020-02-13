@@ -545,7 +545,7 @@ def TF_CopyResultOp : TF_Op<"CopyResult"> {
   Copy memref data from src to dest by call external function.
   }];
 
-  let arguments = (ins I64:$dest, AnyTypeOf<[AnyMemRef, AnyTensor]>:$src);
+  let arguments = (ins AnyTypeOf<[I64Tensor, I64MemRef]>:$dest, AnyTypeOf<[AnyMemRef, AnyTensor]>:$src);
 
   let parser = ?;
   let printer = ?;
