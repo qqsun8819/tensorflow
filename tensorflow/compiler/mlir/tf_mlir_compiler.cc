@@ -67,7 +67,6 @@ Status SimpleMlirCompiler::CompileGraphDef()   {
   applyPassManagerCLOptions(pm);
   pm.addPass(mlir::CreateTFExecutorToTFDialectConversion());
   pm.addPass(mlir::CreateTFLowerToAffinePass());
-  pm.addPass(mlir::CreateTFLowerToLLVMPass());
   pm.addPass(mlir::createLowerAffinePass());
   pm.addPass(mlir::createLowerToLLVMPass());
 

@@ -147,8 +147,10 @@ void ExecutorToTFDialectConversion::runOnFunction() {
           SmallVector<Value, 4> operands;
           operands.append(wrapped_op.getOperands().begin(),
                           wrapped_op.getOperands().end());
-          auto callfunc_op = builder.create<TF::UniqueOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
-         // wrapped_op.getResult(0)->replaceAllUsesWith(callfunc_op);
+          auto callfunc_op = builder.create<TF::UniqueOp>(wrapped_op.getLoc(), 
+              wrapped_op.getResultTypes()[0], wrapped_op.getResultTypes()[1], wrapped_op.getOperand(0));
+          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op.getResult(0));
+          wrapped_op.getResult(1).replaceAllUsesWith(callfunc_op.getResult(1));
         } else if (state.name.getStringRef() == "_tf.Reshape") {
           SmallVector<Type, 4> result_types;
           result_types.append(wrapped_op.getResultTypes().begin(),

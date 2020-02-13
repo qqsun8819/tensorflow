@@ -245,6 +245,34 @@ static Error compileAndExecuteFunctionWithArgs(
       return error;
   }
 
+  // test unique with int64
+  if (mainFuncName.getValue() == "main_unqiue_1d64") {
+    std::cout << "Now testing `1-D unique int64_t` case\n";
+    int count = 10;
+    int64_t* ptr = (int64_t*)malloc(sizeof(int64_t)*count);
+    for (int i = 0; i < 3; ++i) {
+      *(ptr+i) = 1 ;
+    }
+    for (int i = 3; i < 6; ++i) {
+      *(ptr+i) = 2; 
+    }
+    for (int i = 6; i < count; ++i) {
+      *(ptr+i) = 5; 
+    }
+ 
+    std::vector<int64_t> shape;
+    shape.push_back(count);
+
+    mlir::runtime::InputTensorWrapper<1> input_tensor(ptr, shape);
+    void* args_pointer = input_tensor.GetArg();
+
+    if (auto error =
+        compileAndExecute(module, entryPoint, transformer, ((void**)&args_pointer)))
+      return error;
+  }
+
+
+
   // 2) Test 2-D f32
   if (mainFuncName.getValue() == "main_2d_f32") {
     std::cout << "Now testing `2-D f32` case\n";
