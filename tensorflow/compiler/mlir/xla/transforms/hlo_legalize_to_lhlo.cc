@@ -32,6 +32,8 @@ limitations under the License.
 #include "tensorflow/compiler/mlir/xla/ir/lhlo_ops.h"
 #include "tensorflow/compiler/mlir/xla/transforms/passes.h"
 #include "tensorflow/compiler/mlir/xla/transforms/rewriters.h"
+#include "tensorflow/compiler/mlir/tensorflow/ir/tf_ops.h"
+
 
 namespace mlir {
 namespace xla_hlo {
@@ -382,11 +384,11 @@ struct HloLegalizeToLhlo : public ModulePass<HloLegalizeToLhlo> {
     target.addLegalDialect<xla_lhlo::XlaLhloDialect>();
     target.addLegalDialect<StandardOpsDialect>();
     target.addLegalOp<ModuleOp>();
-    target.addIllegalOp<mlir::ReturnOp>();
+    target.addLegalOp<mlir::ReturnOp>();
     target.addIllegalOp<mlir::TensorLoadOp>();
     target.addIllegalOp<mlir::TensorStoreOp>();
     target.addLegalOp<ModuleTerminatorOp>();
-    // target.addLegalOp<xla_hlo::DebugPrintOp>();
+    target.addLegalOp<TF::CopyResultOp>();
     target.addIllegalDialect<xla_hlo::XlaHloDialect>();
     target.addDynamicallyLegalOp<FuncOp>([&](FuncOp op) {
       auto inputs = op.getType().getInputs();
@@ -518,8 +520,8 @@ void populateHLOToLHLOConversionPattern(MLIRContext* context,
       HloToLhloOpConverter<xla_hlo::DebugPrintOp, xla_lhlo::DebugPrintOp>,
       HloToLHloUniqueIdsOpConverter,
       HloToLhloTensorLoadOpConverter,
-      HloToLhloTensorStoreOpConverter,
-      StdToLhloReturnOpConverter
+      HloToLhloTensorStoreOpConverter
+      // StdToLhloReturnOpConverter
   >(context);
   // clang-format on
 }

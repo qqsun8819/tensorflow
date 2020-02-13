@@ -33,6 +33,8 @@ limitations under the License.
 #include "mlir/Transforms/DialectConversion.h"  // TF:llvm-project
 #include "tensorflow/compiler/mlir/xla/ir/lhlo_ops.h"
 #include "tensorflow/compiler/mlir/xla/transforms/map_xla_to_scalar_op.h"
+#include "tensorflow/compiler/mlir/tensorflow/ir/tf_ops.h"
+
 
 namespace mlir {
 namespace {
@@ -467,11 +469,69 @@ class ConstConverter : public OpConversionPattern<xla_lhlo::ConstOp> {
   }
 };
 
+
+// Support scalar and shaped type
+class RankedConstConverter : public OpConversionPattern<xla_lhlo::ConstOp> {
+  public:
+    using OpConversionPattern<xla_lhlo::ConstOp>::OpConversionPattern;
+
+    PatternMatchResult matchAndRewrite(
+        xla_lhlo::ConstOp constOp, ArrayRef<Value> args,
+        ConversionPatternRewriter& rewriter) const final {
+      auto loc = constOp.getLoc();
+      auto valueAttr = constOp.value().cast<DenseElementsAttr>();
+      // Shaped type
+      if (valueAttr.getType().getRank() != 0) {
+        auto tensor_type = valueAttr.getType().cast<mlir::TensorType>();
+        auto mem_ref_type = mlir::MemRefType::get(tensor_type.getShape(), tensor_type.getElementType());
+        auto value_shape = mem_ref_type.getShape();
+        auto element_type = tensor_type.getElementType();
+
+        auto max_dim = *std::max_element(value_shape.begin(), value_shape.end());
+        mlir::SmallVector<mlir::Value, 8> constant_indices;
+        for (int64_t i = 0; i < max_dim; ++i) {
+          auto value_idx = rewriter.create<mlir::ConstantIndexOp>(loc, i);
+          constant_indices.push_back(value_idx);
+        }
+
+        // TODO: FIXME ?
+        auto value_it = valueAttr.getValues<mlir::IntegerAttr>().begin();
+        auto value_end = valueAttr.getValues<mlir::IntegerAttr>().end();
+        mlir::SmallVector<mlir::Value, 2> indices;
+        std::function<void(uint64_t)> store_elements = [&](uint64_t dimension) {
+          if (dimension == value_shape.size()) {
+            auto std_const_op = rewriter.create<mlir::ConstantOp>(loc, *value_it);
+            rewriter.create<mlir::StoreOp>(loc, std_const_op, args[0], llvm::makeArrayRef(indices));
+            ++value_it;
+            return;
+          }
+
+          for (int64_t i = 0; i < value_shape[dimension]; ++i) {
+            indices.push_back(constant_indices[i]);
+            store_elements(dimension + 1);
+            indices.pop_back();
+          }
+        };
+
+        store_elements(0);
+
+        rewriter.eraseOp(constOp);
+      } else {
+        // Scalar type
+        auto stdConstOp =
+          rewriter.create<mlir::ConstantOp>(loc, valueAttr.getValue({}));
+        rewriter.create<mlir::StoreOp>(loc, stdConstOp, constOp.getOperand());
+        rewriter.eraseOp(constOp);
+      }
+      return matchSuccess();
+    }
+};
+
 void populateLHLOToLinalgConversionPattern(MLIRContext* context,
                                            OwningRewritePatternList* patterns) {
   // clang-format off
   patterns->insert<BroadcastInDimConverter,
-                   ConstConverter,
+                   RankedConstConverter,
                    IotaConverter,
                    PointwiseToLinalgConverter<xla_lhlo::AbsOp>,
                    PointwiseToLinalgConverter<xla_lhlo::AddOp>,
@@ -550,7 +610,7 @@ struct LhloLegalizeToLinalg : public FunctionPass<LhloLegalizeToLinalg> {
     OwningRewritePatternList patterns;
     ConversionTarget target(getContext());
     target.addLegalDialect<linalg::LinalgDialect, StandardOpsDialect>();
-    // target.addLegalOp<TF::CopyResultOp>();
+    target.addLegalOp<TF::CopyResultOp>();
 
     auto func = getFunction();
     populateLHLOToLinalgConversionPattern(func.getContext(), &patterns);

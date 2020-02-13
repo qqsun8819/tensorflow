@@ -173,6 +173,7 @@ cc_library(
     deps = [
         ":hlo",
         ":lhlo",
+         "//tensorflow/compiler/mlir/tensorflow",
         "@com_google_absl//absl/memory",
         "@llvm-project//llvm:support",
         "@llvm-project//mlir:IR",
@@ -226,6 +227,7 @@ cc_library(
     deps = [
         ":hlo",
         ":lhlo",
+         "//tensorflow/compiler/mlir/tensorflow",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@llvm-project//mlir:IR",
