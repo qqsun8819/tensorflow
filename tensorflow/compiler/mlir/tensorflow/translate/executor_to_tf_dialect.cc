@@ -186,7 +186,20 @@ void ExecutorToTFDialectConversion::runOnFunction() {
                           wrapped_op.getOperands().end());
           auto callfunc_op = builder.create<TF::DebugPrintOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
           // wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
-        } else {
+        } else if (state.name.getStringRef() == "_tf.RawDebugPrint") {
+          auto callfunc_op = builder.create<TF::RawDebugPrintOp>(
+              wrapped_op.getLoc(), wrapped_op.getOperand(0).getType(), wrapped_op.getOperand(0), wrapped_op.getOperand(1));          
+          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);        
+        } else if (state.name.getStringRef() == "_tf.RawDebugPrint2") {
+          SmallVector<Type, 4> result_types;
+          result_types.append(wrapped_op.getResultTypes().begin(),
+                              wrapped_op.getResultTypes().end());
+          SmallVector<Value, 4> operands;
+          operands.append(wrapped_op.getOperands().begin(),
+                          wrapped_op.getOperands().end());
+          auto callfunc_op = builder.create<TF::RawDebugPrint2Op>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
+          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
+        }else {
 
           auto *replacement = builder.createOperation(state);
           replacement->setAttrs(wrapped_op.getAttrList());

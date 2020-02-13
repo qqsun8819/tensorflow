@@ -1,5 +1,0 @@
-
-node {
-  name: "A_CallExternalFuncOp"
-  op: "CallExternalFunc"
-}

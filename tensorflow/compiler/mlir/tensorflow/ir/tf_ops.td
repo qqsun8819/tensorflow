@@ -551,4 +551,52 @@ def TF_CopyResultOp : TF_Op<"CopyResult"> {
   let printer = ?;
 }
 
+// For test, delete later
+def TF_RawDebugPrintOp : TF_Op<"RawDebugPrint", [NoSideEffect]> {
+  let summary = "call_external_func  operation";
+  let description = [{
+    call external function
+  }];
+
+  // The operation takes an input tensor to print.
+  let arguments = (ins
+    AnyTypeOf<[TF_NumberTensor, I64MemRef, I32MemRef]>:$x,
+    AnyTypeOf<[TF_NumberTensor, I64MemRef, I32MemRef]>:$y
+  );
+
+  let results = (outs
+    AnyTypeOf<[TF_NumberTensor, I64MemRef, I32MemRef]>:$z
+  );
+
+  let builders = [
+    OpBuilder<"Builder* builder, OperationState& result, Value lhs, Value rhs">
+  ];
+
+  TF_DerivedOperandTypeAttr T = TF_DerivedOperandTypeAttr<0>;
+}
+
+// For test, delete later
+def TF_RawDebugPrint2Op : TF_Op<"RawDebugPrint2", [NoSideEffect]> {
+  let summary = "call_external_func  operation";
+  let description = [{
+    call external function
+  }];
+
+  // The operation takes an input tensor to print.
+  let arguments = (ins
+    AnyTypeOf<[TF_NumberTensor, I32MemRef, I64MemRef]>:$x,
+    AnyTypeOf<[TF_NumberTensor, I32MemRef, I64MemRef]>:$y
+  );
+
+  let results = (outs
+    AnyTypeOf<[TF_NumberTensor, I32MemRef, I64MemRef]>:$z
+  );
+
+  let builders = [
+    OpBuilder<"Builder* builder, OperationState& result, Type result_type, Value lhs, Value rhs, Attribute value">
+  ];
+
+  TF_DerivedOperandTypeAttr T = TF_DerivedOperandTypeAttr<0>;
+}
+
 #endif // TF_OPS

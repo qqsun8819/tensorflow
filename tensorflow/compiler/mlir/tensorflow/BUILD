@@ -293,6 +293,7 @@ cc_library(
         "transforms/tpu_variable_runtime_reformatting.cc",
         "transforms/tf_lower_pass.cc",
         "transforms/tf_lower_to_affine.cc",
+        "transforms/tf_lower_to_llvm.cc",
         "translate/breakup-islands.cc",
         "translate/control_to_executor_dialect.cc",
         "translate/executor_to_control_dialect.cc",
@@ -306,6 +307,7 @@ cc_library(
         "transforms/shape_inference.h",
         "transforms/tf_lower_pass.h",
         "transforms/tf_lower_to_affine.h",
+        "transforms/tf_lower_to_llvm.h",
     ],
     includes = ["include"],
     deps = [

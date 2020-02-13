@@ -1942,20 +1942,4 @@ REGISTER_OP("SobolSample")
       return Status::OK();
     });
 
-REGISTER_OP("CallExternalFunc")
-    .Input("x: T")
-    .Input("y: T")
-    .Output("z: T")
-    .Attr(
-        "T: {bfloat16, half, float, double, uint8, int8, int16, int32, int64}")
-    .SetShapeFn(shape_inference::BroadcastBinaryOpShapeFn);
-
-REGISTER_OP("CallExternalFunc2")
-    .Input("x: T")
-    .Input("y: T")
-    .Output("z: T")
-    .Attr(
-        "T: {bfloat16, half, float, double, uint8, int8, int16, int32, int64}")
-    .SetShapeFn(shape_inference::BroadcastBinaryOpShapeFn);
-    
 }  // namespace tensorflow

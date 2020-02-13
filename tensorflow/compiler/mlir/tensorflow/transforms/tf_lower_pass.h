@@ -16,6 +16,7 @@ limitations under the License.
 #ifndef TENSORFLOW_COMPILER_MLIR_TENSORFLOW_TRANSFORMS_TF_LOWER_PASS_H_
 #define TENSORFLOW_COMPILER_MLIR_TENSORFLOW_TRANSFORMS_TF_LOWER_PASS_H_
 
+#include "tensorflow/compiler/mlir/tensorflow/transforms/tf_lower_to_llvm.h"
 #include "tensorflow/compiler/mlir/tensorflow/transforms/tf_lower_to_affine.h"
 #include "mlir/Dialect/AffineOps/AffineOps.h"
 #include "mlir/Dialect/StandardOps/Ops.h"

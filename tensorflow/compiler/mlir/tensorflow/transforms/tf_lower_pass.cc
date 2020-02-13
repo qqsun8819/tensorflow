@@ -33,6 +33,8 @@ void TFAffineLoweringPass::runOnModule() {
                          mlir::StandardOpsDialect>();
   target.addIllegalDialect<mlir::TF::TensorFlowDialect>();
   mlir::LLVMTypeConverter type_converter(&getContext());
+  target.addLegalOp<mlir::TF::RawDebugPrintOp>();
+  target.addLegalOp<mlir::TF::RawDebugPrint2Op>();
   target.addLegalOp<mlir::TF::MemcpyOp>();
   // NOTE(jiankeng.pt): Advanced skills: prevent the error of UniqueOp lowering process.
   // Cause the `func` op here has no one legalize pattern.
@@ -101,6 +103,9 @@ void TFStandardLoweringPass::runOnModule() {
   target.addLegalOp<mlir::ModuleOp, mlir::FuncOp,
                     mlir::ModuleTerminatorOp>();
   target.addIllegalDialect<mlir::TF::TensorFlowDialect>();
+  target.addLegalOp<mlir::TF::RawDebugPrintOp>();
+  target.addLegalOp<mlir::TF::RawDebugPrint2Op>();
+  target.addLegalOp<mlir::TF::MemcpyOp>();
 
   mlir::LLVMTypeConverter type_converter(&getContext());
   mlir::OwningRewritePatternList patterns;
@@ -115,6 +120,31 @@ void TFStandardLoweringPass::runOnModule() {
   }
 }
 
+void TFLLVMLoweringPass::runOnModule() {
+  mlir::ConversionTarget target(getContext());
+  target.addLegalDialect<mlir::LLVM::LLVMDialect>();
+  target.addLegalOp<mlir::ModuleOp, mlir::ModuleTerminatorOp>();
+  target.addIllegalDialect<mlir::TF::TensorFlowDialect>();
+
+  mlir::LLVMTypeConverter type_converter(&getContext());
+
+  mlir::OwningRewritePatternList patterns;
+  mlir::populateAffineToStdConversionPatterns(patterns, &getContext());
+  mlir::populateLoopToStdConversionPatterns(patterns, &getContext());
+  mlir::populateStdToLLVMConversionPatterns(type_converter, patterns);
+
+  patterns.insert<RawDebugPrintOpLowering>(&getContext());
+  patterns.insert<CallNdExternalFuncOpLowering>(&getContext());
+  patterns.insert<MemcpyOpLowering>(&getContext());
+
+  // TODO: here use module pass! 
+  auto module = getModule();
+  if (mlir::failed(mlir::applyFullConversion(module, target,
+                                             patterns, &type_converter))) {
+    signalPassFailure();
+  }
+}
+
 std::unique_ptr<mlir::Pass> CreateTFLowerToAffinePass() {
   return std::make_unique<TFAffineLoweringPass>();
 }
@@ -123,6 +153,9 @@ std::unique_ptr<mlir::Pass> CreateTFLowerToStdPass() {
   return std::make_unique<TFStandardLoweringPass>();
 }
 
+std::unique_ptr<mlir::Pass> CreateTFLowerToLLVMPass() {
+  return std::make_unique<TFLLVMLoweringPass>();
+}
 
 } // namespace mlir
 
@@ -133,3 +166,8 @@ static mlir::PassRegistration<mlir::TFAffineLoweringPass> pass1(
 static mlir::PassRegistration<mlir::TFStandardLoweringPass> pass3(
         "convert-tf-to-std",
             "Convert from TF dialect to std dialect");
+
+static mlir::PassRegistration<mlir::TFLLVMLoweringPass> pass2(
+        "convert-tf-to-llvm",
+            "Convert from TF dialect to affine dialect");
+
