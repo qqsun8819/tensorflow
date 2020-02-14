@@ -26,6 +26,7 @@ REGISTER_OP("_MlirRun")
     .Attr("Targs: list(type) >= 0")
     .Output("results: Tresults")
     .Attr("Tresults: list(type) >= 0")
+    .Attr("compiled_func_name: string")
     .SetIsStateful()
     .Doc(R"(MLIR Run Op. For use by the MLIR JIT only.
 
