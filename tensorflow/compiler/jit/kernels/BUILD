@@ -52,3 +52,23 @@ cc_library(
     ],
     alwayslink = 1,
 )
+
+cc_library(
+    name = "mlir_ops",
+    hdrs = ["mlir_ops.h"],
+    srcs = ["mlir_ops.cc"],
+    deps = [
+        "//tensorflow/core:core_cpu_internal",
+        "//tensorflow/core:framework",
+        "//tensorflow/core:lib",
+        "//tensorflow/core:state_ops_op_lib",
+        "//tensorflow/core:stream_executor_no_cuda",
+        "//tensorflow/core/profiler/lib:traceme",
+        "//tensorflow/stream_executor:tf_allocator_adapter",
+        "//tensorflow/compiler/mlir/tensorflow:runtime",
+        "@llvm-project//mlir:ExecutionEngineUtils",
+        "@llvm-project//mlir:ExecutionEngine",
+    ],
+    alwayslink = 1,
+)
+

@@ -627,6 +627,7 @@ cc_library(
         "//tensorflow/cc:scope_internal",
         "//tensorflow/compiler/jit/graphcycles",
         "//tensorflow/compiler/jit/ops:xla_ops",
+        "//tensorflow/compiler/jit/ops:mlir_ops",
         "//tensorflow/compiler/tf2xla:resource_operation_table",
         "//tensorflow/compiler/tf2xla:side_effect_util",
         "//tensorflow/compiler/tf2xla:tf2xla_util",
