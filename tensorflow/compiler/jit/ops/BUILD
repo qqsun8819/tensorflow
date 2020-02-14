@@ -12,6 +12,13 @@ cc_library(
     alwayslink = 1,
 )
 
+cc_library(
+    name = "mlir_ops",
+    srcs = ["mlir_ops.cc"],
+    deps = ["//tensorflow/core:framework"],
+    alwayslink = 1,
+)
+
 tf_gen_op_wrapper_py(
     name = "xla_ops_wrapper_py",
     out = "xla_ops.py",

@@ -577,6 +577,7 @@ tf_cc_test(
 cc_library(
     name = "compilation_passes",
     srcs = [
+        "build_mlir_ops_pass.cc",
         "build_xla_ops_pass.cc",
         "clone_constants_for_better_clustering.cc",
         "cluster_scoping_pass.cc",
@@ -593,6 +594,7 @@ cc_library(
         "report_clustering_info_pass.cc",
     ],
     hdrs = [
+        "build_mlir_ops_pass.h",
         "build_xla_ops_pass.h",
         "clone_constants_for_better_clustering.h",
         "cluster_scoping_pass.h",

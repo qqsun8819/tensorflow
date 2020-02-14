@@ -13,6 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
+#include "tensorflow/compiler/jit/build_mlir_ops_pass.h"
 #include "tensorflow/compiler/jit/build_xla_ops_pass.h"
 #include "tensorflow/compiler/jit/clone_constants_for_better_clustering.h"
 #include "tensorflow/compiler/jit/cluster_scoping_pass.h"
@@ -80,5 +81,9 @@ REGISTER_OPTIMIZATION(OptimizationPassRegistry::POST_REWRITE_FOR_EXEC, 50,
 // Must run after EncapsulateSubgraphsPass.
 REGISTER_OPTIMIZATION(OptimizationPassRegistry::POST_REWRITE_FOR_EXEC, 60,
                       BuildXlaOpsPass);
+
+// Create an MlirRunOp
+REGISTER_OPTIMIZATION(OptimizationPassRegistry::POST_REWRITE_FOR_EXEC, 60,
+                      BuildMlirOpsPass);
 
 }  // namespace tensorflow

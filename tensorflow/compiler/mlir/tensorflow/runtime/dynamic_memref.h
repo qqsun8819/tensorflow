@@ -220,8 +220,9 @@ struct ResultTensorWrapper {
 // TODO: 
 // put external function here ? now in tensorflow/compiler/mlir/compile_util.h
 //
-extern "C" MLIR_RUNNER_UTILS_EXPORT void
+/*extern "C" MLIR_RUNNER_UTILS_EXPORT void
 SetExternalMemref(int64_t* dest, mlir::runtime::MemRefWrapper<1>* src,
                   mlir::runtime::ElementType ele_type) {}
+*/
 
 #endif 
