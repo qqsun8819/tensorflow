@@ -558,6 +558,7 @@ void populateLHLOToLinalgConversionPattern(MLIRContext* context,
 
                    ScalarPointwiseBinaryToStandardConverter<xla_lhlo::AddOp>,
                    ScalarPointwiseBinaryToStandardConverter<xla_lhlo::CompareOp>,
+                   ScalarPointwiseBinaryToStandardConverter<xla_lhlo::SubOp>,
 
                    ScalarPointwiseUnaryToStandardConverter<xla_lhlo::AbsOp>,
                    ScalarPointwiseUnaryToStandardConverter<xla_lhlo::NegOp>,
