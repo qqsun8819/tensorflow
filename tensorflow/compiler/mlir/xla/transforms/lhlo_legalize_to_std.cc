@@ -235,10 +235,22 @@ struct DebugPrintConverter : public OpRewritePattern<DebugPrintOp> {
   }
 };
 
+struct LhloTerminatorOpConverter : public OpRewritePattern<xla_lhlo::TerminatorOp> {
+  using OpRewritePattern<xla_lhlo::TerminatorOp>::OpRewritePattern;
+
+  PatternMatchResult matchAndRewrite(xla_lhlo::TerminatorOp op,
+                                     PatternRewriter& rewriter) const override {
+
+    rewriter.replaceOpWithNewOp<mlir::ReturnOp>(op);
+    return this->matchSuccess();
+  }
+};
+
 void populateLHLOToStdConversionPattern(MLIRContext* context,
                                            OwningRewritePatternList* patterns) {
   // clang-format off
   patterns->insert<
+      LhloTerminatorOpConverter,
       UniqueCountConverter,
       UniqueIdsConverter,
       UniqueIndexConverter,
