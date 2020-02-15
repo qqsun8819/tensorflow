@@ -441,9 +441,12 @@ class HloToLhloFuncOpConverter : public OpConversionPattern<FuncOp> {
     for (auto argType : llvm::enumerate(funcType.getInputs())) {
       conversion.addInputs(argType.index(), ConvertType(argType.value()));
     }
+    // TODO: SHOULD to REVERT the change later!
+#if 0
     for (auto resType : funcType.getResults()) {
       conversion.addInputs(ConvertType(resType));
     }
+#endif
     rewriter.updateRootInPlace(funcOp, [&] {
       funcOp.setType(
           rewriter.getFunctionType(conversion.getConvertedTypes(), llvm::None));
@@ -462,6 +465,9 @@ class StdToLhloReturnOpConverter : public OpConversionPattern<mlir::ReturnOp> {
   PatternMatchResult matchAndRewrite(
       mlir::ReturnOp returnOp, ArrayRef<Value> operands,
       ConversionPatternRewriter& rewriter) const final {
+
+    // TODO: SHOULD to REVERT the change later!
+#if 0
     auto numReturnValues = returnOp.getNumOperands();
     auto funcOp = returnOp.getParentOfType<FuncOp>();
     auto numFuncArgs = funcOp.getNumArguments();
@@ -486,6 +492,7 @@ class StdToLhloReturnOpConverter : public OpConversionPattern<mlir::ReturnOp> {
       rewriter.create<xla_lhlo::CopyOp>(loc, llvm::None, operand.value(),
                                         funcOp.getArgument(returnArgNumber));
     }
+#endif
     rewriter.replaceOpWithNewOp<xla_lhlo::TerminatorOp>(returnOp);
     return matchSuccess();
   }
