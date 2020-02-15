@@ -386,17 +386,21 @@ struct HloLegalizeToLhlo : public ModulePass<HloLegalizeToLhlo> {
     target.addLegalDialect<xla_lhlo::XlaLhloDialect>();
     target.addLegalDialect<StandardOpsDialect>();
     target.addLegalOp<ModuleOp>();
-    target.addLegalOp<mlir::ReturnOp>();
     target.addIllegalOp<mlir::TensorLoadOp>();
     target.addIllegalOp<mlir::TensorStoreOp>();
     target.addLegalOp<ModuleTerminatorOp>();
     target.addLegalOp<TF::CopyResultOp>();
+    target.addIllegalOp<mlir::ReturnOp>();
     target.addIllegalDialect<xla_hlo::XlaHloDialect>();
     target.addDynamicallyLegalOp<FuncOp>([&](FuncOp op) {
       auto inputs = op.getType().getInputs();
-      return std::all_of(inputs.begin(), inputs.end(),
-                         [](Type input) { return input.isa<MemRefType>(); });
-    });
+      bool inputs_legal = std::all_of(inputs.begin(), inputs.end(),
+          [](Type input) { return input.isa<MemRefType>(); });
+      auto results = op.getType().getResults();
+      bool results_legal = std::all_of(results.begin(), results.end(),
+          [](Type result) { return result.isa<MemRefType>(); });
+      return inputs_legal && results_legal;
+   });
 
     auto module = getModule();
     populateHLOToLHLOConversionPattern(module.getContext(), &patterns);
@@ -522,8 +526,8 @@ void populateHLOToLHLOConversionPattern(MLIRContext* context,
       HloToLhloOpConverter<xla_hlo::DebugPrintOp, xla_lhlo::DebugPrintOp>,
       HloToLHloUniqueIdsOpConverter,
       HloToLhloTensorLoadOpConverter,
-      HloToLhloTensorStoreOpConverter
-      // StdToLhloReturnOpConverter
+      HloToLhloTensorStoreOpConverter,
+      StdToLhloReturnOpConverter
   >(context);
   // clang-format on
 }
