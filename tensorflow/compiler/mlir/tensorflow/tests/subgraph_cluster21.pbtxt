@@ -1,0 +1,5416 @@
+node {
+  name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+  op: "_Arg"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_output_shapes"
+    value {
+      list {
+        shape {
+          dim {
+            size:-1 
+          }
+        }
+      }
+    }
+  }
+  attr {
+    key: "index"
+    value {
+      i: 0
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_260"
+  op: "Const"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT64
+        tensor_shape {
+        }
+        tensor_content: "\"\000\000\000\000\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1"
+  op: "FloorMod"
+  input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_260"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1"
+  op: "FloorDiv"
+  input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_260"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_262"
+  op: "Const"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT64
+        tensor_shape {
+        }
+        tensor_content: "\001\000\000\000\000\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1"
+  op: "Sub"
+  input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_262"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_267"
+  op: "Const"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT64
+        tensor_shape {
+        }
+        tensor_content: "!\000\000\000\000\000\000\000"
+      }
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2"
+  op: "FloorMod"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_267"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2"
+  op: "FloorDiv"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_267"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum"
+  op: "Maximum"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less"
+  op: "Less"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_262"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast"
+  op: "Cast"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "DstT"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "SrcT"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "Truncate"
+    value {
+      b: false
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select"
+  op: "Select"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2"
+  device: "/job:localhost/replica:0/task:0/device:CPU:0"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "_XlaAlreadyClustered"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_cast_0_retval_RetVal"
+  op: "_Retval"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "index"
+    value {
+      i: 0
+    }
+  }
+}
+node {
+  name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_select_0_retval_RetVal"
+  op: "_Retval"
+  input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select"
+  attr {
+    key: "T"
+    value {
+      type: DT_INT64
+    }
+  }
+  attr {
+    key: "index"
+    value {
+      i: 1
+    }
+  }
+}
+library {
+  function {
+    signature {
+      name: "cluster_21"
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_cast_0_retval"
+        type: DT_INT32
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_select_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1"
+      op: "FloorMod"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_260:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1"
+      op: "FloorDiv"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_260:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1"
+      op: "Sub"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_262:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2"
+      op: "FloorMod"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_267:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2"
+      op: "FloorDiv"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_267:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum"
+      op: "Maximum"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less"
+      op: "Less"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_262:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast"
+      op: "Cast"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "DstT"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "SrcT"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Truncate"
+        value {
+          b: false
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select"
+      op: "Select"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_260"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "\"\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_261"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_262"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "\001\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_272"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_267"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "!\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_268"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_cast_0_retval"
+      value: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast:y:0"
+    }
+    ret {
+      key: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_select_0_retval"
+      value: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select:output:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_13"
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_axis_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_1_axis_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_2_axis_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_1_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_2_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "inputs_item_seq_cate_id_item_seq_cate_id_shared_embedding_cate_id_part_0_read_0_arg"
+        type: DT_FLOAT
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_0_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "inputs_item_seq_cate_id_item_seq_cate_id_shared_embedding_cate_id_part_1_read_0_arg"
+        type: DT_FLOAT
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "inputs_item_seq_cate_id_item_seq_cate_id_shared_embedding_cate_id_part_2_read_0_arg"
+        type: DT_FLOAT
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_2_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_0_retval"
+        type: DT_FLOAT
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2"
+      op: "GatherV2"
+      input: "inputs_item_seq_cate_id_item_seq_cate_id_shared_embedding_cate_id_part_0_read_0_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_0_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_axis_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_1"
+      op: "GatherV2"
+      input: "inputs_item_seq_cate_id_item_seq_cate_id_shared_embedding_cate_id_part_1_read_0_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_1_axis_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_2"
+      op: "GatherV2"
+      input: "inputs_item_seq_cate_id_item_seq_cate_id_shared_embedding_cate_id_part_2_read_0_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_2_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_2_axis_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup"
+      op: "ParallelDynamicStitch"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_0_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_1_arg"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_2_arg"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2:output:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_1:output:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_2:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_0_retval"
+      value: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup:merged:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_20"
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_239_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_240_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_241_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_248_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_innerflatten_sparsereshape_1_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_cast_x_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/GatherV2"
+      op: "GatherV2"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_innerflatten_sparsereshape_1_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/stack/0/clone_238:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_239_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/GatherV2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Slice"
+      op: "Slice"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_innerflatten_sparsereshape_1_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_240_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_241_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Slice"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Prod"
+      op: "Prod"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Slice:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_248_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Prod"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Cast/x"
+      op: "Pack"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Prod:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/GatherV2:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "axis"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Cast/x"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/stack/0/clone_238"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            tensor_shape {
+            }
+            int_val: 1
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/stack/0/clone_238"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_cast_x_0_retval"
+      value: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Cast/x:output:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_18"
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_214_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_strided_slice_stack_1_clone_215_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_216_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_217_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_218_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_219_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_231_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_236_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_sparseconcat_2_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_sparsetensor_19_dense_shape_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_innerflatten_concat_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_17"
+      op: "StridedSlice"
+      input: "mind_inputs_sparseconcat_2_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_214_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_strided_slice_stack_1_clone_215_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_216_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 1
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_17"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_16"
+      op: "StridedSlice"
+      input: "mind_inputs_sparseconcat_2_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_217_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_218_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_219_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 1
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_16"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Maximum"
+      op: "Maximum"
+      input: "MIND/inputs/strided_slice_17:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_226:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Maximum"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice"
+      op: "Const"
+      input: "^MIND/inputs/strided_slice_16"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            int_val: 0
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice_1"
+      op: "Const"
+      input: "^MIND/inputs/Maximum"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            int_val: 0
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/SparseTensor_19/dense_shape"
+      op: "Pack"
+      input: "MIND/inputs/strided_slice_16:output:0"
+      input: "MIND/inputs/Maximum:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "axis"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/SparseTensor_19/dense_shape"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice"
+      op: "ExpandDims"
+      input: "MIND/inputs/strided_slice_16:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tdim"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice_1"
+      op: "ExpandDims"
+      input: "MIND/inputs/Maximum:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice_1:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tdim"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/Prod"
+      op: "Prod"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice_1:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_231_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/Prod"
+      }
+    }
+    node_def {
+      name: "ConstantFolding/MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat/values_1_const_axis"
+      op: "Const"
+      input: "^MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/Prod"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            tensor_shape {
+            }
+            tensor_content: "\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "ConstantFolding/MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat/values_1_const_axis"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat/values_1"
+      op: "ExpandDims"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/Prod:output:0"
+      input: "ConstantFolding/MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat/values_1_const_axis:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tdim"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat/values_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat"
+      op: "ConcatV2"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat/values_1:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_236_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_226"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "\001\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_226"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_innerflatten_concat_0_retval"
+      value: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/InnerFlatten/concat:output:0"
+    }
+    ret {
+      key: "mind_inputs_sparsetensor_19_dense_shape_0_retval"
+      value: "MIND/inputs/SparseTensor_19/dense_shape:output:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_19"
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_220_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_strided_slice_stack_1_clone_221_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_222_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_223_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_224_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_225_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_233_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_237_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_sparseconcat_1_2_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_sparsetensor_25_dense_shape_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_innerflatten_concat_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_31"
+      op: "StridedSlice"
+      input: "mind_inputs_sparseconcat_1_2_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_220_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_strided_slice_stack_1_clone_221_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_222_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 1
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_31"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_30"
+      op: "StridedSlice"
+      input: "mind_inputs_sparseconcat_1_2_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_223_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_224_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_225_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 1
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_30"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Maximum_1"
+      op: "Maximum"
+      input: "MIND/inputs/strided_slice_31:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_227:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Maximum_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice"
+      op: "Const"
+      input: "^MIND/inputs/strided_slice_30"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            int_val: 0
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice_1"
+      op: "Const"
+      input: "^MIND/inputs/Maximum_1"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            int_val: 0
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/SparseTensor_25/dense_shape"
+      op: "Pack"
+      input: "MIND/inputs/strided_slice_30:output:0"
+      input: "MIND/inputs/Maximum_1:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "axis"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/SparseTensor_25/dense_shape"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice"
+      op: "ExpandDims"
+      input: "MIND/inputs/strided_slice_30:output:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tdim"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice_1"
+      op: "ExpandDims"
+      input: "MIND/inputs/Maximum_1:z:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_Axis_strided_slice_1:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tdim"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/Prod"
+      op: "Prod"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice_1:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_233_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/Prod"
+      }
+    }
+    node_def {
+      name: "ConstantFolding/MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat/values_1_const_axis"
+      op: "Const"
+      input: "^MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/Prod"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            tensor_shape {
+            }
+            tensor_content: "\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "ConstantFolding/MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat/values_1_const_axis"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat/values_1"
+      op: "ExpandDims"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/Prod:output:0"
+      input: "ConstantFolding/MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat/values_1_const_axis:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tdim"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat/values_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat"
+      op: "ConcatV2"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/ArithmeticOptimizer/RemoveStackStridedSliceSameAxis_strided_slice:output:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat/values_1:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_237_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_227"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "\001\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_227"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_innerflatten_concat_0_retval"
+      value: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/InnerFlatten/concat:output:0"
+    }
+    ret {
+      key: "mind_inputs_sparsetensor_25_dense_shape_0_retval"
+      value: "MIND/inputs/SparseTensor_25/dense_shape:output:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_17"
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_clone_159_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_clone_160_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_clone_161_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_clone_162_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_163_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_164_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_165_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_166_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_167_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_168_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_169_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_170_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_171_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_172_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_173_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_174_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_190_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_192_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_194_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_195_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_196_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_197_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_198_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_199_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_206_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_207_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_208_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_209_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_8_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_9_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_10_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_11_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_1_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_2_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_3_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_4_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_1"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_8_arg"
+      input: "mind_inputs_reshape_1_shape_clone_159_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_2"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_9_arg"
+      input: "mind_inputs_reshape_1_shape_clone_160_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_3"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_10_arg"
+      input: "mind_inputs_reshape_1_shape_clone_161_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_3"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_4"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_11_arg"
+      input: "mind_inputs_reshape_1_shape_clone_162_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_4"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_5"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_8_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_163_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_164_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_165_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_5"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_8"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_9_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_166_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_167_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_168_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_8"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_11"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_10_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_169_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_170_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_171_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_11"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_14"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_11_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_172_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_173_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_174_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_14"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat"
+      op: "ConcatV2"
+      input: "MIND/inputs/Reshape_1:output:0"
+      input: "MIND/inputs/Reshape_2:output:0"
+      input: "MIND/inputs/Reshape_3:output:0"
+      input: "MIND/inputs/Reshape_4:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_190_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 4
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Max"
+      op: "Max"
+      input: "MIND/inputs/concat:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_192_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Max"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_4"
+      op: "StridedSlice"
+      input: "MIND/inputs/Max:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_194_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_195_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_196_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 1
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_4"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_6"
+      op: "StridedSlice"
+      input: "MIND/inputs/Max:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_197_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_198_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_199_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 1
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_6"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_1"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_4:output:0"
+      input: "MIND/inputs/strided_slice_5:output:0"
+      input: "MIND/inputs/strided_slice_6:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_206_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_2"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_4:output:0"
+      input: "MIND/inputs/strided_slice_8:output:0"
+      input: "MIND/inputs/strided_slice_6:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_207_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_3"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_4:output:0"
+      input: "MIND/inputs/strided_slice_11:output:0"
+      input: "MIND/inputs/strided_slice_6:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_208_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_3"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_4"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_4:output:0"
+      input: "MIND/inputs/strided_slice_14:output:0"
+      input: "MIND/inputs/strided_slice_6:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_209_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_4"
+      }
+    }
+    ret {
+      key: "mind_inputs_concat_1_0_retval"
+      value: "MIND/inputs/concat_1:output:0"
+    }
+    ret {
+      key: "mind_inputs_concat_2_0_retval"
+      value: "MIND/inputs/concat_2:output:0"
+    }
+    ret {
+      key: "mind_inputs_concat_3_0_retval"
+      value: "MIND/inputs/concat_3:output:0"
+    }
+    ret {
+      key: "mind_inputs_concat_4_0_retval"
+      value: "MIND/inputs/concat_4:output:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_14"
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_cast_0_retval"
+        type: DT_INT32
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_select_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "\"\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1/clone_263"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "!\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv/clone_271"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT64
+            tensor_shape {
+            }
+            tensor_content: "\001\000\000\000\000\000\000\000"
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod/clone_264"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1"
+      op: "FloorMod"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1"
+      op: "FloorDiv"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/add_1:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1"
+      op: "Sub"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_unique_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2"
+      op: "FloorMod"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2"
+      op: "FloorDiv"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/sub_1:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum"
+      op: "Maximum"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_1:z:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/floordiv_2:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less"
+      op: "Less"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum:z:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast"
+      op: "Cast"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Maximum:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "DstT"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "SrcT"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Truncate"
+        value {
+          b: false
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select"
+      op: "Select"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Less:z:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_1:z:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/mod_2:z:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_cast_0_retval"
+      value: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Cast:y:0"
+    }
+    ret {
+      key: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_select_0_retval"
+      value: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/Select:output:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_15"
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_clone_175_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_clone_176_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_reshape_1_shape_clone_177_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_178_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_179_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_180_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_181_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_182_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_183_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_184_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_185_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_186_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_187_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_188_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_189_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_191_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_193_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_200_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_201_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_202_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_203_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_204_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_205_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_210_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_211_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_212_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_213_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_1_8_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_1_9_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_1_10_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "mind_inputs_sparsesplit_1_11_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_6_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_7_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_8_0_retval"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_concat_9_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_5"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_1_8_arg"
+      input: "mind_inputs_reshape_1_shape_clone_175_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_5"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_6"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_1_9_arg"
+      input: "mind_inputs_reshape_1_shape_clone_176_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_6"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_7"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_1_10_arg"
+      input: "mind_inputs_reshape_1_shape_clone_177_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_7"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Reshape_8"
+      op: "Reshape"
+      input: "mind_inputs_sparsesplit_1_11_arg"
+      input: "mind_inputs_reshape_1_shape_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Reshape_8"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_19"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_1_8_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_178_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_179_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_180_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_19"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_22"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_1_9_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_181_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_182_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_183_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_22"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_25"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_1_10_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_184_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_185_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_186_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_25"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_28"
+      op: "StridedSlice"
+      input: "mind_inputs_sparsesplit_1_11_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_187_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_188_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_189_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_28"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_5"
+      op: "ConcatV2"
+      input: "MIND/inputs/Reshape_5:output:0"
+      input: "MIND/inputs/Reshape_6:output:0"
+      input: "MIND/inputs/Reshape_7:output:0"
+      input: "MIND/inputs/Reshape_8:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_191_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 4
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_5"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Max_1"
+      op: "Max"
+      input: "MIND/inputs/concat_5:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_193_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Max_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_18"
+      op: "StridedSlice"
+      input: "MIND/inputs/Max_1:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_200_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_201_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_202_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 1
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_18"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_20"
+      op: "StridedSlice"
+      input: "MIND/inputs/Max_1:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_203_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_204_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_205_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 1
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_20"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_6"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_18:output:0"
+      input: "MIND/inputs/strided_slice_19:output:0"
+      input: "MIND/inputs/strided_slice_20:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_210_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_6"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_7"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_18:output:0"
+      input: "MIND/inputs/strided_slice_22:output:0"
+      input: "MIND/inputs/strided_slice_20:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_211_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_7"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_8"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_18:output:0"
+      input: "MIND/inputs/strided_slice_25:output:0"
+      input: "MIND/inputs/strided_slice_20:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_212_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_8"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/concat_9"
+      op: "ConcatV2"
+      input: "MIND/inputs/strided_slice_18:output:0"
+      input: "MIND/inputs/strided_slice_28:output:0"
+      input: "MIND/inputs/strided_slice_20:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_213_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/concat_9"
+      }
+    }
+    ret {
+      key: "mind_inputs_concat_6_0_retval"
+      value: "MIND/inputs/concat_6:output:0"
+    }
+    ret {
+      key: "mind_inputs_concat_7_0_retval"
+      value: "MIND/inputs/concat_7:output:0"
+    }
+    ret {
+      key: "mind_inputs_concat_8_0_retval"
+      value: "MIND/inputs/concat_8:output:0"
+    }
+    ret {
+      key: "mind_inputs_concat_9_0_retval"
+      value: "MIND/inputs/concat_9:output:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_12"
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_reshape_1_shape_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_stack_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_stack_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_reshape_shape_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_slice_1_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_strided_slice_36_stack_1_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_2_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_reshape_1_shape_clone_254_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_279_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_reshape_shape_clone_280_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_281_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_282_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_283_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_284_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_clone_285_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_2_clone_286_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_sparsefillemptyrows_sparsefillemptyrows_2_arg"
+        type: DT_BOOL
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_sparsefillemptyrows_sparsefillemptyrows_2_arg"
+        type: DT_BOOL
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_0_arg"
+        type: DT_FLOAT
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_0_arg"
+        type: DT_FLOAT
+      }
+      output_arg {
+        name: "mind_inputs_mean_0_retval"
+        type: DT_FLOAT
+      }
+      control_output: "MIND/inputs/Mean"
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Reshape_1"
+      op: "Reshape"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_sparsefillemptyrows_sparsefillemptyrows_2_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_reshape_1_shape_clone_254_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_BOOL
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Reshape_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Reshape_1"
+      op: "Reshape"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_sparsefillemptyrows_sparsefillemptyrows_2_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_reshape_1_shape_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_BOOL
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Reshape_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/zeros_like"
+      op: "ZerosLike"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/zeros_like"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/zeros_like"
+      op: "ZerosLike"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/zeros_like"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Tile"
+      op: "Tile"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Reshape_1:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_stack_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_BOOL
+        }
+      }
+      attr {
+        key: "Tmultiples"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Tile"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Tile"
+      op: "Tile"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Reshape_1:output:0"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_stack_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_BOOL
+        }
+      }
+      attr {
+        key: "Tmultiples"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Tile"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights"
+      op: "Select"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Tile:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/zeros_like:y:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights"
+      op: "Select"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Tile:output:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/zeros_like:y:0"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_embedding_lookup_sparse_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Shape_1"
+      op: "Shape"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "out_type"
+        value {
+          type: DT_INT32
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Shape_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Shape_1"
+      op: "Shape"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "out_type"
+        value {
+          type: DT_INT32
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Shape_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Slice_2"
+      op: "Slice"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Shape_1:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_279_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_reshape_shape_clone_280_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Slice_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Slice_2"
+      op: "Slice"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Shape_1:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_reshape_shape_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Slice_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/concat"
+      op: "ConcatV2"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Slice_2:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_281_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/concat"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/concat"
+      op: "ConcatV2"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_slice_1_0_arg"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Slice_2:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_282_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/concat"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Reshape_2"
+      op: "Reshape"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/concat:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Reshape_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Reshape_2"
+      op: "Reshape"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights:output:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/concat:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "Tshape"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Reshape_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/split_5"
+      op: "Split"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_283_0_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/Reshape_2:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "num_split"
+        value {
+          i: 4
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/split_5"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/split_4"
+      op: "Split"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_284_0_arg"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Reshape_2:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "num_split"
+        value {
+          i: 4
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/split_4"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/stack_5"
+      op: "Pack"
+      input: "MIND/inputs/split_5:output:0"
+      input: "MIND/inputs/split_5:output:1"
+      input: "MIND/inputs/split_5:output:2"
+      input: "MIND/inputs/split_5:output:3"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 4
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "axis"
+        value {
+          i: 1
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/stack_5"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/stack_4"
+      op: "Pack"
+      input: "MIND/inputs/split_4:output:0"
+      input: "MIND/inputs/split_4:output:1"
+      input: "MIND/inputs/split_4:output:2"
+      input: "MIND/inputs/split_4:output:3"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 4
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "axis"
+        value {
+          i: 1
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/stack_4"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_36"
+      op: "StridedSlice"
+      input: "MIND/inputs/stack_5:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_clone_285_0_arg"
+      input: "mind_inputs_strided_slice_36_stack_1_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_2_clone_286_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 1
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_36"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/strided_slice_37"
+      op: "StridedSlice"
+      input: "MIND/inputs/stack_4:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_0_arg"
+      input: "mind_inputs_strided_slice_36_stack_1_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_strided_slice_stack_2_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "begin_mask"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "ellipsis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "end_mask"
+        value {
+          i: 1
+        }
+      }
+      attr {
+        key: "new_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      attr {
+        key: "shrink_axis_mask"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/strided_slice_37"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Mean/input"
+      op: "Pack"
+      input: "MIND/inputs/strided_slice_36:output:0"
+      input: "MIND/inputs/strided_slice_37:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "axis"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Mean/input"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/Mean"
+      op: "Mean"
+      input: "MIND/inputs/Mean/input:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/Mean"
+      }
+    }
+    ret {
+      key: "mind_inputs_mean_0_retval"
+      value: "MIND/inputs/Mean:output:0"
+    }
+    control_ret {
+      key: "MIND/inputs/Mean"
+      value: "MIND/inputs/Mean"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_11"
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_axis_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_1_axis_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_2_axis_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_1_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_2_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "inputs_item_seq_item_id_item_seq_item_id_shared_embedding_item_id_part_0_read_0_arg"
+        type: DT_FLOAT
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_0_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "inputs_item_seq_item_id_item_seq_item_id_shared_embedding_item_id_part_1_read_0_arg"
+        type: DT_FLOAT
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_arg"
+        type: DT_INT64
+      }
+      input_arg {
+        name: "inputs_item_seq_item_id_item_seq_item_id_shared_embedding_item_id_part_2_read_0_arg"
+        type: DT_FLOAT
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_2_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_0_retval"
+        type: DT_FLOAT
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2"
+      op: "GatherV2"
+      input: "inputs_item_seq_item_id_item_seq_item_id_shared_embedding_item_id_part_0_read_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_axis_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_1"
+      op: "GatherV2"
+      input: "inputs_item_seq_item_id_item_seq_item_id_shared_embedding_item_id_part_1_read_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_1_axis_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_1"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_2"
+      op: "GatherV2"
+      input: "inputs_item_seq_item_id_item_seq_item_id_shared_embedding_item_id_part_2_read_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_2_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_gatherv2_2_axis_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup"
+      op: "ParallelDynamicStitch"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_1_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_dynamicpartition_1_2_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_1:output:0"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup/GatherV2_2:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 3
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_FLOAT
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_embedding_lookup_sparse_embedding_lookup_0_retval"
+      value: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/embedding_lookup_sparse/embedding_lookup:merged:0"
+    }
+  }
+  function {
+    signature {
+      name: "cluster_16"
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_243_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_244_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_245_0_arg"
+        type: DT_INT32
+      }
+      input_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_innerflatten_sparsereshape_1_arg"
+        type: DT_INT64
+      }
+      output_arg {
+        name: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_cast_x_0_retval"
+        type: DT_INT64
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/GatherV2"
+      op: "GatherV2"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_innerflatten_sparsereshape_1_arg"
+      input: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/stack/0/clone_242:output:0"
+      input: "constantfolding_input_fn_decodecsv_record_defaults_1_const_axis_clone_243_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Taxis"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tindices"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "Tparams"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "batch_dims"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/GatherV2"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Slice"
+      op: "Slice"
+      input: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_innerflatten_sparsereshape_1_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_clone_244_0_arg"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_size_clone_245_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "Index"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Slice"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Prod"
+      op: "Prod"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Slice:output:0"
+      input: "mind_inputs_item_seq_item_id_1_item_seq_item_id_shared_embedding_item_seq_item_id_shared_embeddingweights_slice_1_begin_0_arg"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "Tidx"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "keep_dims"
+        value {
+          b: false
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Prod"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Cast/x"
+      op: "Pack"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Prod:output:0"
+      input: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/GatherV2:output:0"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "N"
+        value {
+          i: 2
+        }
+      }
+      attr {
+        key: "T"
+        value {
+          type: DT_INT64
+        }
+      }
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "axis"
+        value {
+          i: 0
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Cast/x"
+      }
+    }
+    node_def {
+      name: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/stack/0/clone_242"
+      op: "Const"
+      device: "/job:localhost/replica:0/task:0/device:CPU:0"
+      attr {
+        key: "_XlaAlreadyClustered"
+        value {
+          b: true
+        }
+      }
+      attr {
+        key: "dtype"
+        value {
+          type: DT_INT32
+        }
+      }
+      attr {
+        key: "value"
+        value {
+          tensor {
+            dtype: DT_INT32
+            tensor_shape {
+            }
+            int_val: 1
+          }
+        }
+      }
+      experimental_debug_info {
+        original_node_names: "MIND/inputs/item_seq_item_id_1/item_seq_item_id_shared_embedding/item_seq_item_id_shared_embeddingweights/stack/0/clone_242"
+      }
+    }
+    ret {
+      key: "mind_inputs_item_seq_cate_id_1_item_seq_cate_id_shared_embedding_item_seq_cate_id_shared_embeddingweights_cast_x_0_retval"
+      value: "MIND/inputs/item_seq_cate_id_1/item_seq_cate_id_shared_embedding/item_seq_cate_id_shared_embeddingweights/Cast/x:output:0"
+    }
+  }
+}
+versions {
+  producer: 175
+}
