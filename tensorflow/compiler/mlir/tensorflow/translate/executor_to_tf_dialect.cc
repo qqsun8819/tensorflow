@@ -110,88 +110,25 @@ void ExecutorToTFDialectConversion::runOnFunction() {
           break;
         }
         // Add a leading _ off the name.
-        new_op_name = "_";
-        new_op_name += wrapped_op.getName().getStringRef();
-        OperationState state(wrapped_op.getLoc(), new_op_name);
+        OperationState state(wrapped_op.getLoc(), wrapped_op.getName().getStringRef());
 
         // Add an operand for each non-control input we find. Collect control
         // values separately to add them to the island operands
         state.operands.append(wrapped_op.getOperands().begin(),
                               wrapped_op.getOperands().end());
 
-        // Chain operations through a control dependency, except for the first
-        // operations in the sequence that carry the control dependencies held
-        // by the island itself.
-        if (ctl_sequence) {
-          state.operands.push_back(ctl_sequence);
-        } else {
-          for (Value ctl_operand : island.getOperands())
-            state.operands.push_back(ctl_operand);
-        }
-
-        // Add a result type for each result
+       // Add a result type for each result
         state.types.append(wrapped_op.getResultTypes().begin(),
                            wrapped_op.getResultTypes().end());
-        state.types.push_back(control_type);
 
-        if (state.name.getStringRef() == "_tf.Const" ) {
+        if (state.name.getStringRef() == "tf.Const" ) {
           auto const_op = builder.create<TF::ConstOp>(wrapped_op.getLoc(), wrapped_op.getAttrList().get("value"));
           wrapped_op.getResult(0).replaceAllUsesWith(const_op); 
-        } else if (state.name.getStringRef() == "_tf.Add") {
-          auto add_op = builder.create<TF::AddOp>(wrapped_op.getLoc(), wrapped_op.getOperand(0), wrapped_op.getOperand(1));
-          wrapped_op.getResult(0).replaceAllUsesWith(add_op); 
-        } else if (state.name.getStringRef() == "_tf.Unique") {
-          SmallVector<Type, 4> result_types;
-          result_types.append(wrapped_op.getResultTypes().begin(),
-                              wrapped_op.getResultTypes().end());
-          SmallVector<Value, 4> operands;
-          operands.append(wrapped_op.getOperands().begin(),
-                          wrapped_op.getOperands().end());
-          auto callfunc_op = builder.create<TF::UniqueOp>(wrapped_op.getLoc(), 
-              wrapped_op.getResultTypes()[0], wrapped_op.getResultTypes()[1], wrapped_op.getOperand(0));
-          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op.getResult(0));
-          wrapped_op.getResult(1).replaceAllUsesWith(callfunc_op.getResult(1));
-        } else if (state.name.getStringRef() == "_tf.Reshape") {
-          SmallVector<Type, 4> result_types;
-          result_types.append(wrapped_op.getResultTypes().begin(),
-                              wrapped_op.getResultTypes().end());
-          SmallVector<Value, 4> operands;
-          operands.append(wrapped_op.getOperands().begin(),
-                          wrapped_op.getOperands().end());
-          auto callfunc_op = builder.create<TF::ReshapeOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
-          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
-        } else if (state.name.getStringRef() == "_tf.Sub") {
-          SmallVector<Type, 4> result_types;
-          result_types.append(wrapped_op.getResultTypes().begin(),
-                              wrapped_op.getResultTypes().end());
-          SmallVector<Value, 4> operands;
-          operands.append(wrapped_op.getOperands().begin(),
-                          wrapped_op.getOperands().end());
-          auto callfunc_op = builder.create<TF::SubOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
-          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
-        } else if (state.name.getStringRef() == "_tf.CopyResult") {
-          SmallVector<Type, 4> result_types;
-          result_types.append(wrapped_op.getResultTypes().begin(),
-                              wrapped_op.getResultTypes().end());
-          SmallVector<Value, 4> operands;
-          operands.append(wrapped_op.getOperands().begin(),
-                          wrapped_op.getOperands().end());
-          auto callfunc_op = builder.create<TF::CopyResultOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
-          wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
-        } else if (state.name.getStringRef() == "_tf.DebugPrint") {
-          SmallVector<Type, 4> result_types;
-          result_types.append(wrapped_op.getResultTypes().begin(),
-                              wrapped_op.getResultTypes().end());
-          SmallVector<Value, 4> operands;
-          operands.append(wrapped_op.getOperands().begin(),
-                          wrapped_op.getOperands().end());
-          auto callfunc_op = builder.create<TF::DebugPrintOp>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
-          // wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
-        } else if (state.name.getStringRef() == "_tf.RawDebugPrint") {
+        } else if (state.name.getStringRef() == "tf.RawDebugPrint") {
           auto callfunc_op = builder.create<TF::RawDebugPrintOp>(
               wrapped_op.getLoc(), wrapped_op.getOperand(0).getType(), wrapped_op.getOperand(0), wrapped_op.getOperand(1));          
           wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);        
-        } else if (state.name.getStringRef() == "_tf.RawDebugPrint2") {
+        } else if (state.name.getStringRef() == "tf.RawDebugPrint2") {
           SmallVector<Type, 4> result_types;
           result_types.append(wrapped_op.getResultTypes().begin(),
                               wrapped_op.getResultTypes().end());
@@ -200,8 +137,7 @@ void ExecutorToTFDialectConversion::runOnFunction() {
                           wrapped_op.getOperands().end());
           auto callfunc_op = builder.create<TF::RawDebugPrint2Op>(wrapped_op.getLoc(), result_types, operands, wrapped_op.getAttrs());
           wrapped_op.getResult(0).replaceAllUsesWith(callfunc_op);
-        }else {
-
+        } else {
           auto *replacement = builder.createOperation(state);
           replacement->setAttrs(wrapped_op.getAttrList());
 
@@ -209,29 +145,13 @@ void ExecutorToTFDialectConversion::runOnFunction() {
               llvm::zip(wrapped_op.getResults(), replacement->getResults()))
             std::get<0>(ops_and_ret_vals)
               .replaceAllUsesWith(std::get<1>(ops_and_ret_vals));
-
-          ctl_sequence = replacement->getResult(replacement->getNumResults() - 1);
         }
       }
-
-      if (ctl_sequence) {
-        // If ctl_sequence is non-null, this means at least one operation has
-        // been rewritten from ops in island. Last op rewritten must logically
-        // carry // all the island control inputs, we can simply use it to
-        // replace all uses of island's control output.
-        island.control().replaceAllUsesWith(ctl_sequence);
-      } else if (island.getNumOperands() > 0) {
-        // Getting here means island had an effectively empty body and there is
-        // just one control input. In this case, island's control output should
-        // be replaced with the control input.
-        assert(island.getNumOperands() == 1);
-        island.control().replaceAllUsesWith(island.getOperand(0));
-      }
-
+    
       op.erase();
       continue;
     }
-
+    
     new_op_name.clear();
     if (isa<tf_executor::SwitchOp>(op)) {
       new_op_name = "_tf.Switch";
