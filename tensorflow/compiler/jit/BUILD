@@ -577,7 +577,6 @@ tf_cc_test(
 cc_library(
     name = "compilation_passes",
     srcs = [
-        "build_mlir_ops_pass.cc",
         "build_xla_ops_pass.cc",
         "clone_constants_for_better_clustering.cc",
         "cluster_scoping_pass.cc",
@@ -594,7 +593,6 @@ cc_library(
         "report_clustering_info_pass.cc",
     ],
     hdrs = [
-        "build_mlir_ops_pass.h",
         "build_xla_ops_pass.h",
         "clone_constants_for_better_clustering.h",
         "cluster_scoping_pass.h",
@@ -611,6 +609,7 @@ cc_library(
     ],
     deps = [
         "compilability_check_util",
+        ":mlir_ops_pass",
         ":common",
         ":device_util",
         ":encapsulate_util",
@@ -627,7 +626,6 @@ cc_library(
         "//tensorflow/cc:scope_internal",
         "//tensorflow/compiler/jit/graphcycles",
         "//tensorflow/compiler/jit/ops:xla_ops",
-        "//tensorflow/compiler/jit/ops:mlir_ops",
         "//tensorflow/compiler/tf2xla:resource_operation_table",
         "//tensorflow/compiler/tf2xla:side_effect_util",
         "//tensorflow/compiler/tf2xla:tf2xla_util",
@@ -638,6 +636,41 @@ cc_library(
         "//tensorflow/compiler/xla:statusor",
         "//tensorflow/compiler/xla:util",
         "//tensorflow/core:all_kernels",
+        "//tensorflow/core:core_cpu",
+        "//tensorflow/core:core_cpu_internal",
+        "//tensorflow/core:framework",
+        "//tensorflow/core:framework_bounds_check",
+        "//tensorflow/core:graph",
+        "//tensorflow/core:lib",
+        "//tensorflow/core:lib_internal",
+        "//tensorflow/core:protos_all_cc",
+        "//tensorflow/stream_executor/lib",
+        "@com_google_absl//absl/algorithm:container",
+        "@com_google_absl//absl/base",
+        "@com_google_absl//absl/container:flat_hash_map",
+        "@com_google_absl//absl/container:flat_hash_set",
+        "@com_google_absl//absl/container:inlined_vector",
+        "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/types:optional",
+    ],
+)
+
+cc_library(
+    name = "mlir_ops_pass",
+    srcs = [
+        "build_mlir_ops_pass.cc",
+    ],
+    hdrs = [
+        "build_mlir_ops_pass.h",
+    ],
+    deps = [
+        "//tensorflow/compiler/jit/ops:mlir_ops",
+        "//tensorflow/cc:cc_ops",
+        "//tensorflow/cc:functional_ops",
+        "//tensorflow/cc:ops",
+        "//tensorflow/cc:scope",
+        "//tensorflow/cc:scope_internal",
         "//tensorflow/core:core_cpu",
         "//tensorflow/core:core_cpu_internal",
         "//tensorflow/core:framework",

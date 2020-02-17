@@ -18,7 +18,10 @@ limitations under the License.
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
+#include "tensorflow/cc/framework/ops.h"
+#include "tensorflow/cc/framework/scope_internal.h"
 #include "tensorflow/core/graph/graph.h"
+#include "tensorflow/core/graph/node_builder.h"
 
 namespace tensorflow {
 
@@ -34,11 +37,70 @@ bool IsMlirCompiledKernel(const Node& node) {
   return has_compilation_attr ? is_compiled : false;
 }
 
+NodeBuilder::NodeOut IncomingEdgeAsOutput(const Edge* e) {
+  return NodeBuilder::NodeOut(e->src(), e->src_output());
+}
+
+void ReplaceOutEdges(Graph* graph, Node* o, Node* n) {
+  std::vector<const Edge*> out_edges(
+      o->out_edges().begin(),
+      o->out_edges().end());
+  for (const Edge* edge : out_edges) {
+    graph->AddEdge(n, edge->src_output(), edge->dst(), edge->dst_input());
+    graph->RemoveEdge(edge);
+  }
+}
+
 Status ReplaceNodeWithMlirRun(
     const GraphOptimizationPassOptions& options,
     Graph* g, Node* n) {
-  // TODO: Insert MlirRun node here
-  // 
+  // Insert MlirRun node and delete cluster_N below.
+
+  // For cluster_N node, the related compiled func name
+  // is `cluster_N_main`
+  string entry_func_name = n->name() + "main";
+
+  // TODO: FIXME
+  // Don't distinguish const/non-const/resource inputs here
+  std::vector<const Edge*> input_edges_vector;
+  TF_RETURN_IF_ERROR(n->input_edges(&input_edges_vector));
+  absl::Span<const Edge*> input_edges(input_edges_vector);
+  std::vector<NodeBuilder::NodeOut> args_inputs;
+  // copy input edges
+  absl::c_transform(input_edges.subspan(0, n->num_inputs()),
+                    std::back_inserter(args_inputs),
+                    IncomingEdgeAsOutput);
+  Status status;
+  Scope scope = NewInternalScope(g, &status, /*refiner=*/nullptr)
+                   .NewSubScope(n->name());
+  if (!status.ok()) {
+    LOG(FATAL) << "Create graph scope failed.";
+  }
+
+  //ops::_MlirRun mlir_run(root.WithOpName("mlir_run"),
+  //                      args_inputs);
+  //mlir_run.operation.node()->AddAttr("CompiledFuncName", entry_func_name);
+
+  ::tensorflow::Node* ret;
+  const auto unique_name = scope.GetUniqueNameForOp("_MlirRun");
+  auto builder = ::tensorflow::NodeBuilder(unique_name, "_MlirRun")
+                       .Input(args_inputs)
+                       .Attr("CompiledFuncName", entry_func_name)
+                       .Attr("Targs", n->input_types())
+                       .Attr("Tresults", n->output_types());
+
+  scope.UpdateBuilder(&builder);
+  scope.UpdateStatus(builder.Finalize(g, &ret));
+  if (!scope.ok()) {
+    LOG(FATAL) << "Insert _MlirRun node to graph failed.";
+  }
+  scope.UpdateStatus(scope.DoShapeInference(ret));
+
+  // TODO: FIXME handle control edges here
+
+  // copy output edges
+  ReplaceOutEdges(g, n, ret);
+  g->RemoveNode(n);
 
   return Status::OK();
 }

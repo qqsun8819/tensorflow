@@ -26,8 +26,9 @@ REGISTER_OP("_MlirRun")
     .Attr("Targs: list(type) >= 0")
     .Output("results: Tresults")
     .Attr("Tresults: list(type) >= 0")
-    .Attr("compiled_func_name: string")
+    .Attr("CompiledFuncName: string")
     .SetIsStateful()
+    .SetShapeFn(shape_inference::UnknownShape)
     .Doc(R"(MLIR Run Op. For use by the MLIR JIT only.
 
 Executes a TensorFlow function previously compiled into a Mlir executable.
