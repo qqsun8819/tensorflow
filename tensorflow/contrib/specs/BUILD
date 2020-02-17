@@ -39,7 +39,7 @@ py_library(
 tf_py_test(
     name = "specs_test",
     srcs = ["python/specs_test.py"],
-    additional_deps = [
+    deps = [
         ":specs",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -53,7 +53,7 @@ tf_py_test(
 tf_py_test(
     name = "summaries_test",
     srcs = ["python/summaries_test.py"],
-    additional_deps = [
+    deps = [
         ":specs",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",

@@ -110,7 +110,7 @@ tf_py_test(
     srcs = [
         "python/ops/gmm_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":factorization_py",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         "//third_party/py/numpy",
@@ -140,7 +140,7 @@ tf_py_test(
     srcs = [
         "python/ops/gmm_ops_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":factorization_py",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         "//third_party/py/numpy",
@@ -175,7 +175,7 @@ py_library(
 tf_py_test(
     name = "factorization_ops_test",
     srcs = ["python/ops/factorization_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":factorization_py",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         ":factorization_ops_test_utils_py",
@@ -225,7 +225,7 @@ tf_py_test(
     name = "wals_test",
     size = "medium",
     srcs = ["python/ops/wals_test.py"],
-    additional_deps = [
+    deps = [
         ":factorization_py",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         ":factorization_ops_test_utils_py",
@@ -257,7 +257,7 @@ tf_py_test(
 tf_py_test(
     name = "wals_solver_ops_test",
     srcs = ["python/kernel_tests/wals_solver_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":factorization_py",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         ":gen_factorization_ops",
@@ -273,7 +273,7 @@ tf_py_test(
 tf_py_test(
     name = "clustering_ops_test",
     srcs = ["python/kernel_tests/clustering_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":factorization_py",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         "//third_party/py/numpy",
@@ -286,7 +286,7 @@ tf_py_test(
 tf_py_test(
     name = "masked_matmul_ops_test",
     srcs = ["python/kernel_tests/masked_matmul_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":gen_factorization_ops",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         "//third_party/py/numpy",
@@ -305,7 +305,7 @@ tf_py_test(
 cuda_py_test(
     name = "masked_matmul_benchmark",
     srcs = ["python/kernel_tests/masked_matmul_benchmark.py"],
-    additional_deps = [
+    deps = [
         ":gen_factorization_ops",
         ":factorization_py_CYCLIC_DEPENDENCIES_THAT_NEED_TO_GO",
         "//tensorflow/python:array_ops",

@@ -92,7 +92,7 @@ py_library(
 tf_py_test(
     name = "kalman_filter_test",
     srcs = ["kalman_filter_test.py"],
-    additional_deps = [
+    deps = [
         ":kalman_filter",
         "//third_party/py/numpy",
         "//tensorflow/contrib/timeseries/python/timeseries:math_utils",
@@ -125,7 +125,7 @@ py_library(
 tf_py_test(
     name = "level_trend_test",
     srcs = ["level_trend_test.py"],
-    additional_deps = [
+    deps = [
         ":level_trend",
         ":test_utils",
         ":state_space_model",
@@ -153,7 +153,7 @@ py_library(
 tf_py_test(
     name = "periodic_test",
     srcs = ["periodic_test.py"],
-    additional_deps = [
+    deps = [
         ":periodic",
         ":test_utils",
         ":state_space_model",
@@ -216,7 +216,7 @@ py_library(
 tf_py_test(
     name = "varma_test",
     srcs = ["varma_test.py"],
-    additional_deps = [
+    deps = [
         ":state_space_model",
         ":varma",
         "//tensorflow/contrib/timeseries/python/timeseries:feature_keys",
@@ -248,7 +248,7 @@ py_library(
 tf_py_test(
     name = "filtering_postprocessor_test",
     srcs = ["filtering_postprocessor_test.py"],
-    additional_deps = [
+    deps = [
         ":filtering_postprocessor",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:constant_op",

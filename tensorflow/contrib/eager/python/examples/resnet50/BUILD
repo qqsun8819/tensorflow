@@ -30,7 +30,7 @@ cuda_py_test(
     name = "resnet50_test",
     size = "medium",
     srcs = ["resnet50_test.py"],
-    additional_deps = [
+    deps = [
         ":resnet50",
         "//tensorflow/contrib/summary:summary_test_util",
         "//tensorflow/contrib/eager/python:tfe",
@@ -47,7 +47,7 @@ cuda_py_test(
     name = "resnet50_graph_test",
     size = "medium",
     srcs = ["resnet50_graph_test.py"],
-    additional_deps = [
+    deps = [
         ":resnet50",
         "//tensorflow/contrib/summary:summary_test_util",
         "//third_party/py/numpy",

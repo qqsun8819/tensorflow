@@ -32,7 +32,7 @@ cuda_py_test(
     srcs = [
         "python/kernel_tests/lanczos_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":solvers_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -50,7 +50,7 @@ cuda_py_test(
     srcs = [
         "python/kernel_tests/least_squares_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":solvers_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -67,7 +67,7 @@ cuda_py_test(
     srcs = [
         "python/kernel_tests/linear_equations_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":solvers_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -84,7 +84,7 @@ cuda_py_test(
     srcs = [
         "python/kernel_tests/util_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":solvers_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",

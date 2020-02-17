@@ -32,7 +32,7 @@ py_library(
 tf_py_test(
     name = "cluster_resolver_initialization_test",
     srcs = ["cluster_resolver_initialization_test.py"],
-    additional_deps = [
+    deps = [
         ":cluster_resolver_py",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:framework_for_generated_wrappers",

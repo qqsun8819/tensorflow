@@ -90,7 +90,7 @@ cuda_py_test(
     name = "estimator_test",
     size = "small",
     srcs = ["python/kernel_tests/estimator_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "@six_archive//:six",
@@ -109,7 +109,7 @@ cuda_py_test(
     name = "distribution_test",
     size = "medium",
     srcs = ["python/kernel_tests/distribution_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client_testlib",
@@ -128,7 +128,7 @@ cuda_py_test(
         "python/kernel_tests/conditional_distribution_test.py",
         "python/kernel_tests/distribution_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client_testlib",
@@ -145,7 +145,7 @@ cuda_py_test(
     name = "autoregressive_test",
     size = "small",
     srcs = ["python/kernel_tests/autoregressive_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -161,7 +161,7 @@ cuda_py_test(
     name = "binomial_test",
     size = "small",
     srcs = ["python/kernel_tests/binomial_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -175,7 +175,7 @@ cuda_py_test(
     name = "cauchy_test",
     size = "medium",
     srcs = ["python/kernel_tests/cauchy_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -191,7 +191,7 @@ cuda_py_test(
 cuda_py_test(
     name = "chi2_test",
     srcs = ["python/kernel_tests/chi2_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -206,7 +206,7 @@ cuda_py_test(
     name = "deterministic_test",
     size = "small",
     srcs = ["python/kernel_tests/deterministic_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -223,7 +223,7 @@ cuda_py_test(
     name = "geometric_test",
     size = "small",
     srcs = ["python/kernel_tests/geometric_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -239,7 +239,7 @@ cuda_py_test(
     name = "half_normal_test",
     size = "medium",
     srcs = ["python/kernel_tests/half_normal_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -256,7 +256,7 @@ cuda_py_test(
 cuda_py_test(
     name = "inverse_gamma_test",
     srcs = ["python/kernel_tests/inverse_gamma_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -271,7 +271,7 @@ cuda_py_test(
 cuda_py_test(
     name = "kumaraswamy_test",
     srcs = ["python/kernel_tests/kumaraswamy_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -291,7 +291,7 @@ cuda_py_test(
     name = "moving_stats_test",
     size = "small",
     srcs = ["python/kernel_tests/moving_stats_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -312,7 +312,7 @@ cuda_py_test(
     name = "mvn_diag_test",
     size = "medium",
     srcs = ["python/kernel_tests/mvn_diag_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -329,7 +329,7 @@ cuda_py_test(
     name = "mvn_diag_plus_low_rank_test",
     size = "medium",
     srcs = ["python/kernel_tests/mvn_diag_plus_low_rank_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -346,7 +346,7 @@ cuda_py_test(
     name = "mvn_full_covariance_test",
     size = "small",
     srcs = ["python/kernel_tests/mvn_full_covariance_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -363,7 +363,7 @@ cuda_py_test(
     name = "mvn_tril_test",
     size = "medium",
     srcs = ["python/kernel_tests/mvn_tril_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -381,7 +381,7 @@ cuda_py_test(
     name = "mixture_test",
     size = "medium",
     srcs = ["python/kernel_tests/mixture_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/core:protos_all_py",
@@ -403,7 +403,7 @@ cuda_py_test(
     name = "mixture_same_family_test",
     size = "small",
     srcs = ["python/kernel_tests/mixture_same_family_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -416,7 +416,7 @@ cuda_py_test(
     name = "negative_binomial_test",
     size = "small",
     srcs = ["python/kernel_tests/negative_binomial_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -432,7 +432,7 @@ cuda_py_test(
     name = "poisson_test",
     size = "small",
     srcs = ["python/kernel_tests/poisson_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -446,7 +446,7 @@ cuda_py_test(
     name = "poisson_lognormal_test",
     size = "medium",
     srcs = ["python/kernel_tests/poisson_lognormal_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:platform_test",
@@ -457,7 +457,7 @@ cuda_py_test(
     name = "sinh_arcsinh_test",
     size = "medium",
     srcs = ["python/kernel_tests/sinh_arcsinh_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -471,7 +471,7 @@ cuda_py_test(
     name = "independent_test",
     size = "small",
     srcs = ["python/kernel_tests/independent_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -486,7 +486,7 @@ cuda_py_test(
     name = "batch_reshape_test",
     size = "medium",
     srcs = ["python/kernel_tests/batch_reshape_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -500,7 +500,7 @@ cuda_py_test(
     name = "sample_stats_test",
     size = "medium",
     srcs = ["python/kernel_tests/sample_stats_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -519,7 +519,7 @@ cuda_py_test(
     name = "seed_stream_test",
     size = "small",
     srcs = ["python/kernel_tests/seed_stream_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:client_testlib",
     ],
@@ -534,7 +534,7 @@ cuda_py_test(
     srcs = [
         "python/kernel_tests/statistical_testing_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -546,7 +546,7 @@ cuda_py_test(
     name = "vector_sinh_arcsinh_diag_test",
     size = "medium",
     srcs = ["python/kernel_tests/vector_sinh_arcsinh_diag_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -560,7 +560,7 @@ cuda_py_test(
     name = "vector_exponential_diag_test",
     size = "medium",
     srcs = ["python/kernel_tests/vector_exponential_diag_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -576,7 +576,7 @@ cuda_py_test(
     name = "vector_laplace_diag_test",
     size = "medium",
     srcs = ["python/kernel_tests/vector_laplace_diag_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -592,7 +592,7 @@ cuda_py_test(
     name = "vector_student_t_test",
     size = "medium",
     srcs = ["python/kernel_tests/vector_student_t_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -608,7 +608,7 @@ cuda_py_test(
     name = "wishart_test",
     size = "medium",
     srcs = ["python/kernel_tests/wishart_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -626,7 +626,7 @@ cuda_py_test(
     name = "normal_conjugate_posteriors_test",
     size = "small",
     srcs = ["python/kernel_tests/normal_conjugate_posteriors_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client",
@@ -641,7 +641,7 @@ cuda_py_test(
     name = "quantized_distribution_test",
     size = "medium",
     srcs = ["python/kernel_tests/quantized_distribution_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -658,7 +658,7 @@ cuda_py_test(
     name = "logistic_test",
     size = "small",
     srcs = ["python/kernel_tests/logistic_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client_testlib",
@@ -672,7 +672,7 @@ cuda_py_test(
     name = "relaxed_bernoulli_test",
     size = "small",
     srcs = ["python/kernel_tests/relaxed_bernoulli_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client_testlib",
@@ -686,7 +686,7 @@ cuda_py_test(
     name = "onehot_categorical_test",
     size = "small",
     srcs = ["python/kernel_tests/onehot_categorical_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client_testlib",
@@ -700,7 +700,7 @@ cuda_py_test(
     name = "relaxed_onehot_categorical_test",
     size = "small",
     srcs = ["python/kernel_tests/relaxed_onehot_categorical_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client_testlib",
@@ -714,7 +714,7 @@ cuda_py_test(
     name = "transformed_distribution_test",
     size = "medium",
     srcs = ["python/kernel_tests/transformed_distribution_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -731,7 +731,7 @@ cuda_py_test(
     name = "vector_diffeomixture_test",
     size = "medium",
     srcs = ["python/kernel_tests/vector_diffeomixture_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -748,7 +748,7 @@ cuda_py_test(
         "python/kernel_tests/conditional_transformed_distribution_test.py",
         "python/kernel_tests/transformed_distribution_test.py",
     ],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -765,7 +765,7 @@ cuda_py_test(
     name = "distribution_util_test",
     size = "small",
     srcs = ["python/kernel_tests/distribution_util_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -783,7 +783,7 @@ cuda_py_test(
     name = "shape_test",
     size = "medium",
     srcs = ["python/kernel_tests/shape_test.py"],
-    additional_deps = [
+    deps = [
         ":distributions_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -801,7 +801,7 @@ cuda_py_test(
     name = "conditional_bijector_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/conditional_bijector_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -820,7 +820,7 @@ cuda_py_test(
     name = "absolute_value_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/absolute_value_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -838,7 +838,7 @@ cuda_py_test(
     name = "affine_test",
     size = "medium",
     srcs = ["python/kernel_tests/bijectors/affine_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -859,7 +859,7 @@ cuda_py_test(
     name = "affine_scalar_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/affine_scalar_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -878,7 +878,7 @@ cuda_py_test(
     name = "affine_linear_operator_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/affine_linear_operator_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -897,7 +897,7 @@ cuda_py_test(
     name = "batch_normalization_test",
     size = "medium",
     srcs = ["python/kernel_tests/bijectors/batch_normalization_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -914,7 +914,7 @@ cuda_py_test(
     name = "chain_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/chain_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -933,7 +933,7 @@ cuda_py_test(
     name = "cholesky_outer_product_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/cholesky_outer_product_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -952,7 +952,7 @@ cuda_py_test(
     name = "exp_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/exp_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -971,7 +971,7 @@ cuda_py_test(
     name = "fill_triangular_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/fill_triangular_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -990,7 +990,7 @@ cuda_py_test(
     name = "gumbel_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/gumbel_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1009,7 +1009,7 @@ cuda_py_test(
     name = "inline_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/inline_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1028,7 +1028,7 @@ cuda_py_test(
     name = "invert_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/invert_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1047,7 +1047,7 @@ cuda_py_test(
     name = "kumaraswamy_bijector_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/kumaraswamy_bijector_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1066,7 +1066,7 @@ cuda_py_test(
     name = "masked_autoregressive_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/masked_autoregressive_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1082,7 +1082,7 @@ cuda_py_test(
     name = "matrix_inverse_tril_test",
     size = "medium",
     srcs = ["python/kernel_tests/bijectors/matrix_inverse_tril_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1101,7 +1101,7 @@ cuda_py_test(
     name = "real_nvp_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/real_nvp_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1117,7 +1117,7 @@ cuda_py_test(
     name = "permute_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/permute_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1133,7 +1133,7 @@ cuda_py_test(
     name = "power_transform_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/power_transform_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1152,7 +1152,7 @@ cuda_py_test(
     name = "reshape_test",
     size = "medium",
     srcs = ["python/kernel_tests/bijectors/reshape_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1168,7 +1168,7 @@ cuda_py_test(
     name = "scale_tril_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/scale_tril_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1187,7 +1187,7 @@ cuda_py_test(
     name = "sigmoid_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/sigmoid_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1208,7 +1208,7 @@ cuda_py_test(
     name = "sinh_arcsinh_bijector_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/sinh_arcsinh_bijector_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1228,7 +1228,7 @@ cuda_py_test(
     name = "softmax_centered_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/softmax_centered_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1247,7 +1247,7 @@ cuda_py_test(
     name = "softplus_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/softplus_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1266,7 +1266,7 @@ cuda_py_test(
     name = "softsign_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/softsign_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1285,7 +1285,7 @@ cuda_py_test(
     name = "square_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/square_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1304,7 +1304,7 @@ cuda_py_test(
     name = "transform_diagonal_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/transform_diagonal_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",
@@ -1323,7 +1323,7 @@ cuda_py_test(
     name = "weibull_test",
     size = "small",
     srcs = ["python/kernel_tests/bijectors/weibull_test.py"],
-    additional_deps = [
+    deps = [
         ":bijectors_py",
         ":distributions_py",
         "//third_party/py/numpy",

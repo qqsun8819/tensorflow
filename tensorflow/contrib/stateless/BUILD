@@ -25,7 +25,7 @@ py_library(
 cuda_py_test(
     name = "stateless_random_ops_test",
     srcs = ["python/kernel_tests/stateless_random_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":stateless",
         "//tensorflow/python:client_testlib",
     ],

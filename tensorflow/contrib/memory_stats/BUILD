@@ -96,7 +96,7 @@ cuda_py_test(
     name = "memory_stats_ops_test",
     size = "small",
     srcs = ["python/kernel_tests/memory_stats_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":memory_stats_py",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:math_ops",

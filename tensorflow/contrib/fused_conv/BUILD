@@ -149,7 +149,7 @@ cuda_py_test(
     name = "fused_conv2d_bias_activation_op_test",
     size = "large",
     srcs = ["python/ops/fused_conv2d_bias_activation_op_test.py"],
-    additional_deps = [
+    deps = [
         ":fused_conv2d_bias_activation_op_test_base",
         "//tensorflow/python:client_testlib",
     ],
@@ -163,7 +163,7 @@ cuda_py_test(
 cuda_py_test(
     name = "fused_conv2d_bias_activation_benchmark",
     srcs = ["python/ops/fused_conv2d_bias_activation_benchmark.py"],
-    additional_deps = [
+    deps = [
         ":fused_conv_py",
         "//tensorflow/python:client",
         "//tensorflow/python:client_testlib",
@@ -188,7 +188,7 @@ cuda_py_test(
 cuda_py_test(
     name = "tensorrt_fused_conv_test",
     srcs = ["python/ops/tensorrt_fused_conv_test.py"],
-    additional_deps = [
+    deps = [
         ":fused_conv_py",
         "//tensorflow/python/compiler/tensorrt:tf_trt_integration_test_base",
         "//tensorflow/python:client_testlib",

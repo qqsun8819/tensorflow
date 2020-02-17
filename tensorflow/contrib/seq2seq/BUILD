@@ -102,7 +102,7 @@ cuda_py_test(
     name = "loss_test",
     size = "medium",
     srcs = ["python/kernel_tests/loss_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "//third_party/py/numpy",
         "//tensorflow/contrib/layers:layers_py",
@@ -120,7 +120,7 @@ cuda_py_test(
     name = "basic_decoder_test",
     size = "medium",
     srcs = ["python/kernel_tests/basic_decoder_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "//tensorflow/contrib/layers:layers_py",
         "//tensorflow/contrib/rnn:rnn_py",
@@ -140,7 +140,7 @@ cuda_py_test(
     name = "basic_decoder_v2_test",
     size = "medium",
     srcs = ["python/kernel_tests/basic_decoder_v2_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "@absl_py//absl/testing:parameterized",
         "//tensorflow/contrib/layers:layers_py",
@@ -161,7 +161,7 @@ cuda_py_test(
     name = "beam_search_ops_test",
     size = "medium",
     srcs = ["python/kernel_tests/beam_search_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client_testlib",
@@ -175,7 +175,7 @@ cuda_py_test(
     name = "decoder_test",
     size = "medium",
     srcs = ["python/kernel_tests/decoder_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "//tensorflow/contrib/layers:layers_py",
         "//tensorflow/contrib/rnn:rnn_py",
@@ -195,7 +195,7 @@ cuda_py_test(
     name = "decoder_v2_test",
     size = "medium",
     srcs = ["python/kernel_tests/decoder_v2_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "@absl_py//absl/testing:parameterized",
         "//tensorflow/contrib/layers:layers_py",
@@ -216,7 +216,7 @@ cuda_py_test(
     name = "beam_search_decoder_test",
     size = "medium",
     srcs = ["python/kernel_tests/beam_search_decoder_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "//third_party/py/numpy",
         "//tensorflow/contrib/layers:layers_py",
@@ -237,7 +237,7 @@ cuda_py_test(
     name = "attention_wrapper_test",
     size = "medium",
     srcs = ["python/kernel_tests/attention_wrapper_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "//tensorflow/contrib/layers:layers_py",
         "//tensorflow/contrib/rnn:rnn_py",
@@ -258,7 +258,7 @@ cuda_py_test(
     name = "attention_wrapper_v2_test",
     size = "medium",
     srcs = ["python/kernel_tests/attention_wrapper_v2_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "@absl_py//absl/testing:parameterized",
         "//tensorflow/python:client_testlib",

@@ -15,7 +15,7 @@ tf_py_test(
     srcs = [
         "mnist.py",
     ],
-    additional_deps = [
+    deps = [
         "//tensorflow:tensorflow_py",
         "//tensorflow/examples/tutorials/mnist",
         "//tensorflow/examples/tutorials/mnist:input_data",

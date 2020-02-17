@@ -78,7 +78,7 @@ tf_custom_op_py_library(
 tf_py_test(
     name = "decode_libsvm_op_test",
     srcs = ["python/kernel_tests/decode_libsvm_op_test.py"],
-    additional_deps = [
+    deps = [
         ":libsvm",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",

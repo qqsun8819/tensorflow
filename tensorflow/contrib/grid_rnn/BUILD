@@ -29,7 +29,7 @@ py_library(
 cuda_py_tests(
     name = "grid_rnn_test",
     srcs = ["python/kernel_tests/grid_rnn_test.py"],
-    additional_deps = [
+    deps = [
         ":grid_rnn_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",

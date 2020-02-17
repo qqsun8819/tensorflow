@@ -159,7 +159,7 @@ tf_py_test(
     name = "experiment_test",
     size = "medium",
     srcs = ["python/learn/experiment_test.py"],
-    additional_deps = [
+    deps = [
         ":learn",
         "//tensorflow/contrib/layers:layers_py",
         "//tensorflow/core:protos_all_py",
@@ -794,7 +794,7 @@ tf_py_test(
     name = "graph_io_test",
     size = "medium",
     srcs = ["python/learn/learn_io/graph_io_test.py"],
-    additional_deps = [
+    deps = [
         ":learn",
         "//tensorflow/python:client",
         "//tensorflow/python:client_testlib",

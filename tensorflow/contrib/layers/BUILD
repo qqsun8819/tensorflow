@@ -131,7 +131,7 @@ cuda_py_test(
     name = "layers_test",
     size = "medium",
     srcs = ["python/layers/layers_test.py"],
-    additional_deps = [
+    deps = [
         ":layers_py",
         "//third_party/py/numpy",
         "//tensorflow/contrib/framework:framework_py",

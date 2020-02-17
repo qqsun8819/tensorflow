@@ -30,7 +30,7 @@ cuda_py_test(
     name = "spinn_test",
     size = "medium",
     srcs = ["spinn_test.py"],
-    additional_deps = [
+    deps = [
         ":data",
         "//third_party/examples/eager/spinn",
         "//third_party/py/numpy",

@@ -41,7 +41,7 @@ cuda_py_tests(
     name = "sparsemax_test",
     size = "medium",
     srcs = ["python/kernel_tests/sparsemax_test.py"],
-    additional_deps = [
+    deps = [
         ":sparsemax_py",
         "//tensorflow:tensorflow_py",
         "//tensorflow/python:array_ops",
@@ -59,7 +59,7 @@ cuda_py_tests(
     name = "sparsemax_loss_test",
     size = "medium",
     srcs = ["python/kernel_tests/sparsemax_loss_test.py"],
-    additional_deps = [
+    deps = [
         ":sparsemax_py",
         "//tensorflow:tensorflow_py",
         "//tensorflow/python:array_ops",

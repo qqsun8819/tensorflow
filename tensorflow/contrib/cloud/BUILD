@@ -58,7 +58,7 @@ tf_py_test(
     name = "bigquery_reader_ops_test",
     size = "small",
     srcs = ["python/ops/bigquery_reader_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":cloud_py",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python:array_ops",
@@ -77,7 +77,7 @@ tf_py_test(
     name = "gcs_config_ops_test",
     size = "small",
     srcs = ["python/ops/gcs_config_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":cloud_py",
         "//tensorflow/python:client_testlib",
     ],

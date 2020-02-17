@@ -62,7 +62,7 @@ cuda_py_test(
     name = "adadelta_test",
     size = "medium",
     srcs = ["adadelta_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:embedding_ops",
@@ -80,7 +80,7 @@ cuda_py_test(
     name = "adagrad_test",
     size = "small",
     srcs = ["adagrad_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "//tensorflow/python:embedding_ops",
         "//tensorflow/python:framework",
@@ -96,7 +96,7 @@ cuda_py_test(
     name = "adam_test",
     size = "small",
     srcs = ["adam_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:framework",
@@ -111,7 +111,7 @@ cuda_py_test(
 cuda_py_test(
     name = "checkpointable_utils_test",
     srcs = ["checkpointable_utils_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "@six_archive//:six",
         "//tensorflow/python:constant_op",
@@ -137,7 +137,7 @@ cuda_py_test(
     name = "gradient_descent_test",
     size = "medium",
     srcs = ["gradient_descent_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:embedding_ops",
@@ -154,7 +154,7 @@ cuda_py_test(
     name = "momentum_test",
     size = "medium",
     srcs = ["momentum_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:embedding_ops",
@@ -172,7 +172,7 @@ cuda_py_test(
     name = "optimizer_v2_test",
     size = "medium",
     srcs = ["optimizer_v2_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:framework",
@@ -190,7 +190,7 @@ cuda_py_test(
     name = "rmsprop_test",
     size = "small",
     srcs = ["rmsprop_test.py"],
-    additional_deps = [
+    deps = [
         ":training",
         "@absl_py//absl/testing:parameterized",
         "//tensorflow/python:array_ops",

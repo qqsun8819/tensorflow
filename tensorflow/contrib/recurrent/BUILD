@@ -58,7 +58,7 @@ cuda_py_tests(
     name = "recurrent_ops_test",
     size = "small",
     srcs = ["python/kernel_tests/recurrent_test.py"],
-    additional_deps = [
+    deps = [
         ":recurrent_ops_py",
         "//third_party/py/numpy",
         "//tensorflow/core:protos_all_py",
@@ -84,7 +84,7 @@ cuda_py_tests(
     name = "functional_rnn_ops_test",
     size = "small",
     srcs = ["python/kernel_tests/functional_rnn_test.py"],
-    additional_deps = [
+    deps = [
         ":functional_rnn_ops_py",
         "//third_party/py/numpy",
         "//tensorflow/contrib/layers:layers_py",

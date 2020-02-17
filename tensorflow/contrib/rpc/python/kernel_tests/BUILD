@@ -60,7 +60,7 @@ tf_py_test(
     name = "rpc_op_test",
     size = "small",
     srcs = ["rpc_op_test.py"],
-    additional_deps = [
+    deps = [
         ":py_test_deps",
         ":rpc_op_test_base",
         ":rpc_op_test_servicer",

@@ -107,7 +107,7 @@ tf_py_test(
     name = "hyperplane_lsh_probes_test",
     size = "small",
     srcs = ["python/kernel_tests/hyperplane_lsh_probes_test.py"],
-    additional_deps = [
+    deps = [
         ":nearest_neighbor_py",
         "//tensorflow/python:client_testlib",
     ],

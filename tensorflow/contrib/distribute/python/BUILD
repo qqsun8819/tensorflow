@@ -56,7 +56,7 @@ py_library(
 cuda_py_test(
     name = "parameter_server_strategy_test",
     srcs = ["parameter_server_strategy_test.py"],
-    additional_deps = [
+    deps = [
         ":parameter_server_strategy",
         "//tensorflow/python/distribute:central_storage_strategy",
         "//tensorflow/python/distribute:combinations",
@@ -114,7 +114,7 @@ py_library(
 cuda_py_test(
     name = "contrib_mirrored_strategy_test",
     srcs = ["contrib_mirrored_strategy_test.py"],
-    additional_deps = [
+    deps = [
         ":mirrored_strategy",
         "//tensorflow/python/eager:context",
         "//tensorflow/python/eager:test",
@@ -131,7 +131,7 @@ cuda_py_test(
 cuda_py_test(
     name = "keras_multi_worker_correctness_test",
     srcs = ["keras_multi_worker_correctness_test.py"],
-    additional_deps = [
+    deps = [
         ":collective_all_reduce_strategy",
         ":mirrored_strategy",
         ":parameter_server_strategy",
@@ -183,7 +183,7 @@ py_library(
 cuda_py_test(
     name = "collective_all_reduce_strategy_test",
     srcs = ["collective_all_reduce_strategy_test.py"],
-    additional_deps = [
+    deps = [
         ":collective_all_reduce_strategy",
         "//tensorflow/python/distribute:combinations",
         "//tensorflow/python/distribute:strategy_combinations",
@@ -215,7 +215,7 @@ cuda_py_test(
 cuda_py_test(
     name = "optimizer_v2_test",
     srcs = ["optimizer_v2_test.py"],
-    additional_deps = [
+    deps = [
         "//tensorflow/python/distribute:combinations",
         "//tensorflow/python/distribute:strategy_combinations",
         "//tensorflow/python/distribute:single_loss_example",
@@ -246,7 +246,7 @@ py_library(
 cuda_py_test(
     name = "monitor_test",
     srcs = ["monitor_test.py"],
-    additional_deps = [
+    deps = [
         "//tensorflow/python/distribute:combinations",
         "//tensorflow/python/distribute:strategy_combinations",
         ":monitor",

@@ -42,7 +42,7 @@ cuda_py_test(
     name = "monte_carlo_test",
     size = "small",
     srcs = ["python/kernel_tests/monte_carlo_test.py"],
-    additional_deps = [
+    deps = [
         ":bayesflow_py",
         "//third_party/py/numpy",
         "//tensorflow/contrib/distributions:distributions_py",

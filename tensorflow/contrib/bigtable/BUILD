@@ -196,7 +196,7 @@ tf_py_test(
     name = "bigtable_ops_test",
     size = "small",
     srcs = ["python/kernel_tests/bigtable_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":bigtable",
         ":bigtable_test_py",
         "//tensorflow/core:protos_all_py",

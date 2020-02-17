@@ -101,7 +101,7 @@ tf_custom_op_py_library(
 tf_py_test(
     name = "hadoop_test",
     srcs = ["python/kernel_tests/hadoop_test.py"],
-    additional_deps = [
+    deps = [
         ":hadoop",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",

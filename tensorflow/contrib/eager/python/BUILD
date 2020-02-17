@@ -37,7 +37,7 @@ py_library(
 cuda_py_test(
     name = "tfe_test",
     srcs = ["tfe_test.py"],
-    additional_deps = [
+    deps = [
         ":tfe",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:metrics",
@@ -69,7 +69,7 @@ py_library(
 cuda_py_test(
     name = "datasets_test",
     srcs = ["datasets_test.py"],
-    additional_deps = [
+    deps = [
         ":datasets",
         "//tensorflow/contrib/data/python/ops:prefetching_ops",
         "//tensorflow/contrib/data/python/ops:threadpool",
@@ -114,7 +114,7 @@ py_library(
 cuda_py_test(
     name = "saver_test",
     srcs = ["saver_test.py"],
-    additional_deps = [
+    deps = [
         ":saver",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:client",
@@ -244,7 +244,7 @@ py_test(
 cuda_py_test(
     name = "remote_test",
     srcs = ["remote_test.py"],
-    additional_deps = [
+    deps = [
         ":parameter_server",
         "//tensorflow/python/eager:remote",
         "//tensorflow/contrib/eager/python:tfe",

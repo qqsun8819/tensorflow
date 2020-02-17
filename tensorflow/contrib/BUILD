@@ -75,7 +75,7 @@ py_library(
         "//tensorflow/contrib/periodic_resample:init_py",
         "//tensorflow/contrib/predictor",
         "//tensorflow/contrib/proto",
-        "//tensorflow/contrib/quantization:quantization_py",
+#"//tensorflow/contrib/quantization:quantization_py",
         "//tensorflow/contrib/quantize:quantize_graph",
         "//tensorflow/contrib/receptive_field:receptive_field_py",
         "//tensorflow/contrib/recurrent:recurrent_py",
@@ -102,7 +102,7 @@ py_library(
         "//tensorflow/contrib/text:text_py",
         "//tensorflow/contrib/tfprof",
         "//tensorflow/contrib/timeseries",
-        "//tensorflow/contrib/tpu",
+#"//tensorflow/contrib/tpu",
         "//tensorflow/contrib/training:training_py",
         "//tensorflow/contrib/util:util_py",
         "//tensorflow/python:util",
@@ -113,7 +113,7 @@ py_library(
         "//tensorflow:linux_s390x": [],
         "//tensorflow:windows": [],
         "//conditions:default": [
-            "//tensorflow/contrib/tensorrt:init_py",
+#"//tensorflow/contrib/tensorrt:init_py",
             "//tensorflow/contrib/ffmpeg:ffmpeg_ops_py",
         ],
     }) + select({

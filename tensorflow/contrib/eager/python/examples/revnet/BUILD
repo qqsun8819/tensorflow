@@ -70,7 +70,7 @@ cuda_py_test(
     name = "ops_test",
     size = "medium",
     srcs = ["ops_test.py"],
-    additional_deps = [
+    deps = [
         ":ops",
         "//tensorflow:tensorflow_py",
     ],
@@ -84,7 +84,7 @@ cuda_py_test(
     name = "blocks_test",
     size = "medium",
     srcs = ["blocks_test.py"],
-    additional_deps = [":blocks_test_main_lib"],
+    deps = [":blocks_test_main_lib"],
     shard_count = 4,
     tags = [
         "no_oss",  # TODO(b/132387200): Segfaulting
@@ -109,7 +109,7 @@ cuda_py_test(
     name = "revnet_test",
     size = "medium",
     srcs = ["revnet_test.py"],
-    additional_deps = [
+    deps = [
         ":blocks_test",
         ":config",
         ":revnet",

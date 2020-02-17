@@ -77,7 +77,7 @@ cuda_py_test(
     name = "reduce_slice_ops_test",
     size = "small",
     srcs = ["python/kernel_tests/reduce_slice_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":reduce_slice_ops_py",
         "//tensorflow/python:framework_test_lib",
         "//tensorflow/python:platform_test",

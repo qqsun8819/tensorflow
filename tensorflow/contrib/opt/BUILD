@@ -137,7 +137,7 @@ py_test(
 tf_py_test(
     name = "variable_clipping_optimizer_test",
     srcs = ["python/training/variable_clipping_optimizer_test.py"],
-    additional_deps = [
+    deps = [
         ":opt_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -214,7 +214,7 @@ py_test(
 cuda_py_test(
     name = "reg_adagrad_optimizer_test",
     srcs = ["python/training/reg_adagrad_optimizer_test.py"],
-    additional_deps = [
+    deps = [
         ":opt_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client_testlib",
@@ -270,7 +270,7 @@ py_test(
 tf_py_test(
     name = "drop_stale_gradient_optimizer_test",
     srcs = ["python/training/drop_stale_gradient_optimizer_test.py"],
-    additional_deps = [
+    deps = [
         ":opt_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -292,7 +292,7 @@ tf_py_test(
 tf_py_test(
     name = "agn_optimizer_test",
     srcs = ["python/training/agn_optimizer_test.py"],
-    additional_deps = [
+    deps = [
         ":opt_py",
         "//tensorflow/python:client",
         "//tensorflow/python:client_testlib",
@@ -313,7 +313,7 @@ tf_py_test(
 tf_py_test(
     name = "elastic_average_optimizer_test",
     srcs = ["python/training/elastic_average_optimizer_test.py"],
-    additional_deps = [
+    deps = [
         ":opt_py",
         "//tensorflow/python:client",
         "//tensorflow/python:client_testlib",
@@ -334,7 +334,7 @@ tf_py_test(
 tf_py_test(
     name = "model_average_optimizer_test",
     srcs = ["python/training/model_average_optimizer_test.py"],
-    additional_deps = [
+    deps = [
         ":opt_py",
         "//tensorflow/python:client",
         "//tensorflow/python:client_testlib",

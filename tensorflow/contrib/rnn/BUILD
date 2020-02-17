@@ -54,7 +54,7 @@ cuda_py_test(
     name = "rnn_cell_test",
     size = "medium",
     srcs = ["python/kernel_tests/rnn_cell_test.py"],
-    additional_deps = [
+    deps = [
         ":rnn_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -78,7 +78,7 @@ cuda_py_test(
     name = "rnn_test",
     size = "medium",
     srcs = ["python/kernel_tests/rnn_test.py"],
-    additional_deps = [
+    deps = [
         ":rnn_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -100,7 +100,7 @@ tf_py_test(
     name = "fused_rnn_cell_test",
     size = "medium",
     srcs = ["python/kernel_tests/fused_rnn_cell_test.py"],
-    additional_deps = [
+    deps = [
         ":rnn_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",
@@ -121,7 +121,7 @@ cuda_py_test(
     name = "lstm_ops_test",
     size = "medium",
     srcs = ["python/kernel_tests/lstm_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":rnn_py",
         "@absl_py//absl/testing:parameterized",
         "//third_party/py/numpy",
@@ -143,7 +143,7 @@ cuda_py_test(
     name = "gru_ops_test",
     size = "small",
     srcs = ["python/kernel_tests/gru_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":rnn_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",

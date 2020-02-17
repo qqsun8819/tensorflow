@@ -39,7 +39,7 @@ py_library(
 tf_py_test(
     name = "sequence_feature_column_test",
     srcs = ["python/feature_column/sequence_feature_column_test.py"],
-    additional_deps = [
+    deps = [
         ":sequence_feature_column",
         "@absl_py//absl/testing:parameterized",
         "//third_party/py/numpy",
@@ -59,7 +59,7 @@ tf_py_test(
 tf_py_test(
     name = "sequence_feature_column_integration_test",
     srcs = ["python/feature_column/sequence_feature_column_integration_test.py"],
-    additional_deps = [
+    deps = [
         ":sequence_feature_column",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:framework_ops",

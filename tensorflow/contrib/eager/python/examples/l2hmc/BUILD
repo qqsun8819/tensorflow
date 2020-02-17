@@ -31,7 +31,7 @@ cuda_py_test(
     name = "l2hmc_test",
     size = "medium",
     srcs = ["l2hmc_test.py"],
-    additional_deps = [
+    deps = [
         ":l2hmc",
         "//tensorflow:tensorflow_py",
         "//tensorflow/contrib/eager/python:tfe",

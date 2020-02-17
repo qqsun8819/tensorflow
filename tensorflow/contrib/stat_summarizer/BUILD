@@ -24,7 +24,7 @@ tf_py_test(
     name = "stat_summarizer_test",
     size = "small",
     srcs = ["python/stat_summarizer_test.py"],
-    additional_deps = [
+    deps = [
         "//tensorflow/core:protos_all_py",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:framework_for_generated_wrappers",

@@ -45,7 +45,7 @@ py_library(
 cuda_py_test(
     name = "xla_test",
     srcs = ["xla_test.py"],
-    additional_deps = [
+    deps = [
         ":xla",
         "@absl_py//absl/testing:parameterized",
         "//tensorflow/compiler/tests:xla_test",

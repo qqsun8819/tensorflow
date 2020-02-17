@@ -22,7 +22,7 @@ py_library(
 tf_py_test(
     name = "import_test",
     srcs = ["import_test.py"],
-    additional_deps = [
+    deps = [
         ":proto",
         "//tensorflow/python:client_testlib",
     ],

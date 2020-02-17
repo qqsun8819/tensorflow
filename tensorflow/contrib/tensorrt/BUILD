@@ -6,7 +6,7 @@
 load(
     "//tensorflow:tensorflow.bzl",
     "tf_cuda_library",
-    "tf_custom_op_library_additional_deps",
+    "tf_custom_op_library_deps",
 )
 load(
     "@local_config_tensorrt//:build_defs.bzl",
@@ -30,7 +30,7 @@ tf_cuda_library(
         "//tensorflow/compiler/tf2tensorrt:trt_plugins",
     ] + if_tensorrt([
         "@local_config_tensorrt//:tensorrt",
-    ]) + tf_custom_op_library_additional_deps(),
+    ]) + tf_custom_op_library_deps(),
 )
 
 py_library(

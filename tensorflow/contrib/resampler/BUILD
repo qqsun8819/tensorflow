@@ -91,7 +91,7 @@ cuda_py_test(
     name = "resampler_ops_test",
     size = "small",
     srcs = ["python/ops/resampler_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":resampler_py",
         "//tensorflow/python:client_testlib",
         "//tensorflow/python:constant_op",

@@ -44,7 +44,7 @@ cuda_py_test(
     name = "cudnn_rnn_ops_test",
     size = "medium",
     srcs = ["python/kernel_tests/cudnn_rnn_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":cudnn_rnn_py",
         "@absl_py//absl/testing:parameterized",
         "//tensorflow/core:protos_all_py",
@@ -73,7 +73,7 @@ cuda_py_test(
     name = "cudnn_rnn_test",
     size = "enormous",
     srcs = ["python/kernel_tests/cudnn_rnn_test.py"],
-    additional_deps = [
+    deps = [
         ":cudnn_rnn_py",
         "//tensorflow/core:protos_all_py",
         "//tensorflow/contrib/rnn:rnn_py",
@@ -100,7 +100,7 @@ cuda_py_test(
     name = "cudnn_rnn_ops_benchmark",
     size = "small",
     srcs = ["python/kernel_tests/cudnn_rnn_ops_benchmark.py"],
-    additional_deps = [
+    deps = [
         ":cudnn_rnn_py",
         "//tensorflow/contrib/rnn:rnn_py",
         "//tensorflow/python:array_ops",

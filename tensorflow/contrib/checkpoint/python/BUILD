@@ -31,7 +31,7 @@ py_library(
 tf_py_test(
     name = "containers_test",
     srcs = ["containers_test.py"],
-    additional_deps = [
+    deps = [
         ":containers",
         "@six_archive//:six",
         "//tensorflow/python:client_testlib",
@@ -57,7 +57,7 @@ py_library(
 tf_py_test(
     name = "python_state_test",
     srcs = ["python_state_test.py"],
-    additional_deps = [
+    deps = [
         ":python_state",
         "//third_party/py/numpy",
         "//tensorflow/python:framework_ops",
@@ -84,7 +84,7 @@ py_library(
 tf_py_test(
     name = "split_dependency_test",
     srcs = ["split_dependency_test.py"],
-    additional_deps = [
+    deps = [
         ":split_dependency",
         "//tensorflow/python:array_ops",
         "//tensorflow/python:framework_test_lib",
@@ -110,7 +110,7 @@ py_library(
 tf_py_test(
     name = "visualize_test",
     srcs = ["visualize_test.py"],
-    additional_deps = [
+    deps = [
         ":visualize",
         "//tensorflow/python:constant_op",
         "//tensorflow/python:resource_variable_ops",

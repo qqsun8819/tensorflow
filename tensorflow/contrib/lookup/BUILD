@@ -31,7 +31,7 @@ tf_py_test(
     name = "lookup_ops_test",
     size = "medium",
     srcs = ["lookup_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":lookup_py",
         "//third_party/py/numpy",
         "@six_archive//:six",

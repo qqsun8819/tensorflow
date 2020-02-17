@@ -41,7 +41,7 @@ cuda_py_tests(
     name = "seq2seq_test",
     size = "medium",
     srcs = ["python/kernel_tests/seq2seq_test.py"],
-    additional_deps = [
+    deps = [
         ":seq2seq_py",
         "//third_party/py/numpy",
         "//tensorflow/contrib/rnn:rnn_py",

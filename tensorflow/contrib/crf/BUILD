@@ -30,7 +30,7 @@ py_library(
 cuda_py_tests(
     name = "crf_test",
     srcs = ["python/kernel_tests/crf_test.py"],
-    additional_deps = [
+    deps = [
         ":crf_py",
         "//third_party/py/numpy",
         "//tensorflow/python:array_ops",

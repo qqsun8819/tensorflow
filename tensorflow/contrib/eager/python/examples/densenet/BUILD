@@ -28,7 +28,7 @@ cuda_py_test(
     name = "densenet_test",
     size = "medium",
     srcs = ["densenet_test.py"],
-    additional_deps = [
+    deps = [
         ":densenet",
         "//tensorflow/contrib/eager/python:tfe",
         "//tensorflow:tensorflow_py",
@@ -45,7 +45,7 @@ cuda_py_test(
     name = "densenet_graph_test",
     size = "medium",
     srcs = ["densenet_graph_test.py"],
-    additional_deps = [
+    deps = [
         ":densenet",
         "//third_party/py/numpy",
         "//tensorflow:tensorflow_py",

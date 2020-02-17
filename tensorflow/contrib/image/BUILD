@@ -100,7 +100,7 @@ cuda_py_test(
     name = "image_ops_test",
     size = "medium",
     srcs = ["python/kernel_tests/image_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":distort_image_py",
         ":image_py",
         ":single_image_random_dot_stereograms_py",
@@ -203,7 +203,7 @@ cuda_py_test(
     name = "distort_image_ops_test",
     size = "medium",
     srcs = ["python/kernel_tests/distort_image_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":distort_image_py",
         ":image_py",
         ":single_image_random_dot_stereograms_py",
@@ -267,7 +267,7 @@ cuda_py_test(
     name = "sparse_image_warp_test",
     size = "medium",
     srcs = ["python/kernel_tests/sparse_image_warp_test.py"],
-    additional_deps = [
+    deps = [
         ":sparse_image_warp_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -295,7 +295,7 @@ cuda_py_test(
     name = "dense_image_warp_test",
     size = "medium",
     srcs = ["python/kernel_tests/dense_image_warp_test.py"],
-    additional_deps = [
+    deps = [
         ":dense_image_warp_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -316,7 +316,7 @@ cuda_py_test(
     name = "interpolate_spline_test",
     size = "medium",
     srcs = ["python/kernel_tests/interpolate_spline_test.py"],
-    additional_deps = [
+    deps = [
         ":interpolate_spline_py",
         "//third_party/py/numpy",
         "//tensorflow/python:client",
@@ -336,7 +336,7 @@ tf_py_test(
     name = "segmentation_test",
     size = "medium",
     srcs = ["python/kernel_tests/segmentation_test.py"],
-    additional_deps = [
+    deps = [
         ":distort_image_py",
         ":image_py",
         "//tensorflow/python:array_ops",
@@ -407,7 +407,7 @@ cuda_py_test(
     name = "single_image_random_dot_stereograms_ops_test",
     size = "medium",
     srcs = ["python/kernel_tests/single_image_random_dot_stereograms_ops_test.py"],
-    additional_deps = [
+    deps = [
         ":distort_image_py",
         ":image_py",
         ":single_image_random_dot_stereograms_py",
