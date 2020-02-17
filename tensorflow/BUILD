@@ -457,6 +457,7 @@ package_group(
         "//learning/brain/swift/x10/...",
         "//perftools/accelerators/xprof/api/...",
         "//tensorflow/...",
+        "//tensorflow/contrib",
         "//tensorflow_estimator/python/estimator/...",
         "//tensorflow_models/official/...",
         "//third_party/py/autograph/...",

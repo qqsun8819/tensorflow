@@ -24,7 +24,7 @@ def tf_gen_op_wrapper_private_py(
     tf_gen_op_wrapper_py(
         name = bare_op_name,
         out = out,
-        visibility = visibility,
+        visibility = ["//visibility:public"],
         deps = deps,
         require_shape_functions = require_shape_functions,
         generated_target_name = name,
