@@ -72,7 +72,9 @@ Status ReplaceNodeWithMlirRun(
                     IncomingEdgeAsOutput);
   Status status;
   Scope scope = NewInternalScope(g, &status, /*refiner=*/nullptr)
-                   .NewSubScope(n->name());
+                   .NewSubScope(n->name())
+                   .WithDevice(n->requested_device())
+                   .WithAssignedDevice(n->requested_device());
   if (!status.ok()) {
     LOG(FATAL) << "Create graph scope failed.";
   }

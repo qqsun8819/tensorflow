@@ -45,6 +45,7 @@ cc_library(
         ":xla_cpu_device",
         ":xla_cpu_jit",
         "//tensorflow/compiler/plugin",
+        "//tensorflow/compiler/jit/kernels:mlir_ops",
     ] + if_cuda_or_rocm([
         ":xla_gpu_device",
         ":xla_gpu_jit",
@@ -834,6 +835,7 @@ tf_cc_test(
         "//tensorflow/cc:scope",
         "//tensorflow/cc:sendrecv_ops",
         "//tensorflow/compiler/jit/kernels:xla_ops",
+        "//tensorflow/compiler/jit/kernels:mlir_ops",
         "//tensorflow/compiler/tf2xla:rearrange_function_argument",
         "//tensorflow/compiler/tf2xla:side_effect_util",
         "//tensorflow/compiler/tf2xla:test_util",
