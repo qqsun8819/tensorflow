@@ -117,8 +117,8 @@ Status SimpleMlirCompiler::CompileGraphDef(bool enableOpt)   {
   //clSharedLibs.push_back("/home/tops/lib/python3.7/site-packages/tensorflow_core/libtensorflow_framework.so.2");
   const char* python_lib_path= getenv(kPythonLibPath);
   if (python_lib_path) {
-    python_libpath_str = string(python_lib_path);
-    clSharedLibs.push_back(python_lib_path + "/tensorflow_core/python/_pywrap_tensorflow_internal.so");
+    std::string python_libpath_str = std::string(python_lib_path);
+    clSharedLibs.push_back(python_libpath_str + "/tensorflow_core/python/_pywrap_tensorflow_internal.so");
   } else {
     // use tops python3 as default
     clSharedLibs.push_back("/home/tops/lib/python3.7/site-packages/tensorflow_core/python/_pywrap_tensorflow_internal.so");

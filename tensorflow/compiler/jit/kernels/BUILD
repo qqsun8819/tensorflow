@@ -65,7 +65,7 @@ cc_library(
         "//tensorflow/core:stream_executor_no_cuda",
         "//tensorflow/core/profiler/lib:traceme",
         "//tensorflow/stream_executor:tf_allocator_adapter",
-        "//tensorflow/compiler/mlir/tensorflow:runtime",
+        "//tensorflow/compiler/mlir:tf_mlir_compiler",
         "@llvm-project//mlir:ExecutionEngineUtils",
         "@llvm-project//mlir:ExecutionEngine",
     ],
