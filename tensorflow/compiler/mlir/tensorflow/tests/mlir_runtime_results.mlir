@@ -1,7 +1,7 @@
 // 1) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf-opt
 // 2) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir/tensorflow:tf-mlir-runtime
 // 3) bazel build --config=opt --config=noaws --config=nohdfs   --config=nonccl  //tensorflow/compiler/mlir:tf_mlir_external_copy_results
-// 4) bazel-bin/tensorflow/compiler/mlir/tf-opt tensorflow/compiler/mlir/tensorflow/tests/mlir_runtime_results.mlir -tf-executor-to-tf-conversion --xla-legalize-tf -hlo-legalize-to-lhlo --lhlo-legalize-to-linalg --lhlo-legalize-to-std --convert-linalg-to-affine-loops  --lower-affine  --convert-loop-to-std -convert-tf-to-llvm --convert-std-to-llvm | bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime -e main_ret2 -entry-point-result=user_define -shared-libs=/home/jiankeng.pt/workspace/tensorflow-bak/bazel-bin/tensorflow/compiler/mlir/libtf_mlir_external_copy_results.so
+// 4) bazel-bin/tensorflow/compiler/mlir/tf-opt tensorflow/compiler/mlir/tensorflow/tests/mlir_runtime_results.mlir -tf-executor-to-tf-conversion --xla-legalize-tf -hlo-legalize-to-lhlo --lhlo-legalize-to-linalg --lhlo-legalize-to-std --convert-linalg-to-affine-loops  --lower-affine  --convert-loop-to-std -convert-tf-to-llvm --convert-std-to-llvm | bazel-bin/tensorflow/compiler/mlir/tensorflow/tf-mlir-runtime -e main_ret2 -entry-point-result=user_define -shared-libs=bazel-bin/tensorflow/compiler/mlir/libtf_mlir_external_copy_results.so
 // the function name can be: -e main_ret1 ; -e main_ret2 ; -e main_ret3
 
 module attributes {tf.versions = {bad_consumers = [], min_consumer = 0 : i32, producer = 134 : i32}} {

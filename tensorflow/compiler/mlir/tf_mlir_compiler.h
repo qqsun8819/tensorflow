@@ -19,17 +19,20 @@ limitations under the License.
 #include "llvm/ADT/STLExtras.h"
 #include "mlir/IR/Module.h"
 #include "tensorflow/core/platform/status.h"
+#include "mlir/ExecutionEngine/ExecutionEngine.h" // TF:local_config_mlir
+#include <memory>
 namespace tensorflow {
 
 class SimpleMlirCompiler {   
  public:
   SimpleMlirCompiler(const std::string& graph_str);
-  Status CompileGraphDef();
-  Status RunJit(bool enableOpt); 
+  Status CompileGraphDef(bool enableOpt);
+  Status RunJit(std::vector<void*>* args_pointers); 
  private:
   llvm::StringRef graph_stref_;
   mlir::MLIRContext mlir_context_;
   mlir::OwningModuleRef mlir_module_;
+  std::unique_ptr<mlir::ExecutionEngine> engine_;
 };  
 }  // namespace tensorflow
 

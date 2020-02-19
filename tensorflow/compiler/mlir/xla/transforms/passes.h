@@ -65,6 +65,9 @@ namespace xla_lhlo {
 // Lowers from LHLO dialect to Affine dialect.
 std::unique_ptr<OpPassBase<FuncOp>> createLegalizeToAffinePass();
 
+// Lowers from LHLO dialect to Standard dialect.
+std::unique_ptr<OpPassBase<FuncOp>> createLegalizeToStdPass();
+
 // Lowers from LHLO dialect to Linalg dialect.
 std::unique_ptr<OpPassBase<FuncOp>> createLegalizeLhloToLinalgPass();
 

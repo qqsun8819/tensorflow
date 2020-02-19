@@ -35,7 +35,7 @@ int main(int argc, char** argv) {
 
   std::string error_message;
 
-  llvm::outs() << "input file name:" << input_filename;
+  llvm::outs() << "input file name:" << input_filename << " \n";
   auto input = mlir::openInputFile(input_filename, &error_message);
 
   if (!input) {

@@ -157,7 +157,6 @@ cc_library(
     hdrs = ["external_copy_results.h"],
     deps = [
       "//tensorflow/core:framework",
-        "//tensorflow/core:lib",
     ],
     )
 
@@ -206,6 +205,7 @@ cc_library(
     copts=["-g"],
     deps = [
     ":passes_new",
+        "//tensorflow/compiler/mlir/tensorflow:runtime",
         "//tensorflow/compiler/mlir/tensorflow:convert_graphdef",
         "//tensorflow/compiler/mlir/tensorflow:mlir_roundtrip_flags",
         "//tensorflow/compiler/mlir/tensorflow:translate_cl_options",

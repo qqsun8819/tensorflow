@@ -397,12 +397,12 @@ static Error compileAndExecuteFunctionWithArgs(
       return error;
 
     tensorflow::Tensor* result_tensor_ptr = rtw->GetResultTensorPointer();
-    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128) << "\n";
+    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128) ;
 
     // TODO: set result tensor to output
     tensorflow::Tensor tensor_copied(*result_tensor_ptr);
     delete rtw;
-    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128) << "\n";
+    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128);
   }
 
   // 8) Test input args && return results
@@ -418,12 +418,12 @@ static Error compileAndExecuteFunctionWithArgs(
       return error;
 
     tensorflow::Tensor* result_tensor_ptr = rtw->GetResultTensorPointer();
-    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128) << "\n";
+    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128);
 
     // TODO: set result tensor to output
     tensorflow::Tensor tensor_copied(*result_tensor_ptr);
     delete rtw;
-    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128) << "\n";
+    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128);
   }
 
   // 9) Test input args && return results
@@ -462,14 +462,55 @@ static Error compileAndExecuteFunctionWithArgs(
       return error;
 
     tensorflow::Tensor* result_tensor_ptr = rtw->GetResultTensorPointer();
-    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128) << "\n";
+    LOG(INFO) << "result tensor = " << result_tensor_ptr->DebugString(128);
 
     // TODO: set result tensor to output
     tensorflow::Tensor tensor_copied(*result_tensor_ptr);
     delete rtw;
-    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128) << "\n";
+    LOG(INFO) << "result tensor copied = " << tensor_copied.DebugString(128);
   }
 
+
+  // 10) Test subgraph cluster21 args && return results
+  if (mainFuncName.getValue() == "main_cluster21") {
+    std::vector<void*> args_pointers;
+
+    int count = 10;
+    int64_t* ptr = (int64_t*)malloc(sizeof(int64_t)*count);
+
+    for (int i = 0; i < count; ++i) {
+      *(ptr+i) = (int64_t)(i);
+    }
+
+    std::vector<int64_t> shape;
+    shape.push_back(count);
+ 
+    mlir::runtime::InputTensorWrapper<1> input_tensor(ptr, shape);
+    void* args_pointer0 = input_tensor.GetArg();
+    args_pointers.push_back(args_pointer0);
+
+    // Create a ResultTensorWrapper for result tensor
+    mlir::runtime::ResultTensorWrapper *rtw1 = new mlir::runtime::ResultTensorWrapper();
+    args_pointers.push_back(rtw1->GetArg());
+
+    mlir::runtime::ResultTensorWrapper *rtw2 = new mlir::runtime::ResultTensorWrapper();
+    args_pointers.push_back(rtw2->GetArg());
+
+    if (auto error =
+        compileAndExecute(module, entryPoint, transformer, ((void**)(args_pointers.data()))))
+      return error;
+
+    tensorflow::Tensor* result_tensor_ptr1 = rtw1->GetResultTensorPointer();
+    tensorflow::Tensor* result_tensor_ptr2 = rtw2->GetResultTensorPointer();
+
+
+    // TODO: set result tensor to output
+    tensorflow::Tensor tensor_copied1(*result_tensor_ptr1);
+    tensorflow::Tensor tensor_copied2(*result_tensor_ptr2);
+    delete rtw1, rtw2;
+    LOG(INFO) << "result tensor 1= " << tensor_copied1.DebugString(128);
+    LOG(INFO) << "result tensor 2= " << tensor_copied2.DebugString(128);
+  }
   return Error::success();
 }
 

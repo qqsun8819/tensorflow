@@ -32,7 +32,70 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/platform/types.h"
 
-extern "C" int32_t _global_mlir_call_external_func(int a, int b);
+// extern "C" int32_t _global_mlir_call_external_func(int a, int b);
+
+template <int N>
+struct RRawMemRef {
+  void* allocated_ptr;
+  void* aligned_ptr;
+  int64_t offset;
+  int64_t sizes[N];
+  int64_t strides[N];
+};
+
+typedef enum {
+  I32Type = 0,
+  I64Type = 1,
+  F32Type = 2,
+  F64Type = 3,
+
+  InvalidType = 100,
+} RElementType;
+
+template <int N>
+int64_t set_external_memref(RRawMemRef<1>* dest, RRawMemRef<N>* src, int ele_type) {
+  
+  int64_t dest_addr = *((int64_t*)(dest->aligned_ptr));
+  int64_t* dest_addr_addr = (int64_t*)(dest_addr);
+
+  // TODO: consider strides
+
+  int64_t total_count = 1;
+  std::vector<tensorflow::int64> dim_sizes;
+  for (int i = 0; i < N; ++i) {
+    dim_sizes.push_back(*(src->sizes+i));
+    total_count *= *(src->sizes+i);
+  }
+
+  tensorflow::DataType dt;
+  if (ele_type == RElementType::I32Type) {
+    dt = tensorflow::DT_INT32;
+  } else if (ele_type == RElementType::I64Type) {
+    dt = tensorflow::DT_INT64;
+  } else if (ele_type == RElementType::F32Type) {
+    dt = tensorflow::DT_FLOAT;
+  } else if (ele_type == RElementType::F64Type) {
+    dt = tensorflow::DT_DOUBLE;
+  } else {
+    assert(false && "Now only support i32, i64, f32, f64 type tensor.");
+  }
+  tensorflow::Tensor* tmp_tensor(new tensorflow::Tensor(dt, tensorflow::TensorShape(dim_sizes)));
+  *dest_addr_addr = (int64_t)(tmp_tensor);
+
+  // TODO: should be optimized ?
+  for (int64_t i = 0; i < total_count; ++i) {
+    switch (ele_type) {
+      case RElementType::I32Type: tmp_tensor->flat<tensorflow::int32>()(i) = *((int32_t*)(src->aligned_ptr)+i); break;
+      case RElementType::I64Type: tmp_tensor->flat<tensorflow::int64>()(i) = *((int64_t*)(src->aligned_ptr)+i); break;
+      case RElementType::F32Type: tmp_tensor->flat<float>()(i) = *((float*)(src->aligned_ptr)+i); break;
+      case RElementType::F64Type: tmp_tensor->flat<double>()(i) = *((double*)(src->aligned_ptr)+i); break;
+    }
+  }
+  
+  return 0;
+}
+
+
 
 namespace tensorflow {
 struct SessionOptions;

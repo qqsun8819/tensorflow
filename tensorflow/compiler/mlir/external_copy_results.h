@@ -21,7 +21,6 @@ limitations under the License.
 #include <string>
 #include <iostream>
 #include "tensorflow/core/framework/tensor.h"
-#include "tensorflow/core/platform/logging.h"
 
 #ifdef _WIN32
 #ifndef MLIR_RUNNER_UTILS_EXPORT

@@ -55,6 +55,7 @@ limitations under the License.
 #include "tensorflow/core/util/env_var.h"
 
 #include "tensorflow/compiler/mlir/tf_mlir_compiler.h"
+#include "tensorflow/compiler/mlir/tensorflow/runtime/dynamic_memref.h"
 
 namespace tensorflow {
 
@@ -310,9 +311,9 @@ Status GraphMgr::Register(
     item->handle = *graph_handle;
     CHECK(table_.insert({*graph_handle, item}).second);
   
-
     std::ostringstream ostr2;
-    std::ifstream pinfile("/tmp/callfunc.pbtxt", std::ifstream::binary);
+    LOG(INFO) << "/tmp/cluster21.pbtxt";
+    std::ifstream pinfile("/tmp/cluster21.pbtxt", std::ifstream::binary);
     char ch;
     while (pinfile.get(ch)) {  // till end-of-file
       ostr2 << ch;
@@ -321,16 +322,86 @@ Status GraphMgr::Register(
     
     SimpleMlirCompiler mlir_compiler(ostr2.str());
     LOG(INFO) << "mlir compile test";
-    auto s1 = mlir_compiler.CompileGraphDef();
+    auto s1 = mlir_compiler.CompileGraphDef(true);
     if (!s1.ok())  {
       LOG(ERROR) << "compile mlir fail";
     } else {
       LOG(INFO) << "compile success";
-      s1 = mlir_compiler.RunJit(true);
-      if (!s1.ok())  {
-        LOG(ERROR) << "run jit faile";
-      } else {
-        LOG(INFO) << "run jit success";
+
+      {
+        std::vector<void*> args_pointers;
+
+        int count = 10;
+        int64_t* ptr = (int64_t*)malloc(sizeof(int64_t)*count);
+
+        for (int i = 0; i < count; ++i) {
+          *(ptr+i) = (int64_t)(i);
+        }
+
+        std::vector<int64_t> shape;
+        shape.push_back(count);
+
+        mlir::runtime::InputTensorWrapper<1> input_tensor(ptr, shape);
+        void* args_pointer0 = input_tensor.GetArg();
+        args_pointers.push_back(args_pointer0);
+
+        // Create a ResultTensorWrapper for result tensor
+        mlir::runtime::ResultTensorWrapper *rtw1 = new mlir::runtime::ResultTensorWrapper();
+        args_pointers.push_back(rtw1->GetArg());
+
+        mlir::runtime::ResultTensorWrapper *rtw2 = new mlir::runtime::ResultTensorWrapper();
+        args_pointers.push_back(rtw2->GetArg());
+
+        s1 = mlir_compiler.RunJit(&args_pointers);
+        tensorflow::Tensor* result_tensor_ptr1 = rtw1->GetResultTensorPointer();
+        tensorflow::Tensor tensor_copied1(*result_tensor_ptr1);
+        LOG(INFO) << "1st) result tensor 1= " << tensor_copied1.DebugString(128);
+
+
+
+        if (!s1.ok())  {
+          LOG(ERROR) << "run jit fail";
+        } else {
+          LOG(INFO) << "run jit success";
+        }
+      }
+
+      {
+        std::vector<void*> args_pointers;
+
+        int count = 10;
+        int64_t* ptr = (int64_t*)malloc(sizeof(int64_t)*count);
+
+        for (int i = 0; i < count; ++i) {
+          *(ptr+i) = (int64_t)(i);
+        }
+
+        std::vector<int64_t> shape;
+        shape.push_back(count);
+
+        mlir::runtime::InputTensorWrapper<1> input_tensor(ptr, shape);
+        void* args_pointer0 = input_tensor.GetArg();
+        args_pointers.push_back(args_pointer0);
+
+        // Create a ResultTensorWrapper for result tensor
+        mlir::runtime::ResultTensorWrapper *rtw1 = new mlir::runtime::ResultTensorWrapper();
+        args_pointers.push_back(rtw1->GetArg());
+
+        mlir::runtime::ResultTensorWrapper *rtw2 = new mlir::runtime::ResultTensorWrapper();
+        args_pointers.push_back(rtw2->GetArg());
+
+        s1 = mlir_compiler.RunJit(&args_pointers);
+        tensorflow::Tensor* result_tensor_ptr1 = rtw1->GetResultTensorPointer();
+        tensorflow::Tensor tensor_copied1(*result_tensor_ptr1);
+        LOG(INFO) << "2nd) result tensor 1= " << tensor_copied1.DebugString(128);
+
+
+        
+        if (!s1.ok())  {
+          LOG(ERROR) << "run jit fail";
+        } else {
+          LOG(INFO) << "run jit success";
+        }
       }
     }
      
