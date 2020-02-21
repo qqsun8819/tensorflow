@@ -33,6 +33,7 @@ class MlirRunOp : public OpKernel {
   void Compute(OpKernelContext* ctx) override;
 
  private:
+  std::string entry_func_name_;
 };
 
 }  // namespace tensorflow

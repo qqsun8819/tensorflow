@@ -53,8 +53,11 @@ limitations under the License.
 namespace tensorflow {
 
 const char* kPythonLibPath = "TF_PYTHON_LIB_PATH";
-SimpleMlirCompiler::SimpleMlirCompiler(const std::string& graph_str): graph_stref_(graph_str), mlir_context_(){
-  
+SimpleMlirCompiler::SimpleMlirCompiler(const std::string& graph_str,
+                                       const std::string& entry_func_name)
+    : graph_stref_(graph_str),
+      mlir_context_(),
+      entry_func_name_(entry_func_name) {
   mlir_module_ = tensorflow::GraphdefToMlirTranslateFunction(
       graph_str, debug_info_file, input_arrays, input_dtypes, input_shapes,
       output_arrays, control_output_arrays, prune_unused_nodes,
@@ -62,7 +65,10 @@ SimpleMlirCompiler::SimpleMlirCompiler(const std::string& graph_str): graph_stre
   mlir::registerPassManagerCLOptions();
 }
 
-Status SimpleMlirCompiler::CompileGraphDef(bool enableOpt)   {
+Status SimpleMlirCompiler::CompileGraphDef(bool enable_opt)   {
+  // TODO: FIXME
+  // Use entry_func_name_ instead of default function name 'main'
+
   /*
   llvm::SourceMgr source_mgr;
   source_mgr.AddNewSourceBuffer(std::move(input), llvm::SMLoc());
@@ -109,7 +115,7 @@ Status SimpleMlirCompiler::CompileGraphDef(bool enableOpt)   {
   }
   // An optimization pipeline to use within the execution engine.
   auto transformer = mlir::makeOptimizingTransformer(
-      /*optLevel=*/enableOpt ? 3 : 0, /*sizeLevel=*/0,
+      /*optLevel=*/enable_opt ? 3 : 0, /*sizeLevel=*/0,
       /*targetMachine=*/tmOrError->get());
 
   std::vector<std::string> clSharedLibs;
@@ -148,10 +154,11 @@ Status SimpleMlirCompiler::CompileGraphDef(bool enableOpt)   {
 
 Status SimpleMlirCompiler::RunJit(std::vector<void*>* args_pointers ) {
 
+  // TODO: FIXME
+  // Use entry_func_name_ instead of default function name 'main'
   auto expectedFPtr = engine_->lookup("main");
    void (*fptr)(void **) = *expectedFPtr;
   (*fptr)(((void**)(args_pointers->data())));
-
 
   return Status::OK();
 }

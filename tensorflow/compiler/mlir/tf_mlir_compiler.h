@@ -25,14 +25,16 @@ namespace tensorflow {
 
 class SimpleMlirCompiler {   
  public:
-  SimpleMlirCompiler(const std::string& graph_str);
-  Status CompileGraphDef(bool enableOpt);
+  SimpleMlirCompiler(const std::string& graph_str,
+                     const std::string& entry_func_name);
+  Status CompileGraphDef(bool enable_opt);
   Status RunJit(std::vector<void*>* args_pointers); 
  private:
   llvm::StringRef graph_stref_;
   mlir::MLIRContext mlir_context_;
   mlir::OwningModuleRef mlir_module_;
   std::unique_ptr<mlir::ExecutionEngine> engine_;
+  std::string entry_func_name_;
 };  
 }  // namespace tensorflow
 

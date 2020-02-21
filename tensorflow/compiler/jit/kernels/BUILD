@@ -58,6 +58,7 @@ cc_library(
     hdrs = ["mlir_ops.h"],
     srcs = ["mlir_ops.cc"],
     deps = [
+        "//tensorflow/compiler/jit:mlir_util",
         "//tensorflow/core:core_cpu_internal",
         "//tensorflow/core:framework",
         "//tensorflow/core:lib",

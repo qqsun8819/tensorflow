@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     return 1;
   }
 
-  tensorflow::SimpleMlirCompiler mlir_compiler(input->getBuffer().str());
+  tensorflow::SimpleMlirCompiler mlir_compiler(input->getBuffer().str(), "");
   auto s1 = mlir_compiler.CompileGraphDef();
   if (!s1.ok())  {
     LOG(ERROR) << "compile mlir faile";

@@ -15,9 +15,9 @@ limitations under the License.
 
 #include <vector>
 
-#include "absl/container/flat_hash_map.h"
 #include "mlir/ExecutionEngine/ExecutionEngine.h"
 #include "tensorflow/compiler/jit/kernels/mlir_ops.h"
+#include "tensorflow/compiler/jit/mlir_util.h"
 #include "tensorflow/compiler/mlir/tensorflow/runtime/dynamic_memref.h"
 #include "tensorflow/compiler/mlir/tf_mlir_compiler.h"
 #include "tensorflow/core/framework/allocator.h"
@@ -88,61 +88,12 @@ void FreeCompiledFunctionArgs(
   }
 }
 
-
-class MlirExecutableClosure {
- public:
-  explicit MlirExecutableClosure(
-     const std::string& graphstr) {
-    mlir_compiler_ = new SimpleMlirCompiler(graphstr);
-    mlir_compiler_->CompileGraphDef(true);
-  }
-
-  SimpleMlirCompiler* compiler() const { return mlir_compiler_;} 
-
- private:
-  SimpleMlirCompiler* mlir_compiler_;
-  
-  TF_DISALLOW_COPY_AND_ASSIGN(MlirExecutableClosure);
-};
-
-class MlirExecutableClosureStore {
- public:
-  MlirExecutableClosureStore()  {}
-
-  using KeyT = string;
-
-  KeyT Produce(const KeyT& key, const GraphDef& graph_def) {
-    mutex_lock l(mutex_);
-    MlirExecutableClosure* result = new MlirExecutableClosure(graph_def.DebugString());
-    bool insert_successful = closures_.emplace(key, result).second;
-    DCHECK(insert_successful);
-    (void)insert_successful;
-    return key;
-  }
-
-  MlirExecutableClosure* Consume(const KeyT& key) {
-    mutex_lock l(mutex_);
-    auto it = closures_.find(key);
-    DCHECK(it != closures_.end());
-    return it->second;
-  }
-
-  static MlirExecutableClosureStore* Global() {
-    static MlirExecutableClosureStore* instance = new MlirExecutableClosureStore;
-    return instance;
-  }
-
- private:
-  mutex mutex_;
-  absl::flat_hash_map<KeyT, MlirExecutableClosure*> closures_ GUARDED_BY(mutex_);
-
-  TF_DISALLOW_COPY_AND_ASSIGN(MlirExecutableClosureStore);
-};
-
 }
 
 MlirRunOp::MlirRunOp(OpKernelConstruction* ctx)
-    : OpKernel(ctx) {}
+    : OpKernel(ctx) {
+  OP_REQUIRES_OK(ctx, ctx->GetAttr("CompiledFuncName", &entry_func_name_));
+}
 
 void MlirRunOp::Compute(OpKernelContext* ctx) {
   VLOG(3) << "MlirRunOp " << def().name();
@@ -169,12 +120,10 @@ void MlirRunOp::Compute(OpKernelContext* ctx) {
     output_args_tmp_src.push_back(rtw);
   }
  
-  // TODO: get func name from attr
-  std::string func_name = "";
-  GraphDef graph_def;
-  MlirExecutableClosureStore::Global()->Produce(func_name, graph_def);
-  MlirExecutableClosureStore::Global()->Consume(func_name)->compiler()->RunJit(&args_pointers);
-
+  MlirExecutableClosureStore::Global()
+      ->Consume(entry_func_name_)
+      ->compiler()
+      ->RunJit(&args_pointers);
 
   // set tensor to output && free tmp resource
   for (int i = 0; i < output_args_tmp_src.size(); ++i) {

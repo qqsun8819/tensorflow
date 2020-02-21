@@ -22,6 +22,7 @@ limitations under the License.
 #include "tensorflow/cc/framework/scope_internal.h"
 #include "tensorflow/core/graph/graph.h"
 #include "tensorflow/core/graph/node_builder.h"
+#include "tensorflow/compiler/jit/mlir_util.h"
 
 namespace tensorflow {
 
@@ -57,8 +58,9 @@ Status ReplaceNodeWithMlirRun(
   // Insert MlirRun node and delete cluster_N below.
 
   // For cluster_N node, the related compiled func name
-  // is `cluster_N_main`
+  // is `cluster_Nmain`
   string entry_func_name = n->name() + "main";
+  string cluter_node_name = n->name();
 
   // TODO: FIXME
   // Don't distinguish const/non-const/resource inputs here
@@ -79,11 +81,7 @@ Status ReplaceNodeWithMlirRun(
     LOG(FATAL) << "Create graph scope failed.";
   }
 
-  //ops::_MlirRun mlir_run(root.WithOpName("mlir_run"),
-  //                      args_inputs);
-  //mlir_run.operation.node()->AddAttr("CompiledFuncName", entry_func_name);
-
-  ::tensorflow::Node* ret;
+  ::tensorflow::Node* ret = nullptr;
   const auto unique_name = scope.GetUniqueNameForOp("_MlirRun");
   auto builder = ::tensorflow::NodeBuilder(unique_name, "_MlirRun")
                        .Input(args_inputs)
@@ -93,6 +91,7 @@ Status ReplaceNodeWithMlirRun(
 
   scope.UpdateBuilder(&builder);
   scope.UpdateStatus(builder.Finalize(g, &ret));
+
   if (!scope.ok()) {
     LOG(FATAL) << "Insert _MlirRun node to graph failed.";
   }
@@ -103,6 +102,11 @@ Status ReplaceNodeWithMlirRun(
   // copy output edges
   ReplaceOutEdges(g, n, ret);
   g->RemoveNode(n);
+
+  // Generate global mlir compiled function for the sub-cluster
+  //MlirExecutableClosureStore::Global()
+  //    ->Produce(entry_func_name,
+  //              MlirSubGraphDefStore::Global()->GetSubGraphDefString(cluter_node_name), "");
 
   return Status::OK();
 }
@@ -131,5 +135,4 @@ Status BuildMlirOpsPass::Run(const GraphOptimizationPassOptions& options) {
 }
 
 }  // namespace tensorflow
-
 

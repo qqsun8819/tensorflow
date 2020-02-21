@@ -666,6 +666,8 @@ cc_library(
         "build_mlir_ops_pass.h",
     ],
     deps = [
+        ":mlir_util",
+        "//tensorflow/compiler/jit/kernels:mlir_ops",
         "//tensorflow/compiler/jit/ops:mlir_ops",
         "//tensorflow/cc:cc_ops",
         "//tensorflow/cc:functional_ops",
@@ -714,6 +716,20 @@ cc_library(
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_absl//absl/container:inlined_vector",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/types:optional",
+    ],
+)
+
+cc_library(
+    name = "mlir_util",
+    hdrs = ["mlir_util.h"],
+    deps = [
+        "//tensorflow/compiler/mlir:tf_mlir_compiler",
+        "@llvm-project//mlir:ExecutionEngineUtils",
+        "@llvm-project//mlir:ExecutionEngine",
+        "@com_google_absl//absl/container:flat_hash_map",
+        "@com_google_absl//absl/container:flat_hash_set",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/types:optional",
     ],

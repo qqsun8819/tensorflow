@@ -304,6 +304,7 @@ Status GraphMgr::Register(
     return s;
   }
 
+#if 0
   // Inserts one item into table_.
   {
     mutex_lock l(mu_);
@@ -320,7 +321,7 @@ Status GraphMgr::Register(
     }
     pinfile.close();
     
-    SimpleMlirCompiler mlir_compiler(ostr2.str());
+    SimpleMlirCompiler mlir_compiler(ostr2.str(), "");
     LOG(INFO) << "mlir compile test";
     auto s1 = mlir_compiler.CompileGraphDef(true);
     if (!s1.ok())  {
@@ -406,6 +407,8 @@ Status GraphMgr::Register(
     }
      
   }
+#endif
+
   return Status::OK();
 }
 
