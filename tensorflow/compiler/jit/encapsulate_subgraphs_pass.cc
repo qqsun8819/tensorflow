@@ -21,6 +21,7 @@ limitations under the License.
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <fstream>
 
 #include "absl/container/flat_hash_set.h"
 #include "absl/strings/match.h"
@@ -29,6 +30,7 @@ limitations under the License.
 #include "tensorflow/compiler/jit/flags.h"
 #include "tensorflow/compiler/jit/graphcycles/graphcycles.h"
 #include "tensorflow/compiler/jit/mark_for_compilation_pass.h"
+#include "tensorflow/compiler/jit/mlir_util.h"
 #include "tensorflow/compiler/jit/shape_inference_helpers.h"
 #include "tensorflow/compiler/jit/xla_cluster_util.h"
 #include "tensorflow/compiler/tf2xla/const_analysis.h"
@@ -1215,6 +1217,7 @@ Status EncapsulateSubgraphsPass::Run(
             std::unique_ptr<Graph>* subgraph,
             std::vector<int>* input_permutation,
             std::vector<int>* output_permutation, NodeDef* node) {
+
         // Optimize the subgraph.
         // Do not constant fold nodes that output DT_VARIANT type tensors.
         // XLA does not support Const nodes of Variant type since it needs
@@ -1296,7 +1299,28 @@ Status EncapsulateSubgraphsPass::Run(
         // TODO(phawkins): add a forward is-constant analysis, similarly split
         // outputs into host-memory constants and device-memory non-constants.
 
-        AddNodeAttr(kXlaCompiledKernelAttr, true, node);
+        // TODO: FIXME!
+        // Tricky here for test mlir path
+        if (node->name() == "cluster_21") {
+          AddNodeAttr("_MlirCompiledKernel", true, node);
+         
+          // TODO: FIXME Too tricky here. 
+          std::ostringstream ostr2;
+          std::ifstream pinfile("/tmp/cluster21.pbtxt", std::ifstream::binary);
+          char ch;
+          while (pinfile.get(ch)) {
+            ostr2 << ch;
+          }
+          pinfile.close();
+          //MlirSubGraphDefStore::Global()->StoreSubGraph(node->name(), std::string(ostr2.str()));
+
+          string entry_func_name = node->name() + "main";
+          MlirExecutableClosureStore::Global()
+              ->Produce(entry_func_name, std::string(ostr2.str()), "");
+
+        } else {
+          AddNodeAttr(kXlaCompiledKernelAttr, true, node);
+        }
         AddNodeAttr(kXlaNumConstantArgsAttr, num_consts, node);
         AddNodeAttr(kXlaNumResourceArgsAttr, num_resources, node);
         return Status::OK();
@@ -1322,6 +1346,7 @@ Status EncapsulateSubgraphsPass::Run(
     VLOG(3) << "Has ref vars = " << has_ref_vars
             << ", node: " << node->def().SerializeAsString();
   }
+
   return Status::OK();
 }
 
