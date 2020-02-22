@@ -177,5 +177,28 @@ void _global_unique_index64(
     StridedMemRefType<int64_t, 1> *unique_ids,
     StridedMemRefType<int64_t, 1> *ids_index); 
 
+extern "C" MLIR_RUNNER_UTILS_EXPORT
+void _global_unique_i64_i64(
+    StridedMemRefType<int64_t, 1> *input,
+    StridedMemRefType<int64_t, 1> *unique_ids,
+    StridedMemRefType<int64_t, 1> *idx);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT
+void _global_unique_i64_i32(
+    StridedMemRefType<int64_t, 1> *input,
+    StridedMemRefType<int64_t, 1> *unique_ids,
+    StridedMemRefType<int32_t, 1> *idx);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT
+void _global_unique_i32_i64(
+    StridedMemRefType<int32_t, 1> *input,
+    StridedMemRefType<int32_t, 1> *unique_ids,
+    StridedMemRefType<int64_t, 1> *idx);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT
+void _global_unique_i32_i32(
+    StridedMemRefType<int32_t, 1> *input,
+    StridedMemRefType<int32_t, 1> *unique_ids,
+    StridedMemRefType<int32_t, 1> *idx);
 
 #endif TENSORFLOW_COMPILER_MLIR_COMPILE_UTIL_H

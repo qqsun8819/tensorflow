@@ -101,83 +101,62 @@ struct UniqueCountConverter : public OpRewritePattern<UniqueCountOp> {
  
 };
 
-struct UniqueIdsConverter : public OpRewritePattern<UniqueIdsOp> {
-  using OpRewritePattern<UniqueIdsOp>::OpRewritePattern;
+struct UniqueConverter : public OpRewritePattern<UniqueOp> {
+  using OpRewritePattern<UniqueOp>::OpRewritePattern;
 
-  PatternMatchResult matchAndRewrite(UniqueIdsOp op,
-                                     PatternRewriter& rewriter) const override {
-
-
+  PatternMatchResult matchAndRewrite(
+      UniqueOp op,
+      PatternRewriter& rewriter) const override {
     auto context = rewriter.getContext();
     auto loc = op.getLoc();
-    //auto input_ids_type = op.input().getType().dyn_cast<MemRefType>().getElementType()
 
     std::vector<Type> input_types;
     std::vector<Type> result_types;
-    input_types.push_back(op.lhs().getType());
-    input_types.push_back(op.rhs().getType());
-    input_types.push_back(op.out().getType());
-    
-    FlatSymbolRefAttr output_func_ref = CallExternalFunc(
-        rewriter, op.getParentOfType<ModuleOp>(), loc,
-        "_global_unique_ids",
-        input_types, result_types,
-        ArrayRef<NamedAttribute>{});
-
-    // Create a CallOp to call `_global_get_unique_ids_count`
-    SmallVector<Value, 4> func_param;
-    func_param.push_back(op.lhs());
-    func_param.push_back(op.rhs());
-    func_param.push_back(op.out());
-
-    auto unique_call = rewriter.create<mlir::CallOp>(
-        loc, output_func_ref.getValue(),
-        result_types,
-        func_param);
-
-    rewriter.eraseOp(op);
-    return this->matchSuccess();
-  }
-};
-
-struct UniqueIndexConverter : public OpRewritePattern<UniqueIndexOp> {
-  using OpRewritePattern<UniqueIndexOp>::OpRewritePattern;
-
-  PatternMatchResult matchAndRewrite(UniqueIndexOp op,
-                                     PatternRewriter& rewriter) const override {
-
-    auto context = rewriter.getContext();
-    auto loc = op.getLoc();
-    auto output_type = op.out().getType().dyn_cast<MemRefType>().getElementType();
+    input_types.push_back(op.x().getType());
+    input_types.push_back(op.y().getType());
+    input_types.push_back(op.idx().getType());
  
-    std::vector<Type> input_types;
-    std::vector<Type> result_types;
-    input_types.push_back(op.lhs().getType());
-    input_types.push_back(op.rhs().getType());
-    input_types.push_back(op.out().getType());
-    
+    auto tensor_type = op.y().getType().dyn_cast<MemRefType>().getElementType();
+    auto idx_type = op.idx().getType().dyn_cast<MemRefType>().getElementType();
+    std::string func_name("_global_unique");
+    if (tensor_type.isInteger(64)) {
+      func_name += "_i64";
+    } else if (tensor_type.isInteger(32)) {
+      func_name += "_i32";
+    } else {
+      llvm::errs() << "Now only support int32 and int64 type.\n";
+      return this->matchFailure();
+    }
+    if (idx_type.isInteger(64)) {
+      func_name += "_i64";
+    } else if (idx_type.isInteger(32)) {
+      func_name += "_i32";
+    } else {
+      llvm::errs() << "Unique only support int32 and int64 index type.\n";
+      return this->matchFailure();
+    }
+
     FlatSymbolRefAttr output_func_ref = CallExternalFunc(
         rewriter, op.getParentOfType<ModuleOp>(), loc,
-        output_type.isInteger(64) ? "_global_unique_index64":"_global_unique_index32",
-        input_types, result_types,
+        func_name, input_types, result_types,
         ArrayRef<NamedAttribute>{});
 
-    // Create a CallOp to call `_global_get_unique_ids_count`
+    // Create a CallOp to call `_global_unique_i64_i32`
     SmallVector<Value, 4> func_param;
-    func_param.push_back(op.lhs());
-    func_param.push_back(op.rhs());
-    func_param.push_back(op.out());
+    func_param.push_back(op.x());
+    func_param.push_back(op.y());
+    func_param.push_back(op.idx());
 
-    auto unique_call = rewriter.create<mlir::CallOp>(
+    rewriter.create<mlir::CallOp>(
         loc, output_func_ref.getValue(),
         result_types,
         func_param);
 
     rewriter.eraseOp(op);
+
     return this->matchSuccess();
   }
 };
-
 
 struct DebugPrintConverter : public OpRewritePattern<DebugPrintOp> {
   using OpRewritePattern<DebugPrintOp>::OpRewritePattern;
@@ -252,8 +231,7 @@ void populateLHLOToStdConversionPattern(MLIRContext* context,
   patterns->insert<
       LhloTerminatorOpConverter,
       UniqueCountConverter,
-      UniqueIdsConverter,
-      UniqueIndexConverter,
+      UniqueConverter,
       DebugPrintConverter
     >(context);
   // clang-format on
@@ -269,7 +247,11 @@ struct LhloLegalizeToStd: public FunctionPass<LhloLegalizeToStd> {
     // If you don't want the Op with concrete information which you specify
     // in the anonymous function be lowered at the pass, please do this.
     target.addDynamicallyLegalOp<FuncOp>(
-        [&](FuncOp op) { return  
+        [&](FuncOp op) { return
+        op.getName() == "_global_unique_i64_i64" ||
+        op.getName() == "_global_unique_i64_i32" ||
+        op.getName() == "_global_unique_i32_i64" ||
+        op.getName() == "_global_unique_i32_i32" ||
         op.getName() == "_global_unique_index32" ||
         op.getName() == "_global_unique_index64" ||
         op.getName() == "_global_get_unique_ids_count" ||

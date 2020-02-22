@@ -1658,17 +1658,14 @@ class ConvertUniqueOp : public OpRewritePattern<TF::UniqueOp> {
   PatternMatchResult matchAndRewrite(TF::UniqueOp op,
                                      PatternRewriter &rewriter) const override {
     Location loc = op.getLoc();
-
    
     SmallVector<Value, 4> slices;
-
     auto input_type = op.x().getType().dyn_cast<RankedTensorType>();
     auto idcount_shape = RankedTensorType::get({}, input_type.getElementType());
     auto idcount = rewriter.create<xla_hlo::UniqueCountOp>(op.getLoc(), idcount_shape, op.x());
-    auto unique_ids = rewriter.create<xla_hlo::UniqueIdsOp>(loc, op.x().getType(), op.x(), idcount);
-    auto unique_index = rewriter.create<xla_hlo::UniqueIndexOp>(loc, op.y().getType(), op.x(), unique_ids);
-    slices.push_back(unique_ids);
-    slices.push_back(unique_index);
+    auto result = rewriter.create<xla_hlo::UniqueOp>(loc, op.y().getType(), op.idx().getType(), op.x(), idcount);
+    slices.push_back(result.y());
+    slices.push_back(result.idx());
     rewriter.replaceOp(op, slices);
     return matchSuccess();
   }

@@ -632,30 +632,19 @@ def HLO_UniqueCountOp: HLO_UnaryElementwiseOp<"unique_count",
     >];
 }
 
-def HLO_UniqueIdsOp: HLO_Op<"unique_ids",
+def HLO_UniqueOp: HLO_Op<"unique",
       [NoSideEffect]> {
   let arguments = (ins
-    HLO_Tensor:$lhs,
-    HLO_IntTensor:$rhs
+    HLO_Tensor:$x,
+    HLO_IntTensor:$count
   );
-  let builders = [OpBuilder<
-    "Builder *builder, OperationState &result, Value left, Value  right"
-  >];
-  let results = (outs HLO_Tensor);
+  let builders = [
+    OpBuilder<"Builder *builder, OperationState &result, Value left, Value right">,
+  ];
+  let results = (outs
+    HLO_Tensor:$y,
+    HLO_Tensor:$idx);
 }
-
-def HLO_UniqueIndexOp: HLO_Op<"unique_index",
-      [NoSideEffect]> {
-  let arguments = (ins
-    HLO_Tensor:$lhs,
-    HLO_Tensor:$rhs
-  );
-  let builders = [OpBuilder<
-    "Builder *builder, OperationState &result, Value left, Value  right"
-  >];
-  let results = (outs HLO_IntTensor);
-}
-
 
 //===----------------------------------------------------------------------===//
 // XLA Slice definitions.

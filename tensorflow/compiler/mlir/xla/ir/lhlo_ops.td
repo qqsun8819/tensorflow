@@ -106,6 +106,12 @@ def LHLO_UniqueCountOp:  LHLO_Op<"unique_count", [NoSideEffect]> {
                        LHLO_Buffer:$output);
 }
 
+def LHLO_UniqueOp: LHLO_Op<"unique", [NoSideEffect]> {
+  let arguments = (ins LHLO_Buffer:$x,
+                       LHLO_Buffer:$y,
+                       LHLO_Buffer:$idx);
+}
+
 def LHLO_DebugPrintOp:  LHLO_Op<"debug_print", [NoSideEffect]> {
   let arguments = (ins LHLO_Buffer:$input);
 }
@@ -141,9 +147,6 @@ def LHLO_SubOp : LHLO_BinaryElementwiseOp<"sub", []>, BASE_HLO_SubOp;
 def LHLO_AndOp: LHLO_BinaryElementwiseOp<"and", []>, BASE_HLO_AndOp;
 
 def LHLO_OrOp: LHLO_BinaryElementwiseOp<"or", []>, BASE_HLO_OrOp;
-
-def LHLO_UniqueIdsOp: LHLO_BinaryElementwiseOp<"unique_ids", []>;
-def LHLO_UniqueIndexOp: LHLO_BinaryElementwiseOp<"unique_index", []>;
 
 //===----------------------------------------------------------------------===//
 // XLA control flow op definitions.

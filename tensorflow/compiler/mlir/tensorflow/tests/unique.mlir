@@ -7,7 +7,12 @@ module attributes {tf.versions = {bad_consumers = [], min_consumer = 0 : i32, pr
       %control_2 = tf_executor.island wraps "tf.DebugPrint"(%arg0)  : (tensor<?xi64>) -> ()
       %control_4 = tf_executor.island wraps "tf.DebugPrint"(%u1)  : (tensor<?xi64>) -> ()
       %control_5 = tf_executor.island wraps "tf.DebugPrint"(%u2)  : (tensor<?xi64>) -> ()
-      
+
+      %u12, %u22, %contro2_1 = tf_executor.island wraps "tf.Unique"(%arg0)  : (tensor<?xi64>) -> (tensor<?xi64>, tensor<?xi32>)
+      %contro2_2 = tf_executor.island wraps "tf.DebugPrint"(%arg0)  : (tensor<?xi64>) -> ()
+      %contro2_4 = tf_executor.island wraps "tf.DebugPrint"(%u12)  : (tensor<?xi64>) -> ()
+      %contro2_5 = tf_executor.island wraps "tf.DebugPrint"(%u22)  : (tensor<?xi32>) -> ()
+
       tf_executor.fetch
     }
     return
