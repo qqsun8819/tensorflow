@@ -666,7 +666,6 @@ cc_library(
         "build_mlir_ops_pass.h",
     ],
     deps = [
-        ":mlir_util",
         "//tensorflow/compiler/jit/kernels:mlir_ops",
         "//tensorflow/compiler/jit/ops:mlir_ops",
         "//tensorflow/cc:cc_ops",
@@ -722,9 +721,11 @@ cc_library(
 )
 
 cc_library(
-    name = "mlir_util",
-    hdrs = ["mlir_util.h"],
+    name = "mlir_compiler",
+    srcs = ["mlir_compiler.cc"],
+    hdrs = ["mlir_compiler.h"],
     deps = [
+"//tensorflow/compiler/tf2xla:xla_compiler",
         "//tensorflow/compiler/mlir:tf_mlir_compiler",
         "@llvm-project//mlir:ExecutionEngineUtils",
         "@llvm-project//mlir:ExecutionEngine",

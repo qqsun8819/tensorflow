@@ -17,9 +17,23 @@ limitations under the License.
 
 #include "mlir/ExecutionEngine/ExecutionEngine.h"
 #include "tensorflow/compiler/jit/kernels/mlir_ops.h"
-#include "tensorflow/compiler/jit/mlir_util.h"
+#include "tensorflow/compiler/jit/shape_inference.h"
+
 #include "tensorflow/compiler/mlir/tensorflow/runtime/dynamic_memref.h"
 #include "tensorflow/compiler/mlir/tf_mlir_compiler.h"
+#include "tensorflow/core/common_runtime/device.h"
+#include "tensorflow/core/common_runtime/executor.h"
+#include "tensorflow/core/common_runtime/function.h"
+#include "tensorflow/core/common_runtime/graph_optimizer.h"
+#include "tensorflow/core/framework/attr_value_util.h"
+#include "tensorflow/core/framework/function.h"
+#include "tensorflow/core/framework/node_def_util.h"
+#include "tensorflow/core/framework/types.h"
+#include "tensorflow/core/graph/algorithm.h"
+#include "tensorflow/core/graph/graph_constructor.h"
+#include "tensorflow/core/graph/node_builder.h"
+
+#include "tensorflow/core/util/dump_graph.h"
 #include "tensorflow/core/framework/allocator.h"
 #include "tensorflow/core/framework/node_def_util.h"
 #include "tensorflow/core/framework/op.h"
@@ -68,7 +82,7 @@ void* BuildCompiledFunctionArgs(
 
 void FreeCompiledFunctionArgs(
     std::vector<std::vector<void*>>& args) {
-  for (int i = 0; i < args.size(); ++i) {
+  for (size_t i = 0; i < args.size(); ++i) {
     switch (i) {
 #define FREE_ARGS(R, arg)                                    \
   case R:                                                    \
@@ -91,7 +105,7 @@ void FreeCompiledFunctionArgs(
 }
 
 MlirRunOp::MlirRunOp(OpKernelConstruction* ctx)
-    : OpKernel(ctx) {
+    : OpKernel(ctx), compiler_(new MlirCompiler(ctx)) {
   OP_REQUIRES_OK(ctx, ctx->GetAttr("CompiledFuncName", &entry_func_name_));
 }
 
@@ -104,6 +118,9 @@ void MlirRunOp::Compute(OpKernelContext* ctx) {
 
   int input_tensor_num = ctx->num_inputs();
   int output_tensor_num = ctx->num_outputs();
+  
+  compiler_->CompileGraph(ctx, entry_func_name_);
+ 
   std::vector<void*> args_pointers;
 
   // construct input args
@@ -126,7 +143,7 @@ void MlirRunOp::Compute(OpKernelContext* ctx) {
       ->RunJit(&args_pointers);
 
   // set tensor to output && free tmp resource
-  for (int i = 0; i < output_args_tmp_src.size(); ++i) {
+  for (size_t i = 0; i < output_args_tmp_src.size(); ++i) {
     tensorflow::Tensor* result_tensor =
         output_args_tmp_src[i]->GetResultTensorPointer();
     ctx->set_output(i, *result_tensor);

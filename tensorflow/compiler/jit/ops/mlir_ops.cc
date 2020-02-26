@@ -27,6 +27,7 @@ REGISTER_OP("_MlirRun")
     .Output("results: Tresults")
     .Attr("Tresults: list(type) >= 0")
     .Attr("CompiledFuncName: string")
+    .Attr("function: func")
     .SetIsStateful()
     .SetShapeFn(shape_inference::UnknownShape)
     .Doc(R"(MLIR Run Op. For use by the MLIR JIT only.

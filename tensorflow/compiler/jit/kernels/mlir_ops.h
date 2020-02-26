@@ -23,6 +23,7 @@ limitations under the License.
 #include "tensorflow/core/platform/macros.h"
 #include "tensorflow/core/util/stream_executor_util.h"
 #include "tensorflow/stream_executor/tf_allocator_adapter.h"
+#include "tensorflow/compiler/jit/mlir_compiler.h"
 
 namespace tensorflow {
 
@@ -34,6 +35,8 @@ class MlirRunOp : public OpKernel {
 
  private:
   std::string entry_func_name_;
+  std::unique_ptr<MlirCompiler> compiler_;
+ 
 };
 
 }  // namespace tensorflow

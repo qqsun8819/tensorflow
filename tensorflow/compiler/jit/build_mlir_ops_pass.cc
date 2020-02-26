@@ -22,7 +22,7 @@ limitations under the License.
 #include "tensorflow/cc/framework/scope_internal.h"
 #include "tensorflow/core/graph/graph.h"
 #include "tensorflow/core/graph/node_builder.h"
-#include "tensorflow/compiler/jit/mlir_util.h"
+#include "tensorflow/core/util/dump_graph.h"
 
 namespace tensorflow {
 
@@ -60,7 +60,7 @@ Status ReplaceNodeWithMlirRun(
   // For cluster_N node, the related compiled func name
   // is `cluster_Nmain`
   string entry_func_name = n->name() + "main";
-  string cluter_node_name = n->name();
+  string cluster_node_name = n->name();
 
   // TODO: FIXME
   // Don't distinguish const/non-const/resource inputs here
@@ -80,14 +80,17 @@ Status ReplaceNodeWithMlirRun(
   if (!status.ok()) {
     LOG(FATAL) << "Create graph scope failed.";
   }
-
+  
+  NameAttrList function;
+  function.set_name(cluster_node_name);
   ::tensorflow::Node* ret = nullptr;
   const auto unique_name = scope.GetUniqueNameForOp("_MlirRun");
   auto builder = ::tensorflow::NodeBuilder(unique_name, "_MlirRun")
                        .Input(args_inputs)
                        .Attr("CompiledFuncName", entry_func_name)
                        .Attr("Targs", n->input_types())
-                       .Attr("Tresults", n->output_types());
+                       .Attr("Tresults", n->output_types())
+                       .Attr("function", function);
 
   scope.UpdateBuilder(&builder);
   scope.UpdateStatus(builder.Finalize(g, &ret));
@@ -103,12 +106,7 @@ Status ReplaceNodeWithMlirRun(
   ReplaceOutEdges(g, n, ret);
   g->RemoveNode(n);
 
-  // Generate global mlir compiled function for the sub-cluster
-  //MlirExecutableClosureStore::Global()
-  //    ->Produce(entry_func_name,
-  //              MlirSubGraphDefStore::Global()->GetSubGraphDefString(cluter_node_name), "");
-
-  return Status::OK();
+   return Status::OK();
 }
 
 }
@@ -130,6 +128,10 @@ Status BuildMlirOpsPass::Run(const GraphOptimizationPassOptions& options) {
     TF_RETURN_IF_ERROR(ReplaceNodeWithMlirRun(
         options, graph, n));
   }
+  if (VLOG_IS_ON(1)) {
+    DumpGraphToFile("build_mlir_ops", *graph, options.flib_def);
+  }
+
 
   return Status::OK();
 }

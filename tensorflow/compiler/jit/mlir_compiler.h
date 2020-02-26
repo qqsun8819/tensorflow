@@ -19,8 +19,18 @@ limitations under the License.
 #define TENSORFLOW_COMPILER_JIT_MLIR_UTIL_H_
 
 #include "absl/container/flat_hash_map.h"
+#include "tensorflow/core/common_runtime/device.h"
+#include "tensorflow/core/common_runtime/device_mgr.h"
+#include "tensorflow/core/common_runtime/function.h"
+#include "tensorflow/compiler/tf2xla/xla_compilation_device.h"
+#include "tensorflow/core/framework/function.h"
+
+
 #include "tensorflow/compiler/mlir/tf_mlir_compiler.h"
 #include "tensorflow/core/graph/graph.h"
+#include "tensorflow/core/framework/op.h"
+#include "tensorflow/core/framework/op_kernel.h"
+
 
 namespace tensorflow {
 
@@ -63,6 +73,12 @@ class MlirExecutableClosureStore {
                const GraphDef& graph_def,
                const std::string& entry_func_name) {
     return Produce(key, graph_def.DebugString(), entry_func_name);
+  }
+
+  bool Exists(const KeyT& key) {
+    mutex_lock l(mutex_);
+    auto it = closures_.find(key);
+    return it != closures_.end();
   }
 
   MlirExecutableClosure* Consume(const KeyT& key) {
@@ -123,6 +139,25 @@ class MlirSubGraphDefStore {
   absl::flat_hash_map<std::string, std::string> cache_ GUARDED_BY(mutex_);
 
   TF_DISALLOW_COPY_AND_ASSIGN(MlirSubGraphDefStore);
+};
+
+class MlirCompiler {
+ public:
+  explicit MlirCompiler(OpKernelConstruction* ctx);
+  Status CompileGraph(OpKernelContext* ctx, const std::string& func_name);
+ private:
+  Status FindFunctionBody(const NameAttrList& function,
+                                     const FunctionBody** fbody); 
+  std::unique_ptr<Graph> GetGraph(const FunctionBody* fbody);
+
+ private:
+  NameAttrList function_;
+  XlaCompilationDevice* device_;
+  StaticDeviceMgr device_mgr_;
+  const FunctionLibraryDefinition* flib_def_ = nullptr; 
+  std::unique_ptr<ProcessFunctionLibraryRuntime> pflr_;
+  FunctionLibraryRuntime* flib_runtime_;        // owned by pflr_.
+  
 };
 
 }  // namespace tensorflow

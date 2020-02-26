@@ -30,7 +30,6 @@ limitations under the License.
 #include "tensorflow/compiler/jit/flags.h"
 #include "tensorflow/compiler/jit/graphcycles/graphcycles.h"
 #include "tensorflow/compiler/jit/mark_for_compilation_pass.h"
-#include "tensorflow/compiler/jit/mlir_util.h"
 #include "tensorflow/compiler/jit/shape_inference_helpers.h"
 #include "tensorflow/compiler/jit/xla_cluster_util.h"
 #include "tensorflow/compiler/tf2xla/const_analysis.h"
@@ -1303,21 +1302,6 @@ Status EncapsulateSubgraphsPass::Run(
         // Tricky here for test mlir path
         if (node->name() == "cluster_21") {
           AddNodeAttr("_MlirCompiledKernel", true, node);
-         
-          // TODO: FIXME Too tricky here. 
-          std::ostringstream ostr2;
-          std::ifstream pinfile("/tmp/cluster21.pbtxt", std::ifstream::binary);
-          char ch;
-          while (pinfile.get(ch)) {
-            ostr2 << ch;
-          }
-          pinfile.close();
-          //MlirSubGraphDefStore::Global()->StoreSubGraph(node->name(), std::string(ostr2.str()));
-
-          string entry_func_name = node->name() + "main";
-          MlirExecutableClosureStore::Global()
-              ->Produce(entry_func_name, std::string(ostr2.str()), "");
-
         } else {
           AddNodeAttr(kXlaCompiledKernelAttr, true, node);
         }
