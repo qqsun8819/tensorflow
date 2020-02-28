@@ -119,7 +119,7 @@ void MlirRunOp::Compute(OpKernelContext* ctx) {
   int input_tensor_num = ctx->num_inputs();
   int output_tensor_num = ctx->num_outputs();
   
-  compiler_->CompileGraph(ctx, entry_func_name_);
+  OP_REQUIRES_OK(ctx, compiler_->CompileGraph(ctx, entry_func_name_));
  
   std::vector<void*> args_pointers;
 

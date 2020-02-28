@@ -18,6 +18,8 @@ limitations under the License.
 #include "absl/algorithm/container.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
+#include "tensorflow/compiler/tf2xla/cc/ops/mlir_jit_ops.h"
+#include "tensorflow/compiler/jit/encapsulate_subgraphs_pass.h"
 #include "tensorflow/cc/framework/ops.h"
 #include "tensorflow/cc/framework/scope_internal.h"
 #include "tensorflow/core/graph/graph.h"
@@ -38,9 +40,6 @@ bool IsMlirCompiledKernel(const Node& node) {
   return has_compilation_attr ? is_compiled : false;
 }
 
-NodeBuilder::NodeOut IncomingEdgeAsOutput(const Edge* e) {
-  return NodeBuilder::NodeOut(e->src(), e->src_output());
-}
 
 void ReplaceOutEdges(Graph* graph, Node* o, Node* n) {
   std::vector<const Edge*> out_edges(
@@ -52,6 +51,54 @@ void ReplaceOutEdges(Graph* graph, Node* o, Node* n) {
   }
 }
 
+struct MlirClusterInfo {
+  std::vector<Output> constant_inputs;
+  std::vector<Output> non_constant_inputs;
+  std::vector<Output> resource_inputs;
+  NameAttrList function;
+};
+
+Output IncomingEdgeAsOutput(const Edge* e) {
+  return Output(e->src(), e->src_output());
+}
+
+Status GetMlirClusterInfo(Node* n, MlirClusterInfo* result) {
+  int num_constant_inputs, num_resource_inputs;
+  TF_RETURN_IF_ERROR(
+      GetNodeAttr(n->attrs(), kXlaNumConstantArgsAttr, &num_constant_inputs));
+  TF_RETURN_IF_ERROR(
+      GetNodeAttr(n->attrs(), kXlaNumResourceArgsAttr, &num_resource_inputs));
+
+  if (num_constant_inputs < 0 || num_resource_inputs < 0 ||
+      num_constant_inputs + num_resource_inputs > n->num_inputs()) {
+    return errors::InvalidArgument(
+        "Invalid number of constant/resource arguments to XLA kernel.");
+  }
+
+  int num_non_constant_inputs =
+      n->num_inputs() - num_constant_inputs - num_resource_inputs;
+
+  std::vector<const Edge*> input_edges_vector;
+  TF_RETURN_IF_ERROR(n->input_edges(&input_edges_vector));
+  absl::Span<const Edge*> input_edges(input_edges_vector);
+
+  absl::c_transform(input_edges.subspan(0, num_constant_inputs),
+                    std::back_inserter(result->constant_inputs),
+                    IncomingEdgeAsOutput);
+
+  absl::c_transform(
+      input_edges.subspan(num_constant_inputs, num_non_constant_inputs),
+      std::back_inserter(result->non_constant_inputs), IncomingEdgeAsOutput);
+
+  absl::c_transform(
+      input_edges.subspan(num_constant_inputs + num_non_constant_inputs,
+                          num_resource_inputs),
+      std::back_inserter(result->resource_inputs), IncomingEdgeAsOutput);
+
+  result->function.set_name(n->type_string());
+  *result->function.mutable_attr() = n->def().attr();
+  return Status::OK();
+}
 Status ReplaceNodeWithMlirRun(
     const GraphOptimizationPassOptions& options,
     Graph* g, Node* n) {
@@ -60,53 +107,42 @@ Status ReplaceNodeWithMlirRun(
   // For cluster_N node, the related compiled func name
   // is `cluster_Nmain`
   string entry_func_name = n->name() + "main";
-  string cluster_node_name = n->name();
+  MlirClusterInfo cluster_info;
+  TF_RETURN_IF_ERROR(GetMlirClusterInfo(n, &cluster_info));
 
-  // TODO: FIXME
-  // Don't distinguish const/non-const/resource inputs here
-  std::vector<const Edge*> input_edges_vector;
-  TF_RETURN_IF_ERROR(n->input_edges(&input_edges_vector));
-  absl::Span<const Edge*> input_edges(input_edges_vector);
-  std::vector<NodeBuilder::NodeOut> args_inputs;
-  // copy input edges
-  absl::c_transform(input_edges.subspan(0, n->num_inputs()),
-                    std::back_inserter(args_inputs),
-                    IncomingEdgeAsOutput);
+
+
   Status status;
-  Scope scope = NewInternalScope(g, &status, /*refiner=*/nullptr)
+  Scope root = NewInternalScope(g, &status, /*refiner=*/nullptr)
                    .NewSubScope(n->name())
                    .WithDevice(n->requested_device())
                    .WithAssignedDevice(n->requested_device());
   if (!status.ok()) {
-    LOG(FATAL) << "Create graph scope failed.";
+    return status;
   }
   
-  NameAttrList function;
-  function.set_name(cluster_node_name);
-  ::tensorflow::Node* ret = nullptr;
-  const auto unique_name = scope.GetUniqueNameForOp("_MlirRun");
-  auto builder = ::tensorflow::NodeBuilder(unique_name, "_MlirRun")
-                       .Input(args_inputs)
-                       .Attr("CompiledFuncName", entry_func_name)
-                       .Attr("Targs", n->input_types())
-                       .Attr("Tresults", n->output_types())
-                       .Attr("function", function);
-
-  scope.UpdateBuilder(&builder);
-  scope.UpdateStatus(builder.Finalize(g, &ret));
-
-  if (!scope.ok()) {
-    LOG(FATAL) << "Insert _MlirRun node to graph failed.";
+  ops::_MlirRun mlir_run(root.WithOpName("mlir_run"),
+                                /*constants=*/cluster_info.constant_inputs,
+                               /*args=*/cluster_info.non_constant_inputs,
+                               /*resources=*/cluster_info.resource_inputs,
+                               /*Tresults=*/n->output_types(),
+                               /*CompileFuncName=*/entry_func_name,
+                               /*function=*/cluster_info.function);
+     
+          
+  
+  if (!root.ok()) {
+    return root.status();
   }
-  scope.UpdateStatus(scope.DoShapeInference(ret));
+  // scope.UpdateStatus(scope.DoShapeInference(ret));
 
   // TODO: FIXME handle control edges here
 
   // copy output edges
-  ReplaceOutEdges(g, n, ret);
+  ReplaceOutEdges(g, n, mlir_run.operation.node());
   g->RemoveNode(n);
 
-   return Status::OK();
+  return Status::OK();
 }
 
 }

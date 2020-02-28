@@ -22,8 +22,12 @@ namespace tensorflow {
 using shape_inference::InferenceContext;
 
 REGISTER_OP("_MlirRun")
+    .Input("constants: Tconstants")
+    .Attr("Tconstants: list(type) >= 0")
     .Input("args: Targs")
     .Attr("Targs: list(type) >= 0")
+    .Input("resources: Nresources * resource")
+    .Attr("Nresources: int >= 0")
     .Output("results: Tresults")
     .Attr("Tresults: list(type) >= 0")
     .Attr("CompiledFuncName: string")

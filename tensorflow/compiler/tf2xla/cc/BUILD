@@ -49,3 +49,27 @@ cc_library(
         "//tensorflow/core:protos_all_cc",
     ],
 )
+
+
+tf_gen_op_wrapper_cc(
+    name = "mlir_jit_op_gen",
+    include_internal_ops = 1,
+    out_ops_file = "ops/mlir_jit_ops",
+    deps = ["//tensorflow/compiler/jit/ops:mlir_ops"],
+)
+
+cc_library(
+    name = "mlir_jit_ops",
+    srcs = ["ops/mlir_jit_ops.cc"],
+    hdrs = ["ops/mlir_jit_ops.h"],
+    deps = [
+        "//tensorflow/cc:const_op",
+        "//tensorflow/cc:ops",
+        "//tensorflow/cc:scope",
+        "//tensorflow/compiler/jit/ops:mlir_ops",
+        "//tensorflow/core:core_cpu",
+        "//tensorflow/core:framework",
+        "//tensorflow/core:lib",
+        "//tensorflow/core:protos_all_cc",
+    ],
+)

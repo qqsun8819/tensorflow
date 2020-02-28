@@ -34,6 +34,7 @@ limitations under the License.
 #include "tensorflow/core/graph/node_builder.h"
 
 #include "tensorflow/core/util/dump_graph.h"
+#include "tensorflow/cc/framework/scope_internal.h"
 #include "tensorflow/core/framework/allocator.h"
 #include "tensorflow/core/framework/node_def_util.h"
 #include "tensorflow/core/framework/op.h"
@@ -51,11 +52,33 @@ NameAttrList FunctionAttr(OpKernelConstruction* ctx) {
 }
 
 
+std::vector<int> ConstantsVector(OpKernelConstruction* ctx) {
+  DataTypeVector constant_types;
+  if (!ctx->GetAttr("Tconstants", &constant_types).ok())
+    return std::vector<int>();
+  std::vector<int> constants(constant_types.size());
+  std::iota(constants.begin(), constants.end(), 0);
+  return constants;
+}
+
+void ReplaceOutEdges(Graph* graph, Node* o, Node* n) {
+  std::vector<const Edge*> out_edges(
+      o->out_edges().begin(),
+      o->out_edges().end());
+  for (const Edge* edge : out_edges) {
+    graph->AddEdge(n, edge->src_output(), edge->dst(), edge->dst_input());
+    graph->RemoveEdge(edge);
+  }
+}
+
+
+
 }
 MlirCompiler::MlirCompiler(OpKernelConstruction* ctx)
     : device_(new XlaCompilationDevice(SessionOptions(), ctx->device_type())),
       device_mgr_(absl::WrapUnique(device_)),
-      function_(FunctionAttr(ctx)) {
+      function_(FunctionAttr(ctx)),
+      constants_(ConstantsVector(ctx)) { 
   flib_def_ = ctx->function_library()->GetFunctionLibraryDefinition();
   pflr_.reset(new ProcessFunctionLibraryRuntime(
       &device_mgr_, Env::Default(), /*config=*/nullptr,
@@ -170,6 +193,73 @@ std::unique_ptr<Graph> MlirCompiler::GetGraph(const FunctionBody* fbody) {
   return graph;
 }
 
+Status MlirCompiler::ProcessConstArgNodes(std::unique_ptr<Graph>* graph) {
+  Graph* g = graph->get();
+  std::vector<Node*> arg_nodes;
+  absl::c_copy_if(g->op_nodes(), std::back_inserter(arg_nodes),
+                  [](const Node* n) {
+                    if (n->def().op() == "_Arg") {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  });
+  LOG(INFO) << "arg size:" << arg_nodes.size();
+
+  int num_constant_inputs;
+  Status status;
+  status = GetNodeAttr(AttrSlice(&function_.attr()), "_XlaNumConstantArgs", &num_constant_inputs);
+  if (!status.ok())
+    return status;
+
+  for (Node* n : arg_nodes) {
+    DataType node_type;
+    if (TryGetNodeAttr(n->attrs(), "_dtype", &node_type)) {
+      LOG(INFO) << "replace node for arg";
+      Scope scope = NewInternalScope(g, &status, /*refiner=*/nullptr)
+        .NewSubScope(n->name())
+        .WithDevice(n->requested_device())
+        .WithAssignedDevice(n->requested_device());
+      if (!status.ok()) {
+        return status;
+      }
+
+      ::tensorflow::Node* ret = nullptr;
+      const TensorProto* node_value = nullptr;
+      if (!GetNodeAttr(n->attrs(), "_value", &node_value).ok())
+        LOG(FATAL) << "Insert Const value node to graph failed.";
+
+      const auto unique_name = scope.GetUniqueNameForOp("Const");
+      auto builder = ::tensorflow::NodeBuilder(unique_name, "Const")
+        .Attr("dtype", node_type)
+        .Attr("value", *node_value);
+
+      scope.UpdateBuilder(&builder);
+      scope.UpdateStatus(builder.Finalize(g, &ret));
+
+      if (!scope.ok()) {
+        return scope.status();
+      }
+
+      // copy output edges
+      ReplaceOutEdges(g, n, ret);
+      g->RemoveNode(n);
+    } else {
+      // process non-constant _Arg
+      int index;
+      status = GetNodeAttr(n->attrs(), "index", &index);
+      if (!status.ok())
+        return status;
+        
+      n->ClearAttr("index");
+      n->AddAttr("index", index -  num_constant_inputs); 
+       
+    }
+
+  }
+  return Status::OK();
+}   
+
 Status MlirCompiler::CompileGraph(OpKernelContext* ctx, const std::string& func_name) {
 
   if (MlirExecutableClosureStore::Global()->Exists(func_name)) 
@@ -178,28 +268,44 @@ Status MlirCompiler::CompileGraph(OpKernelContext* ctx, const std::string& func_
   const FunctionBody* fbody;
   TF_RETURN_IF_ERROR(FindFunctionBody(function_, &fbody));
 
-
+  std::map<int, Tensor> constant_args;
+  for (int i : constants_) {
+    constant_args.insert({i, ctx->input(i)});
+  }
   for (int i = 0; i < ctx->num_inputs(); i++) {
     DataType dtype;
     TF_RETURN_IF_ERROR(GetNodeAttr(fbody->arg_nodes[i]->def(), "T", &dtype));
     if (dtype == DT_RESOURCE || dtype == DT_VARIANT) {
       continue;
     }
-    const Tensor& input = ctx->input(i);
-    TensorShapeProto arg_shape ; 
-    for (int i = 0;i < input.dims(); i++) {
-      arg_shape.add_dim()->set_size(-1);
+
+    if (constant_args.count(i) > 0) {
+      const Tensor& input = constant_args.at(i);
+      fbody->arg_nodes[i]->ClearAttr("_output_shapes");
+      fbody->arg_nodes[i]->AddAttr("_output_shapes",
+          std::vector<TensorShape>{input.shape()});
+      fbody->arg_nodes[i]->AddAttr("_value", input);
+      fbody->arg_nodes[i]->AddAttr("_dtype", input.dtype());
+      fbody->arg_nodes[i]->AddAttr("_shape", input.shape());
+    } else {
+      const Tensor& input = ctx->input(i);
+      TensorShapeProto arg_shape ; 
+      for (int i = 0;i < input.dims(); i++) {
+        arg_shape.add_dim()->set_size(-1);
+      }
+      fbody->arg_nodes[i]->ClearAttr("_output_shapes");
+      fbody->arg_nodes[i]->AddAttr("_output_shapes",
+          gtl::ArraySlice<TensorShapeProto>{arg_shape});
     }
-    fbody->arg_nodes[i]->ClearAttr("_output_shapes");
-    fbody->arg_nodes[i]->AddAttr("_output_shapes",
-       gtl::ArraySlice<TensorShapeProto>{arg_shape});
   }
   std::unique_ptr<Graph> graph = GetGraph(fbody);
+  TF_RETURN_IF_ERROR(ProcessConstArgNodes(&graph));
   if (VLOG_IS_ON(2)) {
     VLOG(2) << "XlaCompiler::CompileFunction: "
             << DumpGraphToFile(
                    absl::StrCat("mlir_compile_function_", function_.name()), *graph);
   }
+
   GraphDef graph_def;
   graph->ToGraphDef(&graph_def);
 

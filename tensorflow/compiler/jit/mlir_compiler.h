@@ -144,11 +144,12 @@ class MlirSubGraphDefStore {
 class MlirCompiler {
  public:
   explicit MlirCompiler(OpKernelConstruction* ctx);
-  Status CompileGraph(OpKernelContext* ctx, const std::string& func_name);
+  Status CompileGraph(OpKernelContext* ctx, const std::string& func_name); 
  private:
   Status FindFunctionBody(const NameAttrList& function,
                                      const FunctionBody** fbody); 
   std::unique_ptr<Graph> GetGraph(const FunctionBody* fbody);
+  Status ProcessConstArgNodes(std::unique_ptr<Graph>* graph) ;
 
  private:
   NameAttrList function_;
@@ -157,6 +158,7 @@ class MlirCompiler {
   const FunctionLibraryDefinition* flib_def_ = nullptr; 
   std::unique_ptr<ProcessFunctionLibraryRuntime> pflr_;
   FunctionLibraryRuntime* flib_runtime_;        // owned by pflr_.
+  std::vector<int> constants_;
   
 };
 
