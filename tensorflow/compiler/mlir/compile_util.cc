@@ -378,3 +378,12 @@ void _global_unique_i32_i32(
   }
 }
 
+extern "C"
+void _global_mlir_call_external_func_2d_i64(
+    StridedMemRefType<int64_t, 2> *M1,
+    StridedMemRefType<int64_t, 2> *M2) {
+  std::cout << "_global_mlir_call_external_func_2d_64 called\n";
+  printMemRef(*M1);
+  printMemRef(*M2);
+}
+

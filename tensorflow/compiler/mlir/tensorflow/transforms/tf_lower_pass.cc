@@ -81,6 +81,7 @@ void TFAffineLoweringPass::runOnModule() {
 
   mlir::OwningRewritePatternList patterns;
   patterns.insert<ConstOpLowering>(&getContext());
+  patterns.insert<ReshapeOpLOwering>(&getContext());
 
   auto module = getModule();
   for (auto func : module.getOps<mlir::FuncOp>()) {

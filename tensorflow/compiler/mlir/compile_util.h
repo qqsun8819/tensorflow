@@ -111,6 +111,11 @@ template <int D1, int D2, int D3, int D4, typename T>
 using Vector4D = Vector<T, D1, D2, D3, D4>;
 
 extern "C" MLIR_RUNNER_UTILS_EXPORT void
+_global_mlir_call_external_func_2d_i64(
+    StridedMemRefType<int64_t, 2> *M1,
+    StridedMemRefType<int64_t, 2> *M2);
+
+extern "C" MLIR_RUNNER_UTILS_EXPORT void
 _global_print_memref_1d(
     StridedMemRefType<int32_t, 1> *M2);
 
