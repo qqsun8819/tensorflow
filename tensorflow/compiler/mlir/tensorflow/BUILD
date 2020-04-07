@@ -401,6 +401,7 @@ cc_library(
         "translate/control_to_executor_dialect.cc",
         "translate/executor_to_control_dialect.cc",
         "translate/tf_functional_to_executor.cc",
+        "translate/executor_to_tf_dialect.cc",
     ],
     hdrs = [
         "transforms/batchmatmul_to_einsum.h",
