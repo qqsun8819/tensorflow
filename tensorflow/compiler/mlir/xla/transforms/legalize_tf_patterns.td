@@ -143,7 +143,7 @@ def : Pat<(TF_FloorDivOp AnyRankedTensor:$l, AnyRankedTensor:$r),
 // NOTE: This should be optimized for unsigned integers.
 // Requires static shaped inputs to create constant splats and computation of
 // broadcast attributes.
-def : Pat<(TF_FloorDivOp AnyStaticShapeTensor:$l, AnyStaticShapeTensor:$r),
+def : Pat<(TF_FloorDivOp AnyTensor:$l, AnyTensor:$r),
         (HLO_SelectOp
          (HLO_CompareOp
           (HLO_CompareOp $l, (HLO_ConstOp (ConstantSplat<"0"> $l)),
@@ -168,7 +168,7 @@ def : Pat<(TF_FloorDivOp AnyStaticShapeTensor:$l, AnyStaticShapeTensor:$r),
 //   return trunc_mod != 0 && (y < 0 != trunc_mod < 0) ? trunc_mod + y
 // Requires static shaped inputs to create constant splats and computation of
 // broadcast attributes.
-def : Pat<(TF_FloorModOp AnyStaticShapeTensor:$l, AnyStaticShapeTensor:$r),
+def : Pat<(TF_FloorModOp AnyTensor:$l, AnyTensor:$r),
       (HLO_SelectOp
        (HLO_AndOp
         (HLO_CompareOp
